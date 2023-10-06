@@ -1,6 +1,7 @@
 import 'package:appquangbadulich/bloc/auth_bloc/auth_bloc.dart';
 import 'package:appquangbadulich/bloc/login_bloc/login_bloc.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
+import 'package:appquangbadulich/screens/auth/login_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +20,7 @@ class LoginScreen extends StatelessWidget {
             authBloc: BlocProvider.of<AuthBloc>(context),
           );
         },
-        child: LoginScreen(userRepository: userRepository),
+        child: LoginForm(userRepository: userRepository),
       ),
     );
   }

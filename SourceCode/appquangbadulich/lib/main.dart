@@ -2,6 +2,7 @@ import 'package:appquangbadulich/bloc/auth_bloc/auth_bloc.dart';
 import 'package:appquangbadulich/bloc/auth_bloc/auth_event.dart';
 import 'package:appquangbadulich/bloc/auth_bloc/auth_state.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
+import 'package:appquangbadulich/screens/auth/abc.dart';
 import 'package:appquangbadulich/screens/auth/login_screen.dart';
 import 'package:appquangbadulich/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,19 +12,19 @@ class SimpleBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    // print('${bloc.runtimeType} $change');
+    print('${bloc.runtimeType} $change');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    // print('${bloc.runtimeType} $transition');
+    print('${bloc.runtimeType} $transition');
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     super.onError(bloc, error, stackTrace);
-    // print('${bloc.runtimeType} $stackTrace');
+    print('${bloc.runtimeType} $stackTrace');
   }
 }
 
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // locale: Locale('id', 'ID'),
+      locale: Locale('id', 'ID'),
       theme: ThemeData(
         fontFamily: 'Rubik',
         primarySwatch: Colors.blueGrey,

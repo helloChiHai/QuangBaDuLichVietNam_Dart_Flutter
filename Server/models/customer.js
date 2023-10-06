@@ -3,10 +3,9 @@ const mongoose = require("mongoose");
 const customerSchema = new mongoose.Schema({
   idKCus: String,
   type: Number,
-  account: String,
   password: String,
   nameCus: String,
-  emailCus: String,
+  email: String,
   birthday: Date,
   address: String,
   listBookingHotel: [

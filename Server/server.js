@@ -58,10 +58,10 @@ app.get("/hotels", async (req, res) => {
 });
 
 // đăng nhập
-app.post("/auth/login", async (req, res) => {
+app.post("/login", async (req, res) => {
   try {
-    const { account, password } = req.body;
-    const customer = await Customer.findOne(account, password);
+    const { email, password } = req.body;
+    const customer = await Customer.findOne(email, password);
 
     if (!customer) {
       res.status(401).json({
