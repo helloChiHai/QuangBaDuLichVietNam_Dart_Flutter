@@ -1,7 +1,7 @@
-import 'package:appquangbadulich/bloc/auth_bloc/auth_bloc.dart';
-import 'package:appquangbadulich/bloc/login_bloc/login_bloc.dart';
+import 'package:appquangbadulich/login/bloc/auth_bloc/auth_bloc.dart';
+import 'package:appquangbadulich/login/bloc/login_bloc/login_bloc.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
-import 'package:appquangbadulich/screens/auth/login_form.dart';
+import 'package:appquangbadulich/login/screens/auth/login_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

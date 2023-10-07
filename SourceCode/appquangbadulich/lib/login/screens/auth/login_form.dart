@@ -1,6 +1,6 @@
-import 'package:appquangbadulich/bloc/login_bloc/login_bloc.dart';
-import 'package:appquangbadulich/bloc/login_bloc/login_event.dart';
-import 'package:appquangbadulich/bloc/login_bloc/login_state.dart';
+import 'package:appquangbadulich/login/bloc/login_bloc/login_bloc.dart';
+import 'package:appquangbadulich/login/bloc/login_bloc/login_event.dart';
+import 'package:appquangbadulich/login/bloc/login_bloc/login_state.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +54,7 @@ class _LoginFormState extends State<LoginForm> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Auth with Rest',
+                          'Du lịch Việt Nam',
                           style: TextStyle(
                             color: Colors.purpleAccent,
                             fontWeight: FontWeight.bold,
@@ -63,7 +63,7 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          'Login app using Bloc pattern and REST API',
+                          'Hải ơi mình đi đâu thế',
                           style: TextStyle(
                             color: Colors.black38,
                             fontSize: 10,

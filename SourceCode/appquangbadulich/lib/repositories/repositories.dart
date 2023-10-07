@@ -2,10 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class UserRepository {
-  // static String mainUrl = "http://192.168.141.214:3090";
-  // static String mainUrl = "https://reqres.in";
-  var loginUrl = 'http://192.168.174.214:3090/login';
-  // var loginUrl = '$mainUrl/auth/login';
+  static String mainUrl = "http://192.168.174.214:3090";
+  var loginUrl = '$mainUrl/login';
+  var hotelUrl = '$mainUrl/hotels';
 
   final FlutterSecureStorage storage = const FlutterSecureStorage();
   final Dio dio = Dio();
@@ -34,5 +33,18 @@ class UserRepository {
       "password": password,
     });
     return response.data["token"];
+  }
+
+  Future<List<dynamic>> getHotels() async {
+    try {
+      Response response = await dio.get(hotelUrl);
+      if (response.statusCode == 200) {
+        return response.data["data"];
+      } else {
+        throw Exception('Failed to load hotels');
+      }
+    } catch (e) {
+      throw Exception('Failed to connect to the server');
+    }
   }
 }

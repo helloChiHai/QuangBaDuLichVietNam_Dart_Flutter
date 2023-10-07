@@ -23,7 +23,7 @@ const hotelSchema = new mongoose.Schema({
       comfortable: [
         {
           iconComfortable: String,
-          nameComfortable: Number,
+          nameComfortable: String,
         },
       ],
       bookingDate: Date,

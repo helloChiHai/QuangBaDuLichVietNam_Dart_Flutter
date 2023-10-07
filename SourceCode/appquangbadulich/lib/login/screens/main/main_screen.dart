@@ -1,5 +1,5 @@
-import 'package:appquangbadulich/bloc/auth_bloc/auth_bloc.dart';
-import 'package:appquangbadulich/bloc/auth_bloc/auth_event.dart';
+import 'package:appquangbadulich/login/bloc/auth_bloc/auth_bloc.dart';
+import 'package:appquangbadulich/login/bloc/auth_bloc/auth_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';

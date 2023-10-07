@@ -51,7 +51,7 @@ app.get("/customers", async (req, res) => {
 app.get("/hotels", async (req, res) => {
   try {
     const hotels = await Hotel.find({});
-    res.status(200).json({ success: true, data: hotels });
+    res.status(200).json({data: hotels });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
