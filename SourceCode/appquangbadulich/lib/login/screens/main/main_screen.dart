@@ -1,8 +1,4 @@
-import 'package:appquangbadulich/login/bloc/auth_bloc/auth_bloc.dart';
-import 'package:appquangbadulich/login/bloc/auth_bloc/auth_event.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -26,12 +22,12 @@ class _MainScreenState extends State<MainScreen> {
         ),
         title: const Text('AUTH WITH REST'),
         actions: [
-          IconButton(
-            onPressed: () {
-              BlocProvider.of<AuthBloc>(context).add(LoggedOut());
-            },
-            icon: const Icon(EvaIcons.logOutOutline),
-          ),
+          // IconButton(
+          //   onPressed: () {
+          //     BlocProvider.of<AuthBloc>(context).add(LoggedOut());
+          //   },
+          //   icon: const Icon(EvaIcons.logOutOutline),
+          // ),
         ],
       ),
       body: Center(

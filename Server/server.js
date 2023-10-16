@@ -37,46 +37,30 @@ app.get("/regions", async (req, res) => {
   }
 });
 
-// customer
-app.get("/customers", async (req, res) => {
-  try {
-    const customers = await Customer.find({});
-    res.status(200).json({ success: true, data: customers });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-// hotel
-app.get("/hotels", async (req, res) => {
-  try {
-    const hotels = await Hotel.find({});
-    res.status(200).json({data: hotels });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-// đăng nhập
 app.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const customer = await Customer.findOne(email, password);
-
-    if (!customer) {
+    const user = await Customer.findOne({
+      email: req.body.email,
+      password: req.body.password,
+    });
+    console.log(req.body);
+    if (!user) {
       res.status(401).json({
         success: false,
         message: "Tên tài khoản hoặc mật khẩu không đúng",
       });
+      console.log("\n------------ sai email hoặc pass ------------\n");
       return;
     }
-    // return res
-    //   .status(200)
-    //   .json({ success: true, message: "Đăng nhập thành công", data: customer });
-    return res.status(200).json({ success: true, data: customer });
+
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+    console.log("\n ------------>>>>> trả về user: " + user + "\n------------\n");
   } catch (error) {
+    console.log(error); // In lỗi ra console để xem
     return res.status(500).json({ success: false, error: error.message });
   }
 });
-
 app.listen(port, () => console.log(`listening at http://localhost:${port}`));

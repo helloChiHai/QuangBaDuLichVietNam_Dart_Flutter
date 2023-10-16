@@ -1,20 +1,12 @@
 const mongoose = require("mongoose");
 
 const customerSchema = new mongoose.Schema({
-  idKCus: String,
-  type: Number,
-  password: String,
-  nameCus: String,
+  idCus: String,
   email: String,
-  birthday: Date,
+  password: String,
+  name: String,
   address: String,
-  listBookingHotel: [
-    {
-      idHotel: String,
-      idRoom: String,
-    },
-  ],
-  token: String,
+  birthday: String,
 });
 
 const Customer = mongoose.model("Customer", customerSchema, "Customer");

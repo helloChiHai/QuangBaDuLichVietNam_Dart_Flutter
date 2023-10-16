@@ -1,24 +1,23 @@
-import 'package:appquangbadulich/login/bloc/auth_bloc/auth_bloc.dart';
-import 'package:appquangbadulich/login/bloc/auth_bloc/auth_event.dart';
 import 'package:appquangbadulich/login/bloc/login_bloc/login_event.dart';
 import 'package:appquangbadulich/login/bloc/login_bloc/login_state.dart';
-import 'package:appquangbadulich/repositories/repositories.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:appquangbadulich/repositories/repositories.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-@immutable
+
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
-  final AuthBloc authBloc;
 
-  LoginBloc({required this.userRepository, required this.authBloc})
-      : super(LoginInitial()) {
-    on<LoginButtonpressed>((event, emit) async {
+  LoginBloc({required this.userRepository}) : super(LoginInitial()) {
+    on<LoginButtonPressed>((event, emit) async {
       emit(LoginLoading());
       try {
-        final token = await userRepository.login(event.email, event.password);
-        authBloc.add(LoggedIn(token: token));
-        emit(LoginInitial());
+        final result = await userRepository.login(event.email, event.password);
+        if (result != null) {
+          emit(LoginSuccess(customer: result));
+        } else {
+          emit(LoginFailure(error: 'Đăng nhập thất bại'));
+        }
       } catch (e) {
         emit(LoginFailure(error: e.toString()));
       }

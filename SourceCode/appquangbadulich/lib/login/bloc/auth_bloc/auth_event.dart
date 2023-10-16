@@ -1,27 +1,27 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:equatable/equatable.dart';
+// import 'package:flutter/cupertino.dart';
 
-@immutable
-abstract class AuthEvent extends Equatable {
-  const AuthEvent();
+// @immutable
+// abstract class AuthEvent extends Equatable {
+//   const AuthEvent();
 
-  @override
-  List<Object?> get props => [];
-}
+//   @override
+//   List<Object?> get props => [];
+// }
 
-class AppStarted extends AuthEvent {}
+// class AppStarted extends AuthEvent {}
 
-class LoggedIn extends AuthEvent {
-  final String token;
-  const LoggedIn({required this.token});
+// class LoggedIn extends AuthEvent {
+//   final String token;
+//   const LoggedIn({required this.token});
 
-  @override
-  List<Object?> get props => [token];
+//   @override
+//   List<Object?> get props => [token];
 
-  @override
-  String toString() {
-    return 'LoggedIn(token: $token)';
-  }
-}
+//   @override
+//   String toString() {
+//     return 'LoggedIn(token: $token)';
+//   }
+// }
 
-class LoggedOut extends AuthEvent {}
+// class LoggedOut extends AuthEvent {}

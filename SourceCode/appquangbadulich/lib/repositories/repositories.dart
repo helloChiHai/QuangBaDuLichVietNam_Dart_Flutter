@@ -1,50 +1,71 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+import '../login/model/CustomerModel.dart';
 
 class UserRepository {
-  static String mainUrl = "http://192.168.174.214:3090";
-  var loginUrl = '$mainUrl/login';
-  var hotelUrl = '$mainUrl/hotels';
+  String urlHotel = 'http://192.168.50.214:3090/hotels';
+  String urlLogin = 'http://192.168.50.214:3090/login';
+  // String urlLogin = 'https://reqres.in/api/login';
 
-  final FlutterSecureStorage storage = const FlutterSecureStorage();
-  final Dio dio = Dio();
+  // Future<List<HotelModel>> getHotels() async {
+  //   try {
+  //     Response response = await get(Uri.parse(urlHotel));
+  //     if (response.statusCode == 200) {
+  //       final List result = jsonDecode(response.body)['data'];
+  //       return result.map(((e) => HotelModel.fromJson(e))).toList();
+  //     } else {
+  //       throw Exception('Failed to load hotels: ${response.reasonPhrase}');
+  //     }
+  //   } catch (e) {
+  //     print('Error while fetching hotels: $e');
+  //     return [];
+  //   }
+  // }
 
-  Future<bool> hasToken() async {
-    var value = await storage.read(key: 'token');
-    if (value != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  Future<void> persisToken(String token) async {
-    await storage.write(key: 'token', value: token);
-  }
-
-  Future<void> deleteToken() async {
-    storage.delete(key: 'token');
-    storage.deleteAll();
-  }
-
-  Future<String> login(String email, String password) async {
-    Response response = await dio.post(loginUrl, data: {
-      "email": email,
-      "password": password,
-    });
-    return response.data["token"];
-  }
-
-  Future<List<dynamic>> getHotels() async {
+  Future<CustomerModel?> login(String email, String password) async {
     try {
-      Response response = await dio.get(hotelUrl);
+      final response = await http.post(
+        Uri.parse(urlLogin),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({"email": email, "password": password}),
+      );
       if (response.statusCode == 200) {
-        return response.data["data"];
+        final data = jsonDecode(response.body);
+        print(data);
+        print(data['data']['email']);
+        if (data['success'] == true) {
+          final idCus = data['data']['idCus'];
+          final email = data['data']['email'];
+          final password = data['data']['password'];
+          final name = data['data']['name'];
+          final address = data['data']['address'];
+          final birthday = data['data']['birthday'];
+          if (idCus != null &&
+              name != null &&
+              address != null &&
+              birthday != null) {
+            return CustomerModel(
+                idCus: idCus,
+                email: email,
+                password: password,
+                name: name,
+                address: address,
+                birthday: birthday);
+          } else {
+            print('không có dữ liệu');
+            return null;
+          }
+        } else {
+          print('đang sai gì đó....');
+          return null;
+        }
       } else {
-        throw Exception('Failed to load hotels');
+        throw Exception('Login failed: ${response.reasonPhrase}');
       }
     } catch (e) {
-      throw Exception('Failed to connect to the server');
+      print('Error while logging in: $e');
     }
+    return null;
   }
 }

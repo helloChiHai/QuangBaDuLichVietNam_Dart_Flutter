@@ -1,10 +1,7 @@
+import 'package:appquangbadulich/login/model/CustomerModel.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 
-@immutable
 abstract class LoginState extends Equatable {
-  const LoginState();
-
   @override
   List<Object?> get props => [];
 }
@@ -13,16 +10,20 @@ class LoginInitial extends LoginState {}
 
 class LoginLoading extends LoginState {}
 
+class LoginSuccess extends LoginState {
+  final CustomerModel customer;
+
+  LoginSuccess({required this.customer});
+
+  @override
+  List<Object?> get props => [customer];
+}
+
 class LoginFailure extends LoginState {
   final String error;
 
-  const LoginFailure({required this.error});
+  LoginFailure({required this.error});
 
   @override
   List<Object?> get props => [error];
-
-  @override
-  String toString() {
-    return 'LoginFailure {error: $error}';
-  }
 }
