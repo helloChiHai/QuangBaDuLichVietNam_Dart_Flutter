@@ -32,6 +32,14 @@ class LoginForm extends StatelessWidget {
           },
           child: const Text('Đăng nhập'),
         ),
+        ElevatedButton(
+          onPressed: () {
+            print('đã click chuyển sang trang registeraccount');
+            Navigator.of(context).pushNamed('/register');
+          },
+          child: const Text('Đăng ký tài khoản'),
+        ),
+
       ],
     );
   }

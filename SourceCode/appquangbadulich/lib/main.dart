@@ -1,10 +1,11 @@
 import 'package:appquangbadulich/login/bloc/login_bloc/login_bloc.dart';
 import 'package:appquangbadulich/login/bloc/login_bloc/login_state.dart';
+import 'package:appquangbadulich/registerAccount/screens/registerAccount.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'login/screens/auth/login_form.dart';
+import 'login/screens/login_form.dart';
 
 class MyApp extends StatelessWidget {
   final userRepository = UserRepository();
@@ -13,6 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/register': (context) => RegisterAccount(),
+      },
       home: BlocProvider(
         create: (context) => logBloc,
         child: Scaffold(
@@ -22,13 +27,29 @@ class MyApp extends StatelessWidget {
           body: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
               if (state is LoginInitial) {
-                return LoginForm(); 
+                return LoginForm();
               } else if (state is LoginLoading) {
                 return const CircularProgressIndicator();
               } else if (state is LoginSuccess) {
+                Future.delayed(Duration.zero, () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text('Đăng nhập thành công!'),
+                    ),
+                  );
+                });
                 return Text('Đăng nhập thành công: ${state.customer.name}');
               } else if (state is LoginFailure) {
-                return Text('Đăng nhập thất bạiiii: ${state.error}');
+                Future.delayed(Duration.zero, () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text('Đăng nhập thất bại!'),
+                    ),
+                  );
+                });
+                return LoginForm();
               } else {
                 return Container();
               }
