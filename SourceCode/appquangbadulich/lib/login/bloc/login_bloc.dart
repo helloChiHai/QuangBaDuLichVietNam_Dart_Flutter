@@ -1,5 +1,5 @@
-import 'package:appquangbadulich/login/bloc/login_bloc/login_event.dart';
-import 'package:appquangbadulich/login/bloc/login_bloc/login_state.dart';
+import 'package:appquangbadulich/login/bloc/login_event.dart';
+import 'package:appquangbadulich/login/bloc/login_state.dart';
 import 'package:bloc/bloc.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

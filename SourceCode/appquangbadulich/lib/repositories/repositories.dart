@@ -4,24 +4,9 @@ import 'package:http/http.dart' as http;
 import '../login/model/CustomerModel.dart';
 
 class UserRepository {
-  String urlHotel = 'http://192.168.50.214:3090/hotels';
-  String urlLogin = 'http://192.168.50.214:3090/login';
-  // String urlLogin = 'https://reqres.in/api/login';
-
-  // Future<List<HotelModel>> getHotels() async {
-  //   try {
-  //     Response response = await get(Uri.parse(urlHotel));
-  //     if (response.statusCode == 200) {
-  //       final List result = jsonDecode(response.body)['data'];
-  //       return result.map(((e) => HotelModel.fromJson(e))).toList();
-  //     } else {
-  //       throw Exception('Failed to load hotels: ${response.reasonPhrase}');
-  //     }
-  //   } catch (e) {
-  //     print('Error while fetching hotels: $e');
-  //     return [];
-  //   }
-  // }
+  String urlHotel = 'http://192.168.8.214:3090/hotels';
+  String urlLogin = 'http://192.168.8.214:3090/login';
+  String urlCreateAccount = 'http://192.168.8.214:3090/createAccount';
 
   Future<CustomerModel?> login(String email, String password) async {
     try {
@@ -67,5 +52,32 @@ class UserRepository {
       print('Error while logging in: $e');
     }
     return null;
+  }
+
+  Future<int> createAccount(String email, String password, String name,
+      String address, String birthday) async {
+    try {
+      final response = await http.post(
+        Uri.parse(urlCreateAccount),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "email": email,
+          "password": password,
+          "name": name,
+          "address": address,
+          "birthday": birthday,
+        }),
+      );
+      if (response.statusCode == 201) {
+        return 1; // tạo tài khoản thành công
+      } else if (response.statusCode == 409) {
+        return -1; // email đã tồn tại
+      } else {
+        return 0; // tạo tài khoản thất bại
+      }
+    } catch (e) {
+      print('lỗi trong quá trình tạo tài khoản: $e');
+      return 2; // lỗi trong quá trình tạo tài khoản
+    }
   }
 }

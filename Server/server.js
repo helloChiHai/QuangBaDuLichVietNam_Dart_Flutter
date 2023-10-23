@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const app = express();
 const port = 3090;
+const { v4: uuidv4 } = require("uuid");
 
 mongoose.connect("mongodb://127.0.0.1/DACN_APP_DuLich", {
   useNewUrlParser: true,
@@ -37,6 +38,17 @@ app.get("/regions", async (req, res) => {
   }
 });
 
+// hiển thị danh sách các khách hàng
+app.get("/customers", async (req, res) => {
+  try {
+    const user = await Customer.find({});
+    res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// đăng nhập
 app.post("/login", async (req, res) => {
   try {
     const user = await Customer.findOne({
@@ -57,10 +69,50 @@ app.post("/login", async (req, res) => {
       success: true,
       data: user,
     });
-    console.log("\n ------------>>>>> trả về user: " + user + "\n------------\n");
+    console.log(
+      "\n ------------>>>>> trả về user: " + user + "\n------------\n"
+    );
   } catch (error) {
     console.log(error); // In lỗi ra console để xem
     return res.status(500).json({ success: false, error: error.message });
   }
 });
+
+// tạo tài khoảng
+app.post("/createAccount", async (req, res) => {
+  try {
+    const { email, password, name, address, birthday } = req.body;
+
+    // kiểm tra email đã tồn tại hay chưa
+    const existingUser = await Customer.findOne({ email: email });
+
+    if (existingUser) {
+      res
+        .status(409)
+        .json({ success: false, message: "Email đã tồn tại trong hệ thống" });
+      return;
+    }
+
+    const customer = new Customer({
+      idCus: uuidv4(),
+      email,
+      password,
+      name,
+      address,
+      birthday,
+    });
+    await customer.save();
+    res.status(201).json(customer);
+    console.log(
+      "\n ------------>>>>> thông tin tài khoản mới: " +
+        customer +
+        "\n------------\n"
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Lỗi khi thêm khách hàng mới");
+  }
+});
+
+// ---------------
 app.listen(port, () => console.log(`listening at http://localhost:${port}`));

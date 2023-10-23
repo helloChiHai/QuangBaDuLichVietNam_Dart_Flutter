@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:appquangbadulich/login/bloc/login_bloc/login_bloc.dart';
-import 'package:appquangbadulich/login/bloc/login_bloc/login_event.dart';
+import 'package:appquangbadulich/login/bloc/login_bloc.dart';
+import 'package:appquangbadulich/login/bloc/login_event.dart';
 
 class LoginForm extends StatelessWidget {
   final emailController = TextEditingController();
@@ -35,11 +35,10 @@ class LoginForm extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             print('đã click chuyển sang trang registeraccount');
-            Navigator.of(context).pushNamed('/register');
+            Navigator.of(context).pushNamed('/createAccount');
           },
           child: const Text('Đăng ký tài khoản'),
         ),
-
       ],
     );
   }
