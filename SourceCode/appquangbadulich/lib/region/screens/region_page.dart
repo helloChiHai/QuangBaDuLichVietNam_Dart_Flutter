@@ -26,13 +26,38 @@ class RegionPage extends StatelessWidget {
                 final region = regions[index];
                 return ListTile(
                   title: Text(region.nameRegion),
-                  // Hiển thị các thông tin khác về khu vực tại đây
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: region.provinces.map((province) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(province.nameProvines),
+                          ...province.touristAttraction!.map((touristAttraction) {
+                            return ExpansionTile(
+                              title: Text(touristAttraction.nameTourist),
+                              children: [
+                                Text("History: ${touristAttraction.history.historyStory}"),
+                                Text("Right Time: ${touristAttraction.rightTime.join(', ')}"),
+                                ExpansionTile(
+                                  title: Text("Culture"),
+                                  children: touristAttraction.culture.map((culture) {
+                                    return Text("Culture Name: ${culture.nameCulture}");
+                                  }).toList(),
+                                ),
+                              ],
+                            );
+                          }).toList(),
+                        ],
+                      );
+                    }).toList(),
+                  ),
                 );
               },
             );
           } else if (state is RegionLoadFailure) {
             return Center(
-              child: Text('ádfasdfsdaLỗi: ${state.error}'),
+              child: Text('Lỗi: ${state.error}'),
             );
           }
           return Container();
