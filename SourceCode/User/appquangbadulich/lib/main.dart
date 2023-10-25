@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         '/createAccount': (context) => CreateAccountPage(),
         '/regions': (context) => RegionPage(),
       },
-      home: RegionPage(), // Trang chính mặc định là Đăng nhập
+      home: LoginPage(), // Trang chính mặc định là Đăng nhập
     );
   }
 }
