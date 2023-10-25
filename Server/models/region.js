@@ -41,7 +41,7 @@ const regionSchema = new mongoose.Schema({
               idCus: String,
               name: String,
               content: String,
-              atTime: String,
+              atTime: Date,
             },
           ],
         },
