@@ -1,13 +1,39 @@
 import 'dart:convert';
+import 'package:appquangbadulich/region/model/regionModel.dart';
 import 'package:http/http.dart' as http;
 
 import '../login/model/CustomerModel.dart';
 
 class UserRepository {
-  String urlHotel = 'http://192.168.8.214:3090/hotels';
+  String urlRegion = 'http://192.168.8.214:3090/regions';
   String urlLogin = 'http://192.168.8.214:3090/login';
   String urlCreateAccount = 'http://192.168.8.214:3090/createAccount';
 
+  // fetch region
+  Future<List<RegionModel>> getRegions() async {
+    try {
+      final response = await http.get(
+        Uri.parse(urlRegion),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+        final regionList = data['data'] as List<dynamic>;
+        final regions = regionList
+            .map((regionData) => RegionModel.fromJson(regionData))
+            .toList();
+        return regions;
+      } else {
+        throw Exception('Failed to fetch regions: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error while fetching regions: $e');
+      throw Exception('Error while fetching regions: $e');
+    }
+  }
+
+  // đăng nhập
   Future<CustomerModel?> login(String email, String password) async {
     try {
       final response = await http.post(
@@ -54,6 +80,7 @@ class UserRepository {
     return null;
   }
 
+  // tạo tài khoản
   Future<int> createAccount(String email, String password, String name,
       String address, String birthday) async {
     try {

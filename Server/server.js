@@ -12,7 +12,6 @@ mongoose.connect("mongodb://127.0.0.1/DACN_APP_DuLich", {
 
 const Region = require("./models/region");
 const Customer = require("./models/customer");
-const Hotel = require("./models/hotel");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

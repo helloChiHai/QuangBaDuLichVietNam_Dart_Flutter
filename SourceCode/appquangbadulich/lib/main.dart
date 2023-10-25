@@ -1,4 +1,6 @@
 import 'package:appquangbadulich/login/bloc/login_bloc.dart';
+import 'package:appquangbadulich/region/bloc/region_bloc.dart';
+import 'package:appquangbadulich/region/screens/region_page.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +17,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginPage(),
         '/createAccount': (context) => CreateAccountPage(),
+        '/regions': (context) => RegionPage(),
       },
-      home: LoginPage(), // Trang chính mặc định là Đăng nhập
+      home: RegionPage(), // Trang chính mặc định là Đăng nhập
     );
   }
 }
@@ -35,6 +38,11 @@ void main() {
             userRepository: UserRepository(),
           ),
         ),
+        BlocProvider<RegionBloc>(
+          create: (context) => RegionBloc(
+            userRepository: UserRepository(),
+          ),
+        )
       ],
       child: MyApp(),
     ),
