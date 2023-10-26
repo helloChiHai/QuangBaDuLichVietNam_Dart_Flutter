@@ -11,9 +11,6 @@ class CreateAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tạo tài khoản'),
-      ),
       body: BlocListener<CreateAccountBloc, CreateAccountState>(
         listener: (context, state) {
           if (state is CreateAccountSuccess) {
@@ -24,6 +21,7 @@ class CreateAccountPage extends StatelessWidget {
                 backgroundColor: Colors.green,
               ),
             );
+            Navigator.of(context).pushNamed('/login_signupsuccesful');
           }
           if (state is CreateAccountFailure) {
             print(state.error);
@@ -35,7 +33,7 @@ class CreateAccountPage extends StatelessWidget {
             );
           }
         },
-        child: CreateAccountForm(),
+        child: SingleChildScrollView(child: CreateAccountForm()),
       ),
     );
   }

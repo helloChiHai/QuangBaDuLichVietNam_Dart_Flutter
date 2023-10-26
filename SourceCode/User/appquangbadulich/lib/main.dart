@@ -1,4 +1,6 @@
 import 'package:appquangbadulich/login/bloc/login_bloc.dart';
+import 'package:appquangbadulich/login/screens/login_intro.dart';
+import 'package:appquangbadulich/login/screens/login_signUpSuccesful.dart';
 import 'package:appquangbadulich/region/bloc/region_bloc.dart';
 import 'package:appquangbadulich/region/screens/region_page.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
@@ -13,13 +15,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/login': (context) => LoginPage(),
         '/createAccount': (context) => CreateAccountPage(),
         '/regions': (context) => RegionPage(),
+        '/intro_login': (context) => LoginIntro(),
+        '/login_signupsuccesful': (context) => LoginSignUpSuccessful(),
       },
-      home: LoginPage(), // Trang chính mặc định là Đăng nhập
+      home: LoginIntro(), // Trang chính mặc định là Đăng nhập
     );
   }
 }

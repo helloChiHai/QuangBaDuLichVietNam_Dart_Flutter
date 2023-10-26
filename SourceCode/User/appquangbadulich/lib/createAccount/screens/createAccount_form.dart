@@ -18,69 +18,300 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
   final nameController = TextEditingController();
   final addressController = TextEditingController();
   final birthdayController = TextEditingController();
-  bool isErrorPass = false;
 
+  bool _obscureText_mk = true;
+  bool _obscureText_nlmk = true;
   @override
   Widget build(BuildContext context) {
     final createAccountBloc = BlocProvider.of<CreateAccountBloc>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TextField(
-          controller: emailController,
-          decoration: const InputDecoration(labelText: 'Email'),
+        const SizedBox(height: 30),
+        Container(
+          alignment: Alignment.topLeft,
+          child: IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/login');
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+              size: 30,
+            ),
+          ),
         ),
-        TextField(
-          controller: passwordController,
-          decoration: const InputDecoration(labelText: 'Password'),
-          obscureText: true,
+        const SizedBox(height: 30),
+        const SizedBox(
+          width: double.infinity,
+          height: 230,
+          child: Image(
+            image: AssetImage('assets/img/img_5.png'),
+          ),
         ),
-        TextField(
-          controller: confirmPasswordController,
-          decoration: const InputDecoration(labelText: 'Password'),
-          obscureText: true,
+        const SizedBox(height: 30),
+        const Text(
+          'Tạo Tài Tài Khoản',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
         ),
-        TextField(
-          controller: nameController,
-          decoration: const InputDecoration(labelText: 'Name'),
+        const SizedBox(height: 30),
+        Container(
+          width: 0.9 * MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: TextField(
+            controller: emailController,
+            decoration: const InputDecoration(
+              labelText: 'Email',
+              labelStyle: TextStyle(fontSize: 18, color: Colors.black),
+              border: InputBorder.none,
+            ),
+          ),
         ),
-        TextField(
-          controller: addressController,
-          decoration: const InputDecoration(labelText: 'Address'),
-        ),
-        TextField(
-          controller: birthdayController,
-          decoration: const InputDecoration(labelText: 'BirthDay'),
-        ),
-        isErrorPass
-            ? const Text('Mật khẩu không trùng khớp')
-            : const SizedBox(),
-        ElevatedButton(
-          onPressed: () {
-            final email = emailController.text;
-            final password = passwordController.text;
-            final confirmPassword = confirmPasswordController.text;
-            final name = nameController.text;
-            final address = addressController.text;
-            final birthday = birthdayController.text;
-
-            if (password == confirmPassword) {
-              createAccountBloc.add(
-                CreateAccontButtonPressed(
-                  email: email,
-                  password: password,
-                  name: name,
-                  address: address,
-                  birthday: birthday,
+        const SizedBox(height: 20),
+        Container(
+          width: 0.9 * MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: TextField(
+            obscureText: _obscureText_mk,
+            controller: passwordController,
+            decoration: InputDecoration(
+              labelText: 'Mật khẩu',
+              labelStyle: const TextStyle(fontSize: 18, color: Colors.black),
+              border: InputBorder.none,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureText_mk ? Icons.visibility : Icons.visibility_off,
                 ),
-              );
-            } else {
-              setState(() {
-                isErrorPass = true;
-              });
-            }
-          },
-          child: const Text('Tạo tài khoản'),
+                onPressed: () {
+                  setState(() {
+                    _obscureText_mk = !_obscureText_mk;
+                  });
+                },
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        Container(
+          width: 0.9 * MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: TextField(
+            obscureText: _obscureText_nlmk,
+            controller: confirmPasswordController,
+            decoration: InputDecoration(
+              labelText: 'Nhập lại mật khẩu',
+              labelStyle: const TextStyle(fontSize: 18, color: Colors.black),
+              border: InputBorder.none,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureText_nlmk ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureText_nlmk = !_obscureText_nlmk;
+                  });
+                },
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        Container(
+          width: 0.9 * MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: TextField(
+            controller: nameController,
+            decoration: const InputDecoration(
+              labelText: 'Họ tên',
+              labelStyle: TextStyle(fontSize: 18, color: Colors.black),
+              border: InputBorder.none,
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        Container(
+          width: 0.9 * MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: TextField(
+            controller: addressController,
+            decoration: const InputDecoration(
+              labelText: 'Địa chỉ',
+              labelStyle: TextStyle(fontSize: 18, color: Colors.black),
+              border: InputBorder.none,
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        Container(
+          width: 0.9 * MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: TextField(
+            controller: birthdayController,
+            decoration: const InputDecoration(
+              labelText: 'Ngày sinh',
+              labelStyle: TextStyle(fontSize: 18, color: Colors.black),
+              border: InputBorder.none,
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        Container(
+          width: 0.9 * MediaQuery.of(context).size.width,
+          height: 50,
+          margin: const EdgeInsets.only(bottom: 30),
+          child: ElevatedButton(
+              onPressed: () {
+                final email = emailController.text;
+                final password = passwordController.text;
+                final confirmPassword = confirmPasswordController.text;
+                final name = nameController.text;
+                final address = addressController.text;
+                final birthday = birthdayController.text;
+
+                if (email.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Vui lòng nhập Email!',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else if (password.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Vui lòng nhập Mật Khẩu!',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else if (confirmPassword.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Vui lòng nhập Xác Nhận Mật Khẩu!',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else if (name.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Vui lòng nhập lại Họ Tên!',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else if (address.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Vui lòng nhập lại Địa Chỉ!',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else if (birthday.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Vui lòng nhập lại Sinh Nhật!',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else if (password != confirmPassword) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Mật khẩu trong trùng khớp!',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else {
+                  createAccountBloc.add(
+                    CreateAccontButtonPressed(
+                      email: email,
+                      password: password,
+                      name: name,
+                      address: address,
+                      birthday: birthday,
+                    ),
+                  );
+                }
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Tạo tài khoản',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              )),
         ),
       ],
     );
