@@ -1,6 +1,6 @@
 import 'package:appquangbadulich/login/bloc/login_bloc.dart';
 import 'package:appquangbadulich/login/screens/login_intro.dart';
-import 'package:appquangbadulich/login/screens/login_signUpSuccesful.dart';
+import 'package:appquangbadulich/createAccount/screens/login_signUpSuccesful.dart';
 import 'package:appquangbadulich/region/bloc/region_bloc.dart';
 import 'package:appquangbadulich/region/screens/region_page.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'createAccount/bloc/createAccount_bloc.dart';
 import 'createAccount/screens/createAccont_page.dart';
+import 'home/screens/home_page.dart';
 import 'login/screens/login_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
         '/createAccount': (context) => CreateAccountPage(),
         '/regions': (context) => RegionPage(),
         '/intro_login': (context) => LoginIntro(),
-        '/login_signupsuccesful': (context) => LoginSignUpSuccessful(),
+        '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
+        '/home': (context) => HomePage(),
       },
       home: LoginIntro(), // Trang chính mặc định là Đăng nhập
     );

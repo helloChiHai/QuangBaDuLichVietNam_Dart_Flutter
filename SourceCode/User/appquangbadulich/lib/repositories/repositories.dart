@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 import '../login/model/CustomerModel.dart';
 
 class UserRepository {
-  String urlRegion = 'http://192.168.187.214:3090/regions';
-  String urlLogin = 'http://192.168.187.214:3090/login';
-  String urlCreateAccount = 'http://192.168.187.214:3090/createAccount';
+  String urlRegion = 'http://192.168.126.214:3090/regions';
+  String urlLogin = 'http://192.168.126.214:3090/login';
+  String urlCreateAccount = 'http://192.168.126.214:3090/createAccount';
 
   // fetch region
   Future<List<RegionModel>> getRegions() async {

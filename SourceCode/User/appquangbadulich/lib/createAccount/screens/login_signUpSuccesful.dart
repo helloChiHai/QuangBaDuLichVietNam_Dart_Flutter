@@ -1,13 +1,43 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-class LoginSignUpSuccessful extends StatefulWidget {
-  const LoginSignUpSuccessful({super.key});
+class CreateAccountSuccessful extends StatefulWidget {
+  const CreateAccountSuccessful({super.key});
 
   @override
-  State<LoginSignUpSuccessful> createState() => _LoginSignUpSuccessfulState();
+  State<CreateAccountSuccessful> createState() => _CreateAccountSuccessfulState();
 }
 
-class _LoginSignUpSuccessfulState extends State<LoginSignUpSuccessful> {
+class _CreateAccountSuccessfulState extends State<CreateAccountSuccessful> {
+  int countdown = 5;
+  late Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+    startCountdonwn();
+  }
+
+  void startCountdonwn() {
+    timer = Timer.periodic(Duration(seconds: 1), (_timer) {
+      setState(() {
+        if (countdown > 0) {
+          countdown--;
+        } else {
+          Navigator.of(context).pushNamed('/login');
+          timer.cancel();
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,13 +78,11 @@ class _LoginSignUpSuccessfulState extends State<LoginSignUpSuccessful> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  Future.delayed(const Duration(seconds: 3), () {
-                    Navigator.of(context).pushNamed('/login');
-                  });
+                  Navigator.of(context).pushNamed('/login');
                 },
-                child: const Text(
-                  'Đăng nhập',
-                  style: TextStyle(
+                child: Text(
+                  'Đăng nhập ($countdown s)',
+                  style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),
