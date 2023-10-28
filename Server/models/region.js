@@ -25,6 +25,8 @@ const regionSchema = new mongoose.Schema({
             {
               idCulture: String,
               nameCulture: String,
+              imgCulture: String,
+              videoCulture: String,
             },
           ],
           specialtyDish: [

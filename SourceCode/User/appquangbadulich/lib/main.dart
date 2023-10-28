@@ -1,3 +1,4 @@
+import 'package:appquangbadulich/home/screens/detail_touristacctraction.dart';
 import 'package:appquangbadulich/login/bloc/login_bloc.dart';
 import 'package:appquangbadulich/login/screens/login_intro.dart';
 import 'package:appquangbadulich/createAccount/screens/login_signUpSuccesful.dart';
@@ -25,8 +26,9 @@ class MyApp extends StatelessWidget {
         '/intro_login': (context) => LoginIntro(),
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
         '/home': (context) => HomePage(),
+        '/detail_touriestAttraction': (context) => DetailTouristAttraction(),
       },
-      home: LoginIntro(), // Trang chính mặc định là Đăng nhập
+      home: DetailTouristAttraction(), 
     );
   }
 }
