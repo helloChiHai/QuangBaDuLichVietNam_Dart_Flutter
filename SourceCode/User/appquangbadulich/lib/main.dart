@@ -10,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'createAccount/bloc/createAccount_bloc.dart';
 import 'createAccount/screens/createAccont_page.dart';
+import 'home/screens/detailTourist_comment.dart';
+import 'home/screens/detailTourist_content.dart';
 import 'home/screens/home_page.dart';
 import 'login/screens/login_page.dart';
 
@@ -27,6 +29,8 @@ class MyApp extends StatelessWidget {
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
         '/home': (context) => HomePage(),
         '/detail_touriestAttraction': (context) => DetailTouristAttraction(),
+        '/detail_content': (context) => DetailContent(),
+        '/detail_comment': (context) => CommentTourist(),
       },
       home: DetailTouristAttraction(), 
     );

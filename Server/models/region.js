@@ -24,7 +24,8 @@ const regionSchema = new mongoose.Schema({
           culture: [
             {
               idCulture: String,
-              nameCulture: String,
+              titleCulture: String,
+              contentCulture: String,
               imgCulture: String,
               videoCulture: String,
             },

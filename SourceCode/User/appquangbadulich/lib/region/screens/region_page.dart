@@ -42,7 +42,7 @@ class RegionPage extends StatelessWidget {
                                 ExpansionTile(
                                   title: Text("Culture"),
                                   children: touristAttraction.culture.map((culture) {
-                                    return Text("Culture Name: ${culture.nameCulture}");
+                                    return Text("Culture Name: ${culture.titleCulture}");
                                   }).toList(),
                                 ),
                               ],

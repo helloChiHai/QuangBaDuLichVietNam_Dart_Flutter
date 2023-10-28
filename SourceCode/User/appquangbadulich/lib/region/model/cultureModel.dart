@@ -1,12 +1,14 @@
 class CultureModel {
   final String idCulture;
-  final String nameCulture;
+  final String titleCulture;
+  final String contentCulture;
   final String? imgCulture;
   final String? videoCulture;
 
   CultureModel({
     required this.idCulture,
-    required this.nameCulture,
+    required this.titleCulture,
+    required this.contentCulture,
     required this.imgCulture,
     required this.videoCulture,
   });
@@ -14,7 +16,8 @@ class CultureModel {
   factory CultureModel.fromJson(Map<String, dynamic> json) {
     return CultureModel(
       idCulture: json['idCulture'],
-      nameCulture: json['nameCulture'],
+      titleCulture: json['titleCulture'],
+      contentCulture: json['contentCulture'],
       imgCulture: json['imgCulture'],
       videoCulture: json['videoCulture'],
     );
