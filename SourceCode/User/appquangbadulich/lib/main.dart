@@ -1,4 +1,4 @@
-import 'package:appquangbadulich/home/screens/detail_touristacctraction.dart';
+import 'package:appquangbadulich/detailTouristAttraction/screens/detail_touristacctraction.dart';
 import 'package:appquangbadulich/login/bloc/login_bloc.dart';
 import 'package:appquangbadulich/login/screens/login_intro.dart';
 import 'package:appquangbadulich/createAccount/screens/login_signUpSuccesful.dart';
@@ -10,8 +10,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'createAccount/bloc/createAccount_bloc.dart';
 import 'createAccount/screens/createAccont_page.dart';
-import 'home/screens/detailTourist_comment.dart';
-import 'home/screens/detailTourist_content.dart';
+import 'detailTouristAttraction/screens/detailTourist_comment.dart';
+import 'detailTouristAttraction/screens/detailTourist_content.dart';
+import 'detailTouristAttraction/screens/detailTourist_culture.dart';
+import 'detailTouristAttraction/screens/detailTourist_history.dart';
+import 'detailTouristAttraction/screens/detailTourist_specialtyDish.dart';
 import 'home/screens/home_page.dart';
 import 'login/screens/login_page.dart';
 
@@ -31,6 +34,9 @@ class MyApp extends StatelessWidget {
         '/detail_touriestAttraction': (context) => DetailTouristAttraction(),
         '/detail_content': (context) => DetailContent(),
         '/detail_comment': (context) => CommentTourist(),
+        '/detail_culture': (context) => DetailCulture(),
+        '/detail_history': (context) => DetailHistory(),
+        '/detail_specialtyDish': (context) => DetailSpecialtyDish(),
       },
       home: DetailTouristAttraction(), 
     );
@@ -61,95 +67,3 @@ void main() {
     ),
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import 'package:appquangbadulich/login/bloc/login_bloc.dart';
-// import 'package:appquangbadulich/login/bloc/login_state.dart';
-// import 'package:appquangbadulich/createAccount/screens/createAccount_form.dart';
-// import 'package:appquangbadulich/repositories/repositories.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-
-// import 'login/screens/login_form.dart';
-
-// class MyApp extends StatelessWidget {
-//   final userRepository = UserRepository();
-//   final logBloc = LoginBloc(userRepository: UserRepository());
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       initialRoute: '/',
-//       routes: {
-//         '/createAccont': (context) => CreateAccountForm(),
-//       },
-//       home: BlocProvider(
-//         create: (context) => logBloc,
-//         child: Scaffold(
-//           appBar: AppBar(
-//             title: const Text('Flutter Bloc Login Example'),
-//           ),
-//           body: BlocBuilder<LoginBloc, LoginState>(
-//             builder: (context, state) {
-//               if (state is LoginInitial) {
-//                 return LoginForm();
-//               } else if (state is LoginLoading) {
-//                 return const CircularProgressIndicator();
-//               } else if (state is LoginSuccess) {
-//                 Future.delayed(Duration.zero, () {
-//                   ScaffoldMessenger.of(context).showSnackBar(
-//                     const SnackBar(
-//                       backgroundColor: Colors.green,
-//                       content: Text('Đăng nhập thành công!'),
-//                     ),
-//                   );
-//                 });
-//                 return Text('Đăng nhập thành công: ${state.customer.name}');
-//               } else if (state is LoginFailure) {
-//                 Future.delayed(Duration.zero, () {
-//                   ScaffoldMessenger.of(context).showSnackBar(
-//                     const SnackBar(
-//                       backgroundColor: Colors.red,
-//                       content: Text('Đăng nhập thất bại!'),
-//                     ),
-//                   );
-//                 });
-//                 return LoginForm();
-//               } else {
-//                 return Container();
-//               }
-//             },
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// void main() {
-//   final userRepository = UserRepository();
-//   final loginBloc = LoginBloc(userRepository: userRepository);
-
-//   runApp(
-//     BlocProvider(
-//       create: (context) => loginBloc,
-//       child: MyApp(),
-//     ),
-//   );
-// }

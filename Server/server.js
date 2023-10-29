@@ -213,6 +213,87 @@ app.get("/regions", async (req, res) => {
   }
 });
 
+// hiển thị tất cả các món đặc sản
+app.get("/getAllSpecialtyDish", async (req, res) => {
+  try {
+    const regions = await Region.find({});
+    const tatCaMonDacSan = [];
+
+    regions.forEach((region) => {
+      region.provinces.forEach((province) => {
+        province.touristAttraction.forEach((attraction) => {
+          tatCaMonDacSan.push(...attraction.specialtyDish);
+        });
+      });
+    });
+
+    res.status(200).json({ success: true, data: tatCaMonDacSan });
+    console.log(data);
+  } catch (error) {
+    console.log(loi);
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, error: "Lỗi khi lấy danh sách món đặc sản" });
+  }
+});
+
+// hiển thị tất cả văn hóa
+app.get("/getAllCulture", async (req, res) => {
+  try {
+    const regions = await Region.find({});
+    const tatCaThongTinVanHoa = [];
+
+    regions.forEach((region) => {
+      region.provinces.forEach((province) => {
+        province.touristAttraction.forEach((attraction) => {
+          attraction.culture.forEach((culture) => {
+            tatCaThongTinVanHoa.push(culture);
+          });
+        });
+      });
+    });
+
+    res.status(200).json({ success: true, data: tatCaThongTinVanHoa });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        error: "Lỗi khi lấy danh sách thông tin văn hóa",
+      });
+  }
+});
+
+// Hiển thị tất cả các tỉnh/thành phố chứa culture với idCulture cụ thể
+app.get("/provincesWithCulture/:idCulture", async (req, res) => {
+  try {
+    const idCultureToFind = req.params.idCulture; // Lấy idCulture từ yêu cầu
+
+    const regions = await Region.find({});
+    const provincesWithCulture = [];
+
+    // Lặp qua các khu vực, tỉnh/thành phố và điểm du lịch để tìm tỉnh/thành phố chứa culture với idCulture tương ứng
+    regions.forEach((region) => {
+      region.provinces.forEach((province) => {
+        province.touristAttraction.forEach((attraction) => {
+          const matchingCulture = attraction.culture.find((culture) => culture._id === idCultureToFind);
+          if (matchingCulture) {
+            provincesWithCulture.push(province);
+          }
+        });
+      });
+    });
+
+    res.status(200).json({ success: true, data: provincesWithCulture });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: "Lỗi khi lấy danh sách tỉnh/thành phố chứa culture" });
+  }
+});
+
+
 // hiển thị danh sách các khách hàng
 app.get("/customers", async (req, res) => {
   try {

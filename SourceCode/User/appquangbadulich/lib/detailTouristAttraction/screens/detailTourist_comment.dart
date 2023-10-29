@@ -75,9 +75,23 @@ class _CommentTouristState extends State<CommentTourist> {
               ],
             ),
           ),
-          Container(
-            width: double.infinity,
-            
+          Expanded(
+            child: Container(
+              color: Colors.amber,
+              width: double.infinity,
+              child: ListView.builder(
+                itemCount: 4,
+                scrollDirection: Axis.vertical,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Text('adsfsdfffffffffffffffffffffffffffffffffff')
+                    ],
+                  );
+                },
+              ),
+            ),
           )
         ],
       ),

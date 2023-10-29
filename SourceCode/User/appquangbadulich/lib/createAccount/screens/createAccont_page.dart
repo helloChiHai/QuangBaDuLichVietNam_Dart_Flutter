@@ -21,7 +21,7 @@ class CreateAccountPage extends StatelessWidget {
                 backgroundColor: Colors.green,
               ),
             );
-            Navigator.of(context).pushNamed('/login_signupsuccesful');
+            Navigator.of(context).pushNamed('/createAccountSuccesful');
           }
           if (state is CreateAccountFailure) {
             print(state.error);
