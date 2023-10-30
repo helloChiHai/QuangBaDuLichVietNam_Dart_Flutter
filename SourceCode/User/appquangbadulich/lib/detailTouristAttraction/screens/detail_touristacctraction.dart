@@ -1,3 +1,4 @@
+import 'package:appquangbadulich/culture/model/cultureModel.dart';
 import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_content.dart';
 import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_culture.dart';
 import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_history.dart';
@@ -13,6 +14,14 @@ class DetailTouristAttraction extends StatefulWidget {
 }
 
 class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
+  late CultureModel culture;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    culture = ModalRoute.of(context)!.settings.arguments as CultureModel;
+  }
+  
   PageController pageController = PageController();
   int currentIndex = 0;
   bool isCheckFavourite = false;
@@ -88,9 +97,9 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Hồ Gươm',
-                              style: TextStyle(
+                             Text(
+                              culture.titleCulture,
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,

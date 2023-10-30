@@ -36,6 +36,7 @@ class _CulturePageState extends State<CulturePage> {
                 return GestureDetector(
                   onTap: () {
                     print(culture.idCulture);
+                    Navigator.of(context).pushNamed('/detail_touriestAttraction', arguments: culture);
                   },
                   child: Container(
                     width: 180,

@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         '/detail_history': (context) => DetailHistory(),
         '/detail_specialtyDish': (context) => DetailSpecialtyDish(),
       },
-      home: LoginIntro(),
+      home: HomePage(),
     );
   }
 }
