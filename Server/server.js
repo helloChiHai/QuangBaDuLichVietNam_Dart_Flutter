@@ -222,15 +222,15 @@ app.get("/getAllSpecialtyDish", async (req, res) => {
     regions.forEach((region) => {
       region.provinces.forEach((province) => {
         province.touristAttraction.forEach((attraction) => {
-          tatCaMonDacSan.push(...attraction.specialtyDish);
+          attraction.specialtyDish.forEach((specialtyDish) => {
+            tatCaMonDacSan.push(specialtyDish);
+          });
         });
       });
     });
 
     res.status(200).json({ success: true, data: tatCaMonDacSan });
-    console.log(data);
   } catch (error) {
-    console.log(loi);
     console.error(error);
     res
       .status(500)
@@ -257,12 +257,10 @@ app.get("/getAllCulture", async (req, res) => {
     res.status(200).json({ success: true, data: tatCaThongTinVanHoa });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Lỗi khi lấy danh sách thông tin văn hóa",
-      });
+    res.status(500).json({
+      success: false,
+      error: "Lỗi khi lấy danh sách thông tin văn hóa",
+    });
   }
 });
 
@@ -278,7 +276,9 @@ app.get("/provincesWithCulture/:idCulture", async (req, res) => {
     regions.forEach((region) => {
       region.provinces.forEach((province) => {
         province.touristAttraction.forEach((attraction) => {
-          const matchingCulture = attraction.culture.find((culture) => culture._id === idCultureToFind);
+          const matchingCulture = attraction.culture.find(
+            (culture) => culture.idCulture === idCultureToFind
+          );
           if (matchingCulture) {
             provincesWithCulture.push(province);
           }
@@ -289,10 +289,14 @@ app.get("/provincesWithCulture/:idCulture", async (req, res) => {
     res.status(200).json({ success: true, data: provincesWithCulture });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, error: "Lỗi khi lấy danh sách tỉnh/thành phố chứa culture" });
+    res
+      .status(500)
+      .json({
+        success: false,
+        error: "Lỗi khi lấy danh sách tỉnh/thành phố chứa culture",
+      });
   }
 });
-
 
 // hiển thị danh sách các khách hàng
 app.get("/customers", async (req, res) => {
@@ -337,7 +341,7 @@ app.post("/login", async (req, res) => {
 // tạo tài khoảng
 app.post("/createAccount", async (req, res) => {
   try {
-    const { email, password, name, address, birthday } = req.body;
+    const { email, password, name, imgCus, address, birthday, role } = req.body;
 
     // kiểm tra email đã tồn tại hay chưa
     const existingUser = await Customer.findOne({ email: email });
@@ -354,8 +358,10 @@ app.post("/createAccount", async (req, res) => {
       email,
       password,
       name,
+      imgCus,
       address,
       birthday,
+      role,
     });
     await customer.save();
     res.status(201).json(customer);

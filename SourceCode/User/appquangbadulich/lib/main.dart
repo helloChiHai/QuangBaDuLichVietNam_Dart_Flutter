@@ -1,3 +1,4 @@
+import 'package:appquangbadulich/culture/bloc/culture_bloc.dart';
 import 'package:appquangbadulich/detailTouristAttraction/screens/detail_touristacctraction.dart';
 import 'package:appquangbadulich/login/bloc/login_bloc.dart';
 import 'package:appquangbadulich/login/screens/login_intro.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'createAccount/bloc/createAccount_bloc.dart';
 import 'createAccount/screens/createAccont_page.dart';
+import 'culture/screens/culture_page.dart';
 import 'detailTouristAttraction/screens/detailTourist_comment.dart';
 import 'detailTouristAttraction/screens/detailTourist_content.dart';
 import 'detailTouristAttraction/screens/detailTourist_culture.dart';
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/createAccount': (context) => CreateAccountPage(),
         '/regions': (context) => RegionPage(),
+        '/cultures': (context) => CulturePage(),
         '/intro_login': (context) => LoginIntro(),
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
         '/home': (context) => HomePage(),
@@ -38,7 +41,7 @@ class MyApp extends StatelessWidget {
         '/detail_history': (context) => DetailHistory(),
         '/detail_specialtyDish': (context) => DetailSpecialtyDish(),
       },
-      home: DetailTouristAttraction(), 
+      home: LoginIntro(),
     );
   }
 }
@@ -59,6 +62,11 @@ void main() {
         ),
         BlocProvider<RegionBloc>(
           create: (context) => RegionBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<CultureBloc>(
+          create: (context) => CultureBloc(
             userRepository: UserRepository(),
           ),
         )

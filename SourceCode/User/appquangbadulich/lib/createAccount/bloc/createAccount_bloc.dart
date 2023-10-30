@@ -11,7 +11,7 @@ class CreateAccountBloc extends Bloc<CreateAccontEvent, CreateAccountState> {
       emit(CreateAccountLoading());
       try {
         final result = await userRepository.createAccount(event.email,
-            event.password, event.name, event.address, event.birthday);
+            event.password, event.name, event.imgCus, event.address, event.birthday, event.role);
         if (result == 1) {
           await Future.delayed(const Duration(seconds: 2));
           emit(CreateAccountSuccess());

@@ -267,11 +267,11 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                       backgroundColor: Colors.red,
                     ),
                   );
-                } else if (birthday.isEmpty) {
+                } else if (birthday == false) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text(
-                        'Vui lòng nhập lại Sinh Nhật!',
+                        'Vui lòng nhập lại Ngày sinh!',
                         style: TextStyle(
                           fontSize: 16,
                         ),
@@ -297,8 +297,10 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                       email: email,
                       password: password,
                       name: name,
+                      imgCus: "",
                       address: address,
                       birthday: birthday,
+                      role: 1,
                     ),
                   );
                 }

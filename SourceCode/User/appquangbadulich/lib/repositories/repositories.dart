@@ -1,13 +1,40 @@
 import 'dart:convert';
+import 'package:appquangbadulich/culture/model/cultureModel.dart';
 import 'package:appquangbadulich/region/model/regionModel.dart';
 import 'package:http/http.dart' as http;
 
 import '../login/model/CustomerModel.dart';
 
 class UserRepository {
-  String urlRegion = 'http://192.168.122.214:3090/regions';
-  String urlLogin = 'http://192.168.122.214:3090/login';
-  String urlCreateAccount = 'http://192.168.122.214:3090/createAccount';
+  String urlRegion = 'http://192.168.35.214:3090/regions';
+  String urlLogin = 'http://192.168.35.214:3090/login';
+  String urlCreateAccount = 'http://192.168.35.214:3090/createAccount';
+  String urlgetAllCulture = 'http://192.168.35.214:3090/getAllCulture';
+
+  // fetch all culture
+  Future<List<CultureModel>> getCultures() async {
+    try {
+      final response = await http.get(
+        Uri.parse(urlgetAllCulture),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+        final cultureList = data['data'] as List<dynamic>;
+        final cultures = cultureList
+            .map((cultureData) => CultureModel.fromJson(cultureData))
+            .toList();
+        return cultures;
+      }
+      else{
+        throw Exception('Failed to fetch culture: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error while fetching regions: $e');
+      throw Exception('Error while fetching regions: $e');
+    }
+  }
 
   // fetch region
   Future<List<RegionModel>> getRegions() async {
@@ -50,8 +77,10 @@ class UserRepository {
           final email = data['data']['email'];
           final password = data['data']['password'];
           final name = data['data']['name'];
+          final imgCus = data['data']['imgCus'];
           final address = data['data']['address'];
           final birthday = data['data']['birthday'];
+          final role = data['data']['role'];
           if (idCus != null &&
               name != null &&
               address != null &&
@@ -61,8 +90,10 @@ class UserRepository {
                 email: email,
                 password: password,
                 name: name,
+                imgCus: imgCus,
                 address: address,
-                birthday: birthday);
+                birthday: birthday,
+                role: role);
           } else {
             print('không có dữ liệu');
             return null;
@@ -82,7 +113,7 @@ class UserRepository {
 
   // tạo tài khoản
   Future<int> createAccount(String email, String password, String name,
-      String address, String birthday) async {
+      String? imgCus, String address, String birthday, int role) async {
     try {
       final response = await http.post(
         Uri.parse(urlCreateAccount),
@@ -91,8 +122,10 @@ class UserRepository {
           "email": email,
           "password": password,
           "name": name,
+          "imgCus": imgCus,
           "address": address,
           "birthday": birthday,
+          "role": role,
         }),
       );
       if (response.statusCode == 201) {

@@ -1,10 +1,10 @@
-import 'package:appquangbadulich/region/model/cultureModel.dart';
+import 'package:appquangbadulich/culture/model/cultureModel.dart';
 import 'package:appquangbadulich/region/model/historyModel.dart';
 import 'package:appquangbadulich/region/model/specialtyDishModel.dart';
 import 'package:appquangbadulich/region/model/commentModel.dart';
 
 class TouristAttractionModel {
-  final HistoryModel history;
+  final List<HistoryModel> history;
   final String idTourist;
   final String nameTourist;
   final String address;
@@ -31,11 +31,15 @@ class TouristAttractionModel {
   });
 
   factory TouristAttractionModel.fromJson(Map<String, dynamic> json) {
-    final historyJson = json['history'];
-    final history = HistoryModel.fromJson(historyJson);
-
     final rightTimeJson = json['rightTime'];
     final List<String> rightTime = rightTimeJson.cast<String>();
+
+    List<HistoryModel> history = [];
+    if (json['history'] != null) {
+      history = (json['history'] as List)
+          .map((historyJson) => HistoryModel.fromJson(historyJson))
+          .toList();
+    }
 
     List<CultureModel> culture = [];
     if (json['culture'] != null) {

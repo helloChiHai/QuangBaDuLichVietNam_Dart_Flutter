@@ -16,11 +16,15 @@ const regionSchema = new mongoose.Schema({
           imgTourist: String,
           touristIntroduction: String,
           rightTime: [String],
-          history: {
-            historyStory: String,
-            imgHistory: String,
-            videoHistory: String,
-          },
+          history: [
+            {
+              idHistoryStory: String,
+              titleStoryStory: String,
+              contentStoryStory: String,
+              imgHistory: String,
+              videoHistory: String,
+            }
+          ],
           culture: [
             {
               idCulture: String,

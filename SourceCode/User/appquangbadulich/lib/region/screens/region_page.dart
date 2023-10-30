@@ -37,7 +37,7 @@ class RegionPage extends StatelessWidget {
                             return ExpansionTile(
                               title: Text(touristAttraction.nameTourist),
                               children: [
-                                Text("History: ${touristAttraction.history.historyStory}"),
+                                // Text("History: ${touristAttraction.history.historyStory}"),
                                 Text("Right Time: ${touristAttraction.rightTime.join(', ')}"),
                                 ExpansionTile(
                                   title: Text("Culture"),
