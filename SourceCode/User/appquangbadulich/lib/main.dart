@@ -1,4 +1,5 @@
 import 'package:appquangbadulich/culture/bloc/culture_bloc.dart';
+import 'package:appquangbadulich/detailTouristAttraction/bloc/detailTouristAttraction_bloc.dart';
 import 'package:appquangbadulich/detailTouristAttraction/screens/detail_touristacctraction.dart';
 import 'package:appquangbadulich/login/bloc/login_bloc.dart';
 import 'package:appquangbadulich/login/screens/login_intro.dart';
@@ -35,9 +36,9 @@ class MyApp extends StatelessWidget {
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
         '/home': (context) => HomePage(),
         '/detail_touriestAttraction': (context) => DetailTouristAttraction(),
-        '/detail_content': (context) => DetailContent(),
+        '/detail_content': (context) => DetailContent(dataIntroTourist: ''),
         '/detail_comment': (context) => CommentTourist(),
-        '/detail_culture': (context) => DetailCulture(),
+        '/detail_culture': (context) => DetailCulture(dataCulture: [],),
         '/detail_history': (context) => DetailHistory(),
         '/detail_specialtyDish': (context) => DetailSpecialtyDish(),
       },
@@ -67,6 +68,11 @@ void main() {
         ),
         BlocProvider<CultureBloc>(
           create: (context) => CultureBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<DetailTouristAttractionBloc>(
+          create: (context) => DetailTouristAttractionBloc(
             userRepository: UserRepository(),
           ),
         )

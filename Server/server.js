@@ -264,39 +264,45 @@ app.get("/getAllCulture", async (req, res) => {
   }
 });
 
-// Hiển thị tất cả các tỉnh/thành phố chứa culture với idCulture cụ thể
-app.get("/provincesWithCulture/:idCulture", async (req, res) => {
+// hiển thị địa điểm du lịch theo idCulture
+app.get("/getTouristAttractionByIdCulture/:idCulture", async (req, res) => {
   try {
-    const idCultureToFind = req.params.idCulture; // Lấy idCulture từ yêu cầu
+    const idCulture = req.params.idCulture;
+    let matchingTouristAttraction = null;
 
-    const regions = await Region.find({});
-    const provincesWithCulture = [];
+    const regions = await Region.find({}); // Lấy tất cả dữ liệu vùng
 
-    // Lặp qua các khu vực, tỉnh/thành phố và điểm du lịch để tìm tỉnh/thành phố chứa culture với idCulture tương ứng
-    regions.forEach((region) => {
-      region.provinces.forEach((province) => {
-        province.touristAttraction.forEach((attraction) => {
-          const matchingCulture = attraction.culture.find(
-            (culture) => culture.idCulture === idCultureToFind
-          );
-          if (matchingCulture) {
-            provincesWithCulture.push(province);
-          }
+    regions.some((region) => {
+      return region.provinces.some((province) => {
+        return province.touristAttraction.some((attraction) => {
+          return attraction.culture.some((culture) => {
+            if (culture.idCulture === idCulture) {
+              matchingTouristAttraction = attraction;
+              return true; 
+            }
+            return false;
+          });
         });
       });
     });
 
-    res.status(200).json({ success: true, data: provincesWithCulture });
+    if (!matchingTouristAttraction) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy điểm du lịch nào dựa trên idCulture đã cung cấp",
+      });
+    }
+
+    res.status(200).json({ success: true, data: matchingTouristAttraction });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Lỗi khi lấy danh sách tỉnh/thành phố chứa culture",
-      });
+    res.status(500).json({
+      success: false,
+      error: "Lỗi khi lấy thông tin điểm du lịch dựa trên idCulture",
+    });
   }
 });
+
 
 // hiển thị danh sách các khách hàng
 app.get("/customers", async (req, res) => {

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:appquangbadulich/culture/model/cultureModel.dart';
 import 'package:appquangbadulich/region/model/regionModel.dart';
+import 'package:appquangbadulich/detailTouristAttraction/model/touristAttractionModel.dart';
 import 'package:http/http.dart' as http;
 
 import '../login/model/CustomerModel.dart';
@@ -10,6 +11,29 @@ class UserRepository {
   String urlLogin = 'http://192.168.35.214:3090/login';
   String urlCreateAccount = 'http://192.168.35.214:3090/createAccount';
   String urlgetAllCulture = 'http://192.168.35.214:3090/getAllCulture';
+  String urlgetProvincesWithCulture = '';
+
+  // fetch Province by idCulture
+  Future<TouristAttractionModel?> getTouristWithCulture(String idCulture) async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://192.168.35.214:3090/getTouristAttractionByIdCulture/$idCulture'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+        final touristAcctractionModel = TouristAttractionModel.fromJson(data['data']);
+        return touristAcctractionModel;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy tỉnh/ thành phố chw culture ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(
+          'Lỗi khi lấy tỉnh/ thành phố chứa Culture theo idCulture: $e');
+    }
+  }
 
   // fetch all culture
   Future<List<CultureModel>> getCultures() async {
@@ -26,8 +50,7 @@ class UserRepository {
             .map((cultureData) => CultureModel.fromJson(cultureData))
             .toList();
         return cultures;
-      }
-      else{
+      } else {
         throw Exception('Failed to fetch culture: ${response.reasonPhrase}');
       }
     } catch (e) {

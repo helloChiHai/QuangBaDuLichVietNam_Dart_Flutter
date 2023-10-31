@@ -1,4 +1,4 @@
-import 'package:appquangbadulich/region/model/touristAttractionModel.dart';
+import 'package:appquangbadulich/detailTouristAttraction/model/touristAttractionModel.dart';
 
 class ProvincesModel {
   final String idProvines;
