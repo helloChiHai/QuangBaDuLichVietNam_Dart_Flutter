@@ -7,17 +7,17 @@ import 'package:http/http.dart' as http;
 import '../login/model/CustomerModel.dart';
 
 class UserRepository {
-  String urlRegion = 'http://192.168.35.214:3090/regions';
-  String urlLogin = 'http://192.168.35.214:3090/login';
-  String urlCreateAccount = 'http://192.168.35.214:3090/createAccount';
-  String urlgetAllCulture = 'http://192.168.35.214:3090/getAllCulture';
+  String urlRegion = 'http://172.16.134.71:3090/regions';
+  String urlLogin = 'http://172.16.134.71:3090/login';
+  String urlCreateAccount = 'http://172.16.134.71:3090/createAccount';
+  String urlgetAllCulture = 'http://172.16.134.71:3090/getAllCulture';
   String urlgetProvincesWithCulture = '';
 
   // fetch Province by idCulture
   Future<TouristAttractionModel?> getTouristWithCulture(String idCulture) async {
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.35.214:3090/getTouristAttractionByIdCulture/$idCulture'),
+        Uri.parse('http://172.16.134.71:3090/getTouristAttractionByIdCulture/$idCulture'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {

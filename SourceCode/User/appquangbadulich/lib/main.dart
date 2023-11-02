@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
         '/detail_content': (context) => DetailContent(dataIntroTourist: ''),
         '/detail_comment': (context) => CommentTourist(),
         '/detail_culture': (context) => DetailCulture(dataCulture: [],),
-        '/detail_history': (context) => DetailHistory(),
-        '/detail_specialtyDish': (context) => DetailSpecialtyDish(),
+        '/detail_history': (context) => DetailHistory(dataHistory: []),
+        '/detail_specialtyDish': (context) => DetailSpecialtyDish(dataSpecialtyDish: []),
       },
       home: HomePage(),
     );

@@ -320,8 +320,8 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
                                 children: [
                                   DetailContent(dataIntroTourist: tourist.touristIntroduction,),
                                   DetailCulture(dataCulture: tourist.culture),
-                                  DetailHistory(),
-                                  DetailSpecialtyDish(),
+                                  DetailHistory(dataHistory: tourist.history),
+                                  DetailSpecialtyDish(dataSpecialtyDish: tourist.specialtyDish),
                                 ],
                               ),
                             ),

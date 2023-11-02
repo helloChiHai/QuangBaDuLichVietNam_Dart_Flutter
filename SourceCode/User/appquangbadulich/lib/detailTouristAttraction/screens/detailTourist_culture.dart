@@ -52,6 +52,7 @@ class _DetailCultureState extends State<DetailCulture> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: ListView.builder(
         scrollDirection: Axis.vertical,
