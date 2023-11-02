@@ -213,6 +213,31 @@ app.get("/regions", async (req, res) => {
   }
 });
 
+// hiển thị các địa điểm du lịch
+app.get("/getAllTouristAttraction", async (req, res) => {
+  try {
+    const regions = await Region.find({});
+    const tatCaDiaDiemDuLich = [];
+
+    regions.forEach((region) => {
+      region.provinces.forEach((province) => {
+        province.touristAttraction.forEach((touristAttraction) => {
+          tatCaDiaDiemDuLich.push(touristAttraction);
+        });
+      });
+    });
+    res.status(200).json({ success: true, data: tatCaDiaDiemDuLich });
+  } catch (error) {
+    console.log(e);
+    res
+      .status(500)
+      .json({
+        success: false,
+        error: "Lỗi khi lấy danh sách các địa điểm du lịch",
+      });
+  }
+});
+
 // hiển thị tất cả các món đặc sản
 app.get("/getAllSpecialtyDish", async (req, res) => {
   try {
@@ -278,7 +303,7 @@ app.get("/getTouristAttractionByIdCulture/:idCulture", async (req, res) => {
           return attraction.culture.some((culture) => {
             if (culture.idCulture === idCulture) {
               matchingTouristAttraction = attraction;
-              return true; 
+              return true;
             }
             return false;
           });
@@ -289,7 +314,8 @@ app.get("/getTouristAttractionByIdCulture/:idCulture", async (req, res) => {
     if (!matchingTouristAttraction) {
       return res.status(404).json({
         success: false,
-        message: "Không tìm thấy điểm du lịch nào dựa trên idCulture đã cung cấp",
+        message:
+          "Không tìm thấy điểm du lịch nào dựa trên idCulture đã cung cấp",
       });
     }
 
@@ -302,7 +328,6 @@ app.get("/getTouristAttractionByIdCulture/:idCulture", async (req, res) => {
     });
   }
 });
-
 
 // hiển thị danh sách các khách hàng
 app.get("/customers", async (req, res) => {
