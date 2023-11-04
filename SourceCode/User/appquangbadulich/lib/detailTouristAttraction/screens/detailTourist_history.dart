@@ -1,6 +1,7 @@
-import 'package:appquangbadulich/region/model/historyModel.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../model/historyModel.dart';
 
 class DetailHistory extends StatefulWidget {
   final List<HistoryModel> dataHistory;

@@ -1,5 +1,6 @@
-import 'package:appquangbadulich/login/model/CustomerModel.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../model/CustomerModel.dart';
 
 abstract class LoginState extends Equatable {
   @override

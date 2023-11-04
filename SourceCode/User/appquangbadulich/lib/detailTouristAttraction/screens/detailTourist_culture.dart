@@ -1,4 +1,4 @@
-import 'package:appquangbadulich/culture/model/cultureModel.dart';
+import 'package:appquangbadulich/model/cultureModel.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 

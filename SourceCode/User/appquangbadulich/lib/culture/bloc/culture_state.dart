@@ -1,4 +1,4 @@
-import 'package:appquangbadulich/culture/model/cultureModel.dart';
+import 'package:appquangbadulich/model/cultureModel.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CultureState extends Equatable {

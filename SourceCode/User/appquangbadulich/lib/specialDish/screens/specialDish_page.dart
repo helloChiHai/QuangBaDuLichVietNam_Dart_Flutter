@@ -1,44 +1,43 @@
+import 'package:appquangbadulich/specialDish/bloc/specialDish_bloc.dart';
+import 'package:appquangbadulich/specialDish/bloc/specialDish_event.dart';
+import 'package:appquangbadulich/specialDish/bloc/specialDish_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:appquangbadulich/culture/bloc/culture_bloc.dart';
-import 'package:appquangbadulich/culture/bloc/culture_event.dart';
-import 'package:appquangbadulich/culture/bloc/culture_state.dart';
 
-class CulturePage extends StatefulWidget {
-  const CulturePage({super.key});
+class SpecialDishPage extends StatefulWidget {
+  const SpecialDishPage({super.key});
 
   @override
-  State<CulturePage> createState() => _CulturePageState();
+  State<SpecialDishPage> createState() => _SpecialDishPageState();
 }
 
-class _CulturePageState extends State<CulturePage> {
+class _SpecialDishPageState extends State<SpecialDishPage> {
   @override
   void initState() {
     super.initState();
-    context.read<CultureBloc>().add(FetchCultures());
+    context.read<SpecialDishBloc>().add(FetchSpecialDish());
   }
 
-  @override
+
+    @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 180,
-      child: BlocBuilder<CultureBloc, CultureState>(
+      child: BlocBuilder<SpecialDishBloc, SpecialDishState>(
         builder: (context, state) {
-          if (state is CultureLoading) {
+          if (state is SpecialDishLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is CultureLoaded) {
-            final cultures = state.cultures;
+          } else if (state is SpecialDishLoaded) {
+            final specialDishs = state.specialDishs;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: cultures.length,
+              itemCount: specialDishs.length,
               itemBuilder: (context, index) {
-                final culture = cultures[index];
+                final specialDish = specialDishs[index];
                 return GestureDetector(
                   onTap: () {
-                    print(culture.idCulture);
-                    Navigator.of(context).pushNamed(
-                        '/detail_touriestAttraction',
-                        arguments: {'cultureData': culture, 'pageViewInit': 2});
+                    print(specialDish.idDish);
+                    // Navigator.of(context).pushNamed('/detail_touriestAttraction', arguments: culture);
                   },
                   child: Container(
                     width: 180,
@@ -47,9 +46,9 @@ class _CulturePageState extends State<CulturePage> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: culture.imgCulture != null
+                          child: specialDish.imgDish != null
                               ? Image.asset(
-                                  'assets/img/${culture.imgCulture!}',
+                                  'assets/img/${specialDish.imgDish!}',
                                   width: double.infinity,
                                   height: double.infinity,
                                   fit: BoxFit.cover,
@@ -65,7 +64,7 @@ class _CulturePageState extends State<CulturePage> {
                           bottom: 10,
                           left: 10,
                           child: Text(
-                            culture.titleCulture,
+                            specialDish.nameDish,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,

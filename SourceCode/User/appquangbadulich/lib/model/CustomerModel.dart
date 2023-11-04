@@ -1,4 +1,5 @@
-import 'package:appquangbadulich/login/model/ListSaveTouristModel.dart';
+
+import 'package:appquangbadulich/model/ListSaveTouristModel.dart';
 
 class CustomerModel {
   final String idCus;

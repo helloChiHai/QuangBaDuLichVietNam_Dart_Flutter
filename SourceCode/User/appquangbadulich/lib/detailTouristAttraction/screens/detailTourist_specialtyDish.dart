@@ -1,5 +1,6 @@
-import 'package:appquangbadulich/region/model/specialtyDishModel.dart';
 import 'package:flutter/material.dart';
+
+import '../../model/specialtyDishModel.dart';
 
 class DetailSpecialtyDish extends StatefulWidget {
   final List<SpecialtyDishModel> dataSpecialtyDish;

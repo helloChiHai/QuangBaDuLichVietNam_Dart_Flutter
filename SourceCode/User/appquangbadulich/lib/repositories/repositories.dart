@@ -1,29 +1,35 @@
 import 'dart:convert';
-import 'package:appquangbadulich/culture/model/cultureModel.dart';
-import 'package:appquangbadulich/region/model/regionModel.dart';
-import 'package:appquangbadulich/detailTouristAttraction/model/touristAttractionModel.dart';
+import 'package:appquangbadulich/model/cultureModel.dart';
+import 'package:appquangbadulich/model/specialtyDishModel.dart';
+import 'package:appquangbadulich/model/touristAttractionModel.dart';
 import 'package:http/http.dart' as http;
 
-import '../login/model/CustomerModel.dart';
+import '../model/CustomerModel.dart';
+import '../model/regionModel.dart';
 
 class UserRepository {
-  String urlRegion = 'http://172.16.134.71:3090/regions';
-  String urlLogin = 'http://172.16.134.71:3090/login';
-  String urlCreateAccount = 'http://172.16.134.71:3090/createAccount';
-  String urlgetAllCulture = 'http://172.16.134.71:3090/getAllCulture';
+  String urlRegion = 'http://192.168.226.214:3090/regions';
+  String urlLogin = 'http://192.168.226.214:3090/login';
+  String urlCreateAccount = 'http://192.168.226.214:3090/createAccount';
+  String urlgetAllCulture = 'http://192.168.226.214:3090/getAllCulture';
+  String urlgetAllSpecialDish =
+      'http://192.168.226.214:3090/getAllSpecialtyDish';
   String urlgetProvincesWithCulture = '';
 
   // fetch Province by idCulture
-  Future<TouristAttractionModel?> getTouristWithCulture(String idCulture) async {
+  Future<TouristAttractionModel?> getTouristWithCulture(
+      String idCulture) async {
     try {
       final response = await http.get(
-        Uri.parse('http://172.16.134.71:3090/getTouristAttractionByIdCulture/$idCulture'),
+        Uri.parse(
+            'http://192.168.226.214:3090/getTouristAttractionByIdCulture/$idCulture'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         print(data);
-        final touristAcctractionModel = TouristAttractionModel.fromJson(data['data']);
+        final touristAcctractionModel =
+            TouristAttractionModel.fromJson(data['data']);
         return touristAcctractionModel;
       } else {
         throw Exception(
@@ -56,6 +62,32 @@ class UserRepository {
     } catch (e) {
       print('Error while fetching regions: $e');
       throw Exception('Error while fetching regions: $e');
+    }
+  }
+
+  // fetch all special dish
+  Future<List<SpecialtyDishModel>> getSpecialDish() async {
+    try {
+      final response = await http.get(
+        Uri.parse(urlgetAllSpecialDish),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+        final specialDishList = data['data'] as List<dynamic>;
+        final specialDishs = specialDishList
+            .map((specialDishData) =>
+                SpecialtyDishModel.fromJson(specialDishData))
+            .toList();
+        return specialDishs;
+      } else {
+        throw Exception(
+            'Failed to fetch special dish: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error while fetching specialdish: $e');
+      throw Exception('Error while fetching specialdish: $e');
     }
   }
 

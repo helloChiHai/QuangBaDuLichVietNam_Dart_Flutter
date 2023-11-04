@@ -1,4 +1,4 @@
-import 'package:appquangbadulich/detailTouristAttraction/model/touristAttractionModel.dart';
+import 'package:appquangbadulich/model/touristAttractionModel.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class DetailTouristAttractionState extends Equatable {

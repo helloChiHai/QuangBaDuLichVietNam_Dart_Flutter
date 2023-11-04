@@ -1,5 +1,6 @@
-import 'package:appquangbadulich/region/model/regionModel.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../model/regionModel.dart';
 
 abstract class RegionState extends Equatable {
   @override

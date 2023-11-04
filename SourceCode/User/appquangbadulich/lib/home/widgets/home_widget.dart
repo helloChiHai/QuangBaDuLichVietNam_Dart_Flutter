@@ -1,3 +1,4 @@
+import 'package:appquangbadulich/specialDish/screens/specialDish_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../culture/screens/culture_page.dart';
@@ -196,7 +197,7 @@ class HomeWidget extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 30),
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
@@ -262,7 +263,7 @@ class HomeWidget extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 30),
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
@@ -284,7 +285,29 @@ class HomeWidget extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 30),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+              ),
+              width: double.infinity,
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Đặc sản Việt Nam: Món ngon đầy hương vị',
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  SpecialDishPage(),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
           ],
         ),
       ),

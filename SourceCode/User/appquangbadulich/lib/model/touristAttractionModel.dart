@@ -1,7 +1,7 @@
-import 'package:appquangbadulich/culture/model/cultureModel.dart';
-import 'package:appquangbadulich/region/model/historyModel.dart';
-import 'package:appquangbadulich/region/model/specialtyDishModel.dart';
-import 'package:appquangbadulich/region/model/commentModel.dart';
+import 'package:appquangbadulich/model/cultureModel.dart';
+import 'package:appquangbadulich/model/commentModel.dart';
+import 'package:appquangbadulich/model/historyModel.dart';
+import 'package:appquangbadulich/model/specialtyDishModel.dart';
 
 class TouristAttractionModel {
   final List<HistoryModel> history;

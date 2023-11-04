@@ -1,4 +1,5 @@
-import 'package:appquangbadulich/region/model/provincesModel.dart';
+
+import 'package:appquangbadulich/model/provincesModel.dart';
 
 class RegionModel {
   final String idRegion;

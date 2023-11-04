@@ -7,6 +7,8 @@ import 'package:appquangbadulich/createAccount/screens/login_signUpSuccesful.dar
 import 'package:appquangbadulich/region/bloc/region_bloc.dart';
 import 'package:appquangbadulich/region/screens/region_page.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
+import 'package:appquangbadulich/specialDish/bloc/specialDish_bloc.dart';
+import 'package:appquangbadulich/specialDish/screens/specialDish_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,15 +34,19 @@ class MyApp extends StatelessWidget {
         '/createAccount': (context) => CreateAccountPage(),
         '/regions': (context) => RegionPage(),
         '/cultures': (context) => CulturePage(),
+        '/specialDishs': (context) => SpecialDishPage(),
         '/intro_login': (context) => LoginIntro(),
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
         '/home': (context) => HomePage(),
         '/detail_touriestAttraction': (context) => DetailTouristAttraction(),
         '/detail_content': (context) => DetailContent(dataIntroTourist: ''),
         '/detail_comment': (context) => CommentTourist(),
-        '/detail_culture': (context) => DetailCulture(dataCulture: [],),
+        '/detail_culture': (context) => DetailCulture(
+              dataCulture: [],
+            ),
         '/detail_history': (context) => DetailHistory(dataHistory: []),
-        '/detail_specialtyDish': (context) => DetailSpecialtyDish(dataSpecialtyDish: []),
+        '/detail_specialtyDish': (context) =>
+            DetailSpecialtyDish(dataSpecialtyDish: []),
       },
       home: HomePage(),
     );
@@ -68,6 +74,11 @@ void main() {
         ),
         BlocProvider<CultureBloc>(
           create: (context) => CultureBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<SpecialDishBloc>(
+          create: (context) => SpecialDishBloc(
             userRepository: UserRepository(),
           ),
         ),

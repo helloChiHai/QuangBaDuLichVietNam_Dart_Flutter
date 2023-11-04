@@ -1,4 +1,3 @@
-import 'package:appquangbadulich/culture/model/cultureModel.dart';
 import 'package:appquangbadulich/detailTouristAttraction/bloc/detailTouristAttraction_bloc.dart';
 import 'package:appquangbadulich/detailTouristAttraction/bloc/detailTouristAttraction_state.dart';
 import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_content.dart';
@@ -8,6 +7,7 @@ import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_s
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../model/cultureModel.dart';
 import '../bloc/detailTouristAttraction_event.dart';
 
 class DetailTouristAttraction extends StatefulWidget {
@@ -20,12 +20,19 @@ class DetailTouristAttraction extends StatefulWidget {
 
 class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
   late CultureModel culture;
+  late int pageViewInit = 0;
+  PageController pageController = PageController();
+  bool isCheckFavourite = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      culture = ModalRoute.of(context)!.settings.arguments as CultureModel;
+      final Map<String, dynamic> arguments =
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+      culture = arguments['cultureData'];
+      pageViewInit = arguments['pageViewInit'];
+      print(pageViewInit);
       context
           .read<DetailTouristAttractionBloc>()
           .add(getTouristWithCulture(idCulture: culture.idCulture));
@@ -35,12 +42,13 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    culture = ModalRoute.of(context)!.settings.arguments as CultureModel;
   }
 
-  PageController pageController = PageController();
-  int currentIndex = 0;
-  bool isCheckFavourite = false;
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -184,17 +192,18 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
                                   const SizedBox(height: 5),
                                   SizedBox(
                                     width: double.infinity,
-                                    child:  Row(
+                                    child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                      const  Icon(Icons.calendar_month_outlined,
+                                        const Icon(
+                                            Icons.calendar_month_outlined,
                                             size: 25),
                                         Expanded(
                                           flex: 8,
                                           child: Text(
                                             'Thời điểm thích hợp: ${tourist.rightTime.join(', ')}',
-                                            style:const TextStyle(
+                                            style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 20,
                                             ),
@@ -226,11 +235,11 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
                                     child: Text(
                                       'Giới thiệu',
                                       style: TextStyle(
-                                        color: currentIndex == 0
+                                        color: pageViewInit == 0
                                             ? Colors.black
                                             : const Color.fromARGB(
                                                 255, 77, 76, 76),
-                                        fontSize: currentIndex == 0 ? 25 : 20,
+                                        fontSize: pageViewInit == 0 ? 25 : 20,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       maxLines: 2,
@@ -249,11 +258,11 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
                                     child: Text(
                                       'Văn hóa',
                                       style: TextStyle(
-                                        color: currentIndex == 1
+                                        color: pageViewInit == 1
                                             ? Colors.black
                                             : const Color.fromARGB(
                                                 255, 77, 76, 76),
-                                        fontSize: currentIndex == 1 ? 25 : 20,
+                                        fontSize: pageViewInit == 1 ? 25 : 20,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       maxLines: 2,
@@ -272,11 +281,11 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
                                     child: Text(
                                       'Lịch sử',
                                       style: TextStyle(
-                                        color: currentIndex == 2
+                                        color: pageViewInit == 2
                                             ? Colors.black
                                             : const Color.fromARGB(
                                                 255, 77, 76, 76),
-                                        fontSize: currentIndex == 2 ? 25 : 20,
+                                        fontSize: pageViewInit == 2 ? 25 : 20,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       maxLines: 2,
@@ -295,11 +304,11 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
                                     child: Text(
                                       'Đặc sản',
                                       style: TextStyle(
-                                        color: currentIndex == 3
+                                        color: pageViewInit == 3
                                             ? Colors.black
                                             : const Color.fromARGB(
                                                 255, 77, 76, 76),
-                                        fontSize: currentIndex == 3 ? 25 : 20,
+                                        fontSize: pageViewInit == 3 ? 25 : 20,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       maxLines: 2,
@@ -314,14 +323,18 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
                                 controller: pageController,
                                 onPageChanged: (index) {
                                   setState(() {
-                                    currentIndex = index;
+                                    pageViewInit = index;
                                   });
                                 },
                                 children: [
-                                  DetailContent(dataIntroTourist: tourist.touristIntroduction,),
+                                  DetailContent(
+                                    dataIntroTourist:
+                                        tourist.touristIntroduction,
+                                  ),
                                   DetailCulture(dataCulture: tourist.culture),
                                   DetailHistory(dataHistory: tourist.history),
-                                  DetailSpecialtyDish(dataSpecialtyDish: tourist.specialtyDish),
+                                  DetailSpecialtyDish(
+                                      dataSpecialtyDish: tourist.specialtyDish),
                                 ],
                               ),
                             ),
