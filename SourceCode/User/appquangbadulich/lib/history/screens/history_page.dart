@@ -1,46 +1,44 @@
-import 'package:appquangbadulich/specialDish/bloc/specialDish_bloc.dart';
-import 'package:appquangbadulich/specialDish/bloc/specialDish_event.dart';
-import 'package:appquangbadulich/specialDish/bloc/specialDish_state.dart';
+import 'package:appquangbadulich/history/bloc/history_bloc.dart';
+import 'package:appquangbadulich/history/bloc/history_event.dart';
+import 'package:appquangbadulich/history/bloc/history_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SpecialDishPage extends StatefulWidget {
-  const SpecialDishPage({super.key});
+class HistoryPage extends StatefulWidget {
+  const HistoryPage({super.key});
 
   @override
-  State<SpecialDishPage> createState() => _SpecialDishPageState();
+  State<HistoryPage> createState() => HistoryPageState();
 }
 
-class _SpecialDishPageState extends State<SpecialDishPage> {
+class HistoryPageState extends State<HistoryPage> {
   @override
   void initState() {
     super.initState();
-    context.read<SpecialDishBloc>().add(FetchSpecialDish());
+    context.read<HistoryBloc>().add(FetchHistory());
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 180,
-      child: BlocBuilder<SpecialDishBloc, SpecialDishState>(
+      child: BlocBuilder<HistoryBloc, HistoryState>(
         builder: (context, state) {
-          if (state is SpecialDishLoading) {
+          if (state is HistoryLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is SpecialDishLoaded) {
-            final specialDishs = state.specialDishs;
+          } else if (state is HistoryLoaded) {
+            final historyList = state.history;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: specialDishs.length,
+              itemCount: historyList.length,
               itemBuilder: (context, index) {
-                final specialDish = specialDishs[index];
+                final history = historyList[index];
                 return GestureDetector(
                   onTap: () {
-                    print(specialDish.idDish);
+                    print(history.idHistoryStory);
                     Navigator.of(context).pushNamed(
-                        '/detail_touriestAttraction_specialDish',
-                        arguments: {
-                          'specialDishData': specialDish,
-                        });
+                        '/detail_touriestAttraction_history',
+                        arguments: {'HistoryData': history});
                   },
                   child: Container(
                     width: 180,
@@ -49,9 +47,10 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: specialDish.imgDish != null
+                          child: history.avatarHistory != null &&
+                                  history.avatarHistory!.isNotEmpty
                               ? Image.asset(
-                                  'assets/img/${specialDish.imgDish!}',
+                                  'assets/img/${history.avatarHistory}',
                                   width: double.infinity,
                                   height: double.infinity,
                                   fit: BoxFit.cover,
@@ -67,7 +66,7 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
                           bottom: 10,
                           left: 10,
                           child: Text(
-                            specialDish.nameDish,
+                            history.titleStoryStory,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,

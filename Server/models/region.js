@@ -21,6 +21,7 @@ const regionSchema = new mongoose.Schema({
               idHistoryStory: String,
               titleStoryStory: String,
               contentStoryStory: String,
+              avatarHistory: String,
               imgHistory: String,
               videoHistory: String,
             }

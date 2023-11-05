@@ -1,3 +1,4 @@
+import 'package:appquangbadulich/history/screens/history_page.dart';
 import 'package:appquangbadulich/specialDish/screens/specialDish_page.dart';
 import 'package:flutter/material.dart';
 
@@ -304,6 +305,28 @@ class HomeWidget extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   SpecialDishPage(),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+              ),
+              width: double.infinity,
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Cùng nhìn lại lịch sử hào hùng của dân tộc Việt Nam',
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  HistoryPage(),
                 ],
               ),
             ),

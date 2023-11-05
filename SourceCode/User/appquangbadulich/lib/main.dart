@@ -1,6 +1,12 @@
 import 'package:appquangbadulich/culture/bloc/culture_bloc.dart';
-import 'package:appquangbadulich/detailTouristAttraction/bloc/detailTouristAttraction_bloc.dart';
-import 'package:appquangbadulich/detailTouristAttraction/screens/detail_touristacctraction.dart';
+import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_culture/detailTourist_culture_bloc.dart';
+import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_history/detailTourist_history_bloc.dart';
+import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_specialDish/detailTourist_specialDish_bloc.dart';
+import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_culture/detail_touristacctraction_culture.dart';
+import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_history/detail_touristacctraction_history.dart';
+import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_specialDish/detail_touristacctraction_specialDish.dart';
+import 'package:appquangbadulich/history/bloc/history_bloc.dart';
+import 'package:appquangbadulich/history/screens/history_page.dart';
 import 'package:appquangbadulich/login/bloc/login_bloc.dart';
 import 'package:appquangbadulich/login/screens/login_intro.dart';
 import 'package:appquangbadulich/createAccount/screens/login_signUpSuccesful.dart';
@@ -34,11 +40,14 @@ class MyApp extends StatelessWidget {
         '/createAccount': (context) => CreateAccountPage(),
         '/regions': (context) => RegionPage(),
         '/cultures': (context) => CulturePage(),
+        '/history': (context) => HistoryPage(),
         '/specialDishs': (context) => SpecialDishPage(),
         '/intro_login': (context) => LoginIntro(),
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
         '/home': (context) => HomePage(),
-        '/detail_touriestAttraction': (context) => DetailTouristAttraction(),
+        '/detail_touriestAttraction_culture': (context) => DetailTouristAttraction_Culture(),
+        '/detail_touriestAttraction_specialDish': (context) => DetailTouristAttraction_SpecialDish(),
+        '/detail_touriestAttraction_history': (context) => DetailTouristAttraction_History(),
         '/detail_content': (context) => DetailContent(dataIntroTourist: ''),
         '/detail_comment': (context) => CommentTourist(),
         '/detail_culture': (context) => DetailCulture(
@@ -77,13 +86,28 @@ void main() {
             userRepository: UserRepository(),
           ),
         ),
+        BlocProvider<HistoryBloc>(
+          create: (context) => HistoryBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
         BlocProvider<SpecialDishBloc>(
           create: (context) => SpecialDishBloc(
             userRepository: UserRepository(),
           ),
         ),
-        BlocProvider<DetailTouristAttractionBloc>(
-          create: (context) => DetailTouristAttractionBloc(
+        BlocProvider<DetailTourist_CultureBloc>(
+          create: (context) => DetailTourist_CultureBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<DetailTourist_SpecialDishBloc>(
+          create: (context) => DetailTourist_SpecialDishBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<DetailTourist_HistoryBloc>(
+          create: (context) => DetailTourist_HistoryBloc(
             userRepository: UserRepository(),
           ),
         )

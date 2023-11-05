@@ -37,8 +37,8 @@ class _CulturePageState extends State<CulturePage> {
                   onTap: () {
                     print(culture.idCulture);
                     Navigator.of(context).pushNamed(
-                        '/detail_touriestAttraction',
-                        arguments: {'cultureData': culture, 'pageViewInit': 2});
+                        '/detail_touriestAttraction_culture',
+                        arguments: {'cultureData': culture});
                   },
                   child: Container(
                     width: 180,

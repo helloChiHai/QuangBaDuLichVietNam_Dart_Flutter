@@ -289,7 +289,33 @@ app.get("/getAllCulture", async (req, res) => {
   }
 });
 
-// hiển thị địa điểm du lịch theo idCulture
+// HIỂN THỊ TẤT CẢ LỊCH SỬ
+app.get("/getAllHistory", async (req, res) => {
+  try {
+    const regions = await Region.find({});
+    const tatCaThongTinLichSu = [];
+
+    regions.forEach((region) => {
+      region.provinces.forEach((province) => {
+        province.touristAttraction.forEach((attraction) => {
+          attraction.history.forEach((_history) => {
+            tatCaThongTinLichSu.push(_history);
+          });
+        });
+      });
+    });
+
+    res.status(200).json({ success: true, data: tatCaThongTinLichSu });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      error: "Lỗi khi lấy danh sách thông tin lịch sử",
+    });
+  }
+});
+
+// hiển thị địa điểm du lịch theo idCulture (VĂN HÓA)
 app.get("/getTouristAttractionByIdCulture/:idCulture", async (req, res) => {
   try {
     const idCulture = req.params.idCulture;
@@ -328,6 +354,87 @@ app.get("/getTouristAttractionByIdCulture/:idCulture", async (req, res) => {
     });
   }
 });
+
+// hiển thị địa điểm du lịch theo idDish (MÓN ĂN)
+app.get("/getTouristAttractionByIdDish/:idDish", async (req, res) => {
+  try {
+    const idDish = req.params.idDish;
+    let matchingTouristAttraction = null;
+
+    const regions = await Region.find({}); 
+
+    regions.some((region) => {
+      return region.provinces.some((province) => {
+        return province.touristAttraction.some((attraction) => {
+          return attraction.specialtyDish.some((specialtyDish) => {
+            if (specialtyDish.idDish === idDish) {
+              matchingTouristAttraction = attraction;
+              return true;
+            }
+            return false;
+          });
+        });
+      });
+    });
+
+    if (!matchingTouristAttraction) {
+      return res.status(404).json({
+        success: false,
+        message:
+          "Không tìm thấy điểm du lịch nào dựa trên idDish đã cung cấp",
+      });
+    }
+
+    res.status(200).json({ success: true, data: matchingTouristAttraction });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      error: "Lỗi khi lấy thông tin điểm du lịch dựa trên idDish",
+    });
+  }
+});
+
+// hiển thị địa điểm du lịch theo idHistoryStory (LỊCH SỬ)
+app.get("/getTouristAttractionByidHistoryStory/:idHistoryStory", async (req, res) => {
+  try {
+    const idHistoryStory = req.params.idHistoryStory;
+    let matchingTouristAttraction = null;
+
+    const regions = await Region.find({}); 
+
+    regions.some((region) => {
+      return region.provinces.some((province) => {
+        return province.touristAttraction.some((attraction) => {
+          return attraction.history.some((history) => {
+            if (history.idHistoryStory === idHistoryStory) {
+              matchingTouristAttraction = attraction;
+              return true;
+            }
+            return false;
+          });
+        });
+      });
+    });
+
+    if (!matchingTouristAttraction) {
+      return res.status(404).json({
+        success: false,
+        message:
+          "Không tìm thấy điểm du lịch nào dựa trên idHistory đã cung cấp",
+      });
+    }
+
+    res.status(200).json({ success: true, data: matchingTouristAttraction });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      error: "Lỗi khi lấy thông tin điểm du lịch dựa trên idHistory",
+    });
+  }
+});
+
 
 // hiển thị danh sách các khách hàng
 app.get("/customers", async (req, res) => {

@@ -1,5 +1,6 @@
-import 'package:appquangbadulich/detailTouristAttraction/bloc/detailTouristAttraction_bloc.dart';
-import 'package:appquangbadulich/detailTouristAttraction/bloc/detailTouristAttraction_state.dart';
+import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_culture/detailTourist_culture_bloc.dart';
+import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_culture/detailTourist_culture_event.dart';
+import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_culture/detailTourist_culture_state.dart';
 import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_content.dart';
 import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_culture.dart';
 import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_history.dart';
@@ -7,20 +8,19 @@ import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_s
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../model/cultureModel.dart';
-import '../bloc/detailTouristAttraction_event.dart';
+import '../../../model/cultureModel.dart';
 
-class DetailTouristAttraction extends StatefulWidget {
-  const DetailTouristAttraction({super.key});
+class DetailTouristAttraction_Culture extends StatefulWidget {
+  const DetailTouristAttraction_Culture({super.key});
 
   @override
-  State<DetailTouristAttraction> createState() =>
-      _DetailTouristAttractionState();
+  State<DetailTouristAttraction_Culture> createState() =>
+      _DetailTouristAttraction_CultureState();
 }
 
-class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
+class _DetailTouristAttraction_CultureState extends State<DetailTouristAttraction_Culture> {
   late CultureModel culture;
-  late int pageViewInit = 0;
+  late int pageViewInit = 1;
   PageController pageController = PageController();
   bool isCheckFavourite = false;
 
@@ -31,11 +31,11 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
       final Map<String, dynamic> arguments =
           ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
       culture = arguments['cultureData'];
-      pageViewInit = arguments['pageViewInit'];
-      print(pageViewInit);
       context
-          .read<DetailTouristAttractionBloc>()
+          .read<DetailTourist_CultureBloc>()
           .add(getTouristWithCulture(idCulture: culture.idCulture));
+      // Dựa vào pageViewInit để xác định trang con đầu tiên
+      pageController = PageController(initialPage: pageViewInit);
     });
   }
 
@@ -53,12 +53,12 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<DetailTouristAttractionBloc,
-          DetailTouristAttractionState>(
+      body: BlocBuilder<DetailTourist_CultureBloc,
+          DetailTourist_CultureState>(
         builder: (context, state) {
-          if (state is DetailTouristLoading) {
+          if (state is DetailTourist_CultureLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is DetailTouristLoaded) {
+          } else if (state is DetailTourist_CultureLoaded) {
             final tourist = state.touristAttraction;
             return SingleChildScrollView(
               child: Column(
@@ -79,31 +79,45 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
                             ),
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 3, vertical: 30),
+                                  horizontal: 10, vertical: 31),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pushNamed('/home');
-                                    },
-                                    icon:
-                                        const Icon(Icons.arrow_back, size: 35),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pushNamed('/home');
+                                      },
+                                      icon: const Icon(Icons.arrow_back,
+                                          size: 30),
+                                    ),
                                   ),
-                                  IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isCheckFavourite = !isCheckFavourite;
-                                      });
-                                    },
-                                    icon: Icon(
-                                      isCheckFavourite
-                                          ? Icons.favorite
-                                          : Icons.favorite_border_outlined,
-                                      size: 35,
-                                      color:
-                                          isCheckFavourite ? Colors.red : null,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isCheckFavourite = !isCheckFavourite;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        isCheckFavourite
+                                            ? Icons.favorite
+                                            : Icons.favorite_border_outlined,
+                                        size: 30,
+                                        color: isCheckFavourite
+                                            ? Colors.red
+                                            : null,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -346,7 +360,7 @@ class _DetailTouristAttractionState extends State<DetailTouristAttraction> {
                 ],
               ),
             );
-          } else if (state is DetailTouristFailure) {
+          } else if (state is DetailTourist_CultureFailure) {
             return Center(
               child: Text('Đã xảy ra lỗi: ${state.error}'),
             );

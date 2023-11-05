@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:appquangbadulich/model/cultureModel.dart';
+import 'package:appquangbadulich/model/historyModel.dart';
 import 'package:appquangbadulich/model/specialtyDishModel.dart';
 import 'package:appquangbadulich/model/touristAttractionModel.dart';
 import 'package:http/http.dart' as http;
@@ -8,10 +9,12 @@ import '../model/CustomerModel.dart';
 import '../model/regionModel.dart';
 
 class UserRepository {
+  String urlMain = 'http://192.168.226.214:3090';
   String urlRegion = 'http://192.168.226.214:3090/regions';
   String urlLogin = 'http://192.168.226.214:3090/login';
   String urlCreateAccount = 'http://192.168.226.214:3090/createAccount';
   String urlgetAllCulture = 'http://192.168.226.214:3090/getAllCulture';
+  String urlgetAllHistory = 'http://192.168.226.214:3090/getAllHistory';
   String urlgetAllSpecialDish =
       'http://192.168.226.214:3090/getAllSpecialtyDish';
   String urlgetProvincesWithCulture = '';
@@ -41,6 +44,57 @@ class UserRepository {
     }
   }
 
+  // fetch Province by idDish
+  Future<TouristAttractionModel?> getTouristWithSpecialDish(
+      String idDish) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://192.168.226.214:3090/getTouristAttractionByIdDish/$idDish'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+        final touristAcctractionModel =
+            TouristAttractionModel.fromJson(data['data']);
+        return touristAcctractionModel;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy tỉnh/ thành phố chw specialDish ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(
+          'Lỗi khi lấy tỉnh/ thành phố chứa specialDish theo isDish: $e');
+    }
+  }
+
+  // fetch Province by idHistory
+  Future<TouristAttractionModel?> getTouristWithHistory(
+      String idHistoryStory) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://192.168.226.214:3090/getTouristAttractionByidHistoryStory/$idHistoryStory'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+        final touristAcctractionModel =
+            TouristAttractionModel.fromJson(data['data']);
+        return touristAcctractionModel;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy tỉnh/ thành phố chw history ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(
+          'Lỗi khi lấy tỉnh/ thành phố chứa history theo idHistory: $e');
+    }
+  }
+
+
   // fetch all culture
   Future<List<CultureModel>> getCultures() async {
     try {
@@ -60,8 +114,32 @@ class UserRepository {
         throw Exception('Failed to fetch culture: ${response.reasonPhrase}');
       }
     } catch (e) {
-      print('Error while fetching regions: $e');
-      throw Exception('Error while fetching regions: $e');
+      print('Error while fetching culture: $e');
+      throw Exception('Error while fetching culture: $e');
+    }
+  }
+
+  // FETCH ALL HISTORY
+  Future<List<HistoryModel>> getHistory() async {
+    try {
+      final response = await http.get(
+        Uri.parse(urlgetAllHistory),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+        final historyList = data['data'] as List<dynamic>;
+        final history_ = historyList
+            .map((historyData) => HistoryModel.fromJson(historyData))
+            .toList();
+        return history_;
+      } else {
+        throw Exception('Failed to fetch history: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error while fetching history: $e');
+      throw Exception('Error while fetching history: $e');
     }
   }
 
