@@ -1,5 +1,6 @@
 import 'package:appquangbadulich/history/screens/history_page.dart';
 import 'package:appquangbadulich/specialDish/screens/specialDish_page.dart';
+import 'package:appquangbadulich/touristAttraction/screens/touristAttraction_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../culture/screens/culture_page.dart';
@@ -41,36 +42,42 @@ class HomeWidget extends StatelessWidget {
                   bottom: 25,
                   left: 15,
                   right: 15,
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(18),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    padding: const EdgeInsets.only(
-                      left: 10,
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.search,
-                          size: 30,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Bắt đầu tìm nơi để đi chơi thôi nào!',
-                          style: TextStyle(fontSize: 18, color: Colors.black),
-                        ),
-                      ],
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed('/searchTouristAttraction');
+                    },
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(18),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.only(
+                        left: 10,
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.search,
+                            size: 30,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Bắt đầu tìm nơi để đi chơi thôi nào!',
+                            style: TextStyle(fontSize: 18, color: Colors.black),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -199,72 +206,30 @@ class HomeWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
+            // MỘT SỐ CÁC ĐỊA ĐIỂM
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
               ),
-              child: Column(
+              width: double.infinity,
+              child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Nhất định bạn phải đến',
+                  Text(
+                    'Nhất định phải đến',
                     style: TextStyle(
                       fontSize: 22,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Container(
-                    height: 180,
-                    color: Colors.white,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed('/detail_touriestAttraction');
-                          },
-                          child: Container(
-                            width: 150,
-                            margin: const EdgeInsets.only(right: 10),
-                            child: Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    'assets/img/img_8.jpg',
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 10,
-                                  left: 10,
-                                  child: Text(
-                                    'Hồ Gươm',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  )
+                  SizedBox(height: 10),
+                  TouristAttractionPage(),
                 ],
               ),
             ),
             const SizedBox(height: 30),
+            // VĂN HÓA
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
@@ -287,6 +252,7 @@ class HomeWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
+            // ĐẶC SẢN
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
@@ -309,6 +275,7 @@ class HomeWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
+            // LỊCH SỬ
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,

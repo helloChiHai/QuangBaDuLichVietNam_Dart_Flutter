@@ -229,12 +229,48 @@ app.get("/getAllTouristAttraction", async (req, res) => {
     res.status(200).json({ success: true, data: tatCaDiaDiemDuLich });
   } catch (error) {
     console.log(e);
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Lỗi khi lấy danh sách các địa điểm du lịch",
+    res.status(500).json({
+      success: false,
+      error: "Lỗi khi lấy danh sách các địa điểm du lịch",
+    });
+  }
+});
+
+// hiển thị địa điểm du lịch theo idTourist (CHI TIẾT ĐỊA ĐIỂM DU LỊCH THEO IdTourist)
+app.get("/getTouristAttractionByIdTourist/:idTourist", async (req, res) => {
+  try {
+    const idTourist = req.params.idTourist;
+    let matchingTouristAttraction = null;
+
+    const regions = await Region.find({}); // Lấy tất cả dữ liệu vùng
+
+    regions.some((region) => {
+      return region.provinces.some((province) => {
+        return province.touristAttraction.some((attraction) => {
+          if (attraction.idTourist === idTourist) {
+            matchingTouristAttraction = attraction;
+            return true;
+          }
+          return false;
+        });
       });
+    });
+
+    if (!matchingTouristAttraction) {
+      return res.status(404).json({
+        success: false,
+        message:
+          "Không tìm thấy điểm du lịch nào dựa trên idTourist đã cung cấp",
+      });
+    }
+
+    res.status(200).json({ success: true, data: matchingTouristAttraction });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      error: "Lỗi khi lấy thông tin điểm du lịch dựa trên idTourist",
+    });
   }
 });
 
@@ -361,7 +397,7 @@ app.get("/getTouristAttractionByIdDish/:idDish", async (req, res) => {
     const idDish = req.params.idDish;
     let matchingTouristAttraction = null;
 
-    const regions = await Region.find({}); 
+    const regions = await Region.find({});
 
     regions.some((region) => {
       return region.provinces.some((province) => {
@@ -380,8 +416,7 @@ app.get("/getTouristAttractionByIdDish/:idDish", async (req, res) => {
     if (!matchingTouristAttraction) {
       return res.status(404).json({
         success: false,
-        message:
-          "Không tìm thấy điểm du lịch nào dựa trên idDish đã cung cấp",
+        message: "Không tìm thấy điểm du lịch nào dựa trên idDish đã cung cấp",
       });
     }
 
@@ -396,45 +431,47 @@ app.get("/getTouristAttractionByIdDish/:idDish", async (req, res) => {
 });
 
 // hiển thị địa điểm du lịch theo idHistoryStory (LỊCH SỬ)
-app.get("/getTouristAttractionByidHistoryStory/:idHistoryStory", async (req, res) => {
-  try {
-    const idHistoryStory = req.params.idHistoryStory;
-    let matchingTouristAttraction = null;
+app.get(
+  "/getTouristAttractionByidHistoryStory/:idHistoryStory",
+  async (req, res) => {
+    try {
+      const idHistoryStory = req.params.idHistoryStory;
+      let matchingTouristAttraction = null;
 
-    const regions = await Region.find({}); 
+      const regions = await Region.find({});
 
-    regions.some((region) => {
-      return region.provinces.some((province) => {
-        return province.touristAttraction.some((attraction) => {
-          return attraction.history.some((history) => {
-            if (history.idHistoryStory === idHistoryStory) {
-              matchingTouristAttraction = attraction;
-              return true;
-            }
-            return false;
+      regions.some((region) => {
+        return region.provinces.some((province) => {
+          return province.touristAttraction.some((attraction) => {
+            return attraction.history.some((history) => {
+              if (history.idHistoryStory === idHistoryStory) {
+                matchingTouristAttraction = attraction;
+                return true;
+              }
+              return false;
+            });
           });
         });
       });
-    });
 
-    if (!matchingTouristAttraction) {
-      return res.status(404).json({
+      if (!matchingTouristAttraction) {
+        return res.status(404).json({
+          success: false,
+          message:
+            "Không tìm thấy điểm du lịch nào dựa trên idHistory đã cung cấp",
+        });
+      }
+
+      res.status(200).json({ success: true, data: matchingTouristAttraction });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
         success: false,
-        message:
-          "Không tìm thấy điểm du lịch nào dựa trên idHistory đã cung cấp",
+        error: "Lỗi khi lấy thông tin điểm du lịch dựa trên idHistory",
       });
     }
-
-    res.status(200).json({ success: true, data: matchingTouristAttraction });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      error: "Lỗi khi lấy thông tin điểm du lịch dựa trên idHistory",
-    });
   }
-});
-
+);
 
 // hiển thị danh sách các khách hàng
 app.get("/customers", async (req, res) => {

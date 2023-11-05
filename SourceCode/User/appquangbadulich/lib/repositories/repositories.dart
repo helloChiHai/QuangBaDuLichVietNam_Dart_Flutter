@@ -15,11 +15,63 @@ class UserRepository {
   String urlCreateAccount = 'http://192.168.226.214:3090/createAccount';
   String urlgetAllCulture = 'http://192.168.226.214:3090/getAllCulture';
   String urlgetAllHistory = 'http://192.168.226.214:3090/getAllHistory';
+  String urlgetAllTouristAttraction =
+      'http://192.168.226.214:3090/getAllTouristAttraction';
   String urlgetAllSpecialDish =
       'http://192.168.226.214:3090/getAllSpecialtyDish';
-  String urlgetProvincesWithCulture = '';
 
-  // fetch Province by idCulture
+  // fetch all tourist attraction
+  Future<List<TouristAttractionModel>> getAllTouristAttraction() async {
+    try {
+      final response = await http.get(
+        Uri.parse(urlgetAllTouristAttraction),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+        final touristList = data['data'] as List<dynamic>;
+        final touristAttractions = touristList
+            .map((touristData) => TouristAttractionModel.fromJson(touristData))
+            .toList();
+        return touristAttractions;
+      } else {
+        throw Exception(
+            'Failed to fetch tourist attraction: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error while fetching tourist attraction: $e');
+      throw Exception('Error while fetching tourist attraction: $e');
+    }
+  }
+
+  // detail tourist by idCulture
+  Future<TouristAttractionModel?> getDetailTouristWithIdTourist(
+      String idTourist) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://192.168.226.214:3090/getTouristAttractionByIdTourist/$idTourist'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+        final touristAcctractionModel =
+            TouristAttractionModel.fromJson(data['data']);
+        return touristAcctractionModel;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy tỉnh/ thành phố chw Tourist ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(
+          'Lỗi khi lấy tỉnh/ thành phố chứa Tourist theo idTourist: $e');
+    }
+  }
+
+
+  // fetch tourist by idCulture
   Future<TouristAttractionModel?> getTouristWithCulture(
       String idCulture) async {
     try {
@@ -44,7 +96,7 @@ class UserRepository {
     }
   }
 
-  // fetch Province by idDish
+  // fetch tourist by idDish
   Future<TouristAttractionModel?> getTouristWithSpecialDish(
       String idDish) async {
     try {
@@ -69,7 +121,7 @@ class UserRepository {
     }
   }
 
-  // fetch Province by idHistory
+  // fetch tourist by idHistory
   Future<TouristAttractionModel?> getTouristWithHistory(
       String idHistoryStory) async {
     try {
@@ -93,7 +145,6 @@ class UserRepository {
           'Lỗi khi lấy tỉnh/ thành phố chứa history theo idHistory: $e');
     }
   }
-
 
   // fetch all culture
   Future<List<CultureModel>> getCultures() async {
