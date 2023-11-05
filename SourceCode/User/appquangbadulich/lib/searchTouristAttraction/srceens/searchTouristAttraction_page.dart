@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:appquangbadulich/model/touristAttractionModel.dart';
 import 'package:appquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
 import 'package:appquangbadulich/touristAttraction/bloc/touristAttraction_event.dart';
 import 'package:appquangbadulich/touristAttraction/bloc/touristAttraction_state.dart';
@@ -18,6 +17,7 @@ class SearchTouristAttractionPage extends StatefulWidget {
 class _SearchTouristAttractionPageState
     extends State<SearchTouristAttractionPage> {
   TextEditingController textSearchTouristAttraction = TextEditingController();
+  List<TouristAttractionModel> filteredTouristAttractions = [];
 
   @override
   void initState() {
@@ -25,10 +25,27 @@ class _SearchTouristAttractionPageState
     context.read<TouristAttractionBloc>().add(FetchTouristAttraction());
   }
 
+  void searchTouristAttractions(String nameTourist) {
+    final touristAttractionState = context.read<TouristAttractionBloc>().state;
+
+    if (touristAttractionState is TouristAttractionLoaded) {
+      final allTouristAttractions = touristAttractionState.touristAttraction;
+
+      setState(() {
+        filteredTouristAttractions = allTouristAttractions
+            .where((touristAttraction) => touristAttraction.nameTourist
+                .toLowerCase()
+                .contains(nameTourist.toLowerCase()))
+            .toList();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: Colors.white,
         margin: const EdgeInsets.only(top: 24),
         child: Column(
           children: [
@@ -85,15 +102,85 @@ class _SearchTouristAttractionPageState
                                       onPressed: () {
                                         setState(() {
                                           textSearchTouristAttraction.clear();
+                                          filteredTouristAttractions.clear();
                                         });
                                       },
                                     )
                                   : null,
                         ),
+                        onChanged: (nameTourist) {
+                          searchTouristAttractions(nameTourist);
+                        },
                       ),
                     ),
                   ),
                 ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: filteredTouristAttractions.length,
+                itemBuilder: (context, index) {
+                  final touristAttraction = filteredTouristAttractions[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                          '/detail_touriestAttraction_about',
+                          arguments: {
+                            'aboutTouristData': touristAttraction,
+                          });
+                    },
+                    child: Container(
+                      color: Colors.amber,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/img/${touristAttraction.imgTourist}',
+                                ),
+                                width: 90,
+                                height: 90,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            flex: 7,
+                            child: SizedBox(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    touristAttraction.nameTourist,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    touristAttraction.address,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
             // gợi ý các địa điểm trong tháng
@@ -132,7 +219,6 @@ class _SearchTouristAttractionPageState
                               .map(
                                 (touristAttraction) => GestureDetector(
                                   onTap: () {
-                                    print(touristAttraction.idTourist);
                                     Navigator.of(context).pushNamed(
                                         '/detail_touriestAttraction_about',
                                         arguments: {
