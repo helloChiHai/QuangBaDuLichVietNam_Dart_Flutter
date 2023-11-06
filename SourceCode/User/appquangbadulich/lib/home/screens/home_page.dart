@@ -1,3 +1,4 @@
+import 'package:appquangbadulich/showFilterAllTouristCultureHistoryFood/screens/showFilterAllTouristCultureHistoryFood_page.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/home_widget.dart';
@@ -12,18 +13,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomeWidget(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    ShowFilterAllTouristCultureHistoryFoodPage(),
+    HomeWidget(),
   ];
 
   void _onItemTapped(int index) {
