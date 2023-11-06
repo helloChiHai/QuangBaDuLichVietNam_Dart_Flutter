@@ -28,6 +28,55 @@ const checkMongoDBConnection = () => {
 
 checkMongoDBConnection();
 
+// lọc địa điểm du lịch theo idRegion và idProvines
+app.get('/api/tourist/:idRegion/:idProvines', async (req, res) => {
+  const { idRegion, idProvines } = req.params;
+
+  try {
+    if (idRegion === 'null' && idProvines !== 'null') {
+      // Tìm idRegion chứa idProvines
+      const region = await Region.findOne({
+        'provinces.idProvines': idProvines
+      });
+
+      if (!region) {
+        return res.status(404).json({ error: 'Không tìm thấy khu vực nào chứa idProvines.' });
+      }
+
+      const touristAttraction = region.provinces[0].touristAttraction;
+      res.json({ success: true, data: touristAttraction });
+    } else if (idProvines === 'null') {
+      // Nếu idProvines là 'null', hiển thị tất cả touristAttraction trong idRegion
+      const region = await Region.findOne({
+        'idRegion': idRegion
+      });
+
+      if (!region) {
+        return res.status(404).json({ error: 'Không tìm thấy khu vực phù hợp.' });
+      }
+
+      const touristAttraction = region.provinces[0].touristAttraction;
+      res.json({ success: true, data: touristAttraction });
+    } else {
+      // Nếu cả idProvines và idRegion được cung cấp, hiển thị touristAttraction theo idRegion và idProvines
+      const region = await Region.findOne({
+        'provinces.idProvines': idProvines,
+        'idRegion': idRegion
+      });
+
+      if (!region) {
+        return res.status(404).json({ error: 'Không tìm thấy khu vực hoặc tỉnh phù hợp.' });
+      }
+
+      const touristAttraction = region.provinces[0].touristAttraction;
+      res.json({ success: true, data: touristAttraction });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Lỗi server.' });
+  }
+});
+
 // thêm bình luận
 app.post("/addComment", async (req, res) => {
   try {

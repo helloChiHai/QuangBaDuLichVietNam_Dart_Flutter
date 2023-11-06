@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
         '/detail_specialtyDish': (context) =>
             DetailSpecialtyDish(dataSpecialtyDish: []),
       },
-      home: ShowFilterAllTouristCultureHistoryFoodPage(),
+      home: HomePage(),
     );
   }
 }
