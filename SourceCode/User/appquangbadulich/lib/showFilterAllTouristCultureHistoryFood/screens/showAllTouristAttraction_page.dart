@@ -1,5 +1,8 @@
-import 'package:appquangbadulich/model/dropdownRegionModel.dart';
 import 'package:appquangbadulich/model/filterRegionModel.dart';
+import 'package:appquangbadulich/model/provinceModel.dart';
+import 'package:appquangbadulich/province/bloc/province_bloc.dart';
+import 'package:appquangbadulich/province/bloc/province_event.dart';
+import 'package:appquangbadulich/province/bloc/province_state.dart';
 import 'package:appquangbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_bloc.dart';
 import 'package:appquangbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_event.dart';
 import 'package:appquangbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_state.dart';
@@ -15,30 +18,39 @@ class ShowAllTouristAttraction extends StatefulWidget {
 }
 
 class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
-  final List<DropDownRegionModel> itemRegions = [
-    DropDownRegionModel(idRegion: 'HCM', nameRegion: 'Ho Chi Minh'),
-    DropDownRegionModel(idRegion: 'HN', nameRegion: 'Ha Noi'),
-    DropDownRegionModel(idRegion: 'CT', nameRegion: 'Can Tho'),
-  ];
-
   final List<FilterReionModel> listItemRegion = [
     FilterReionModel(idRegion: 'PB', nameRegion: 'Miền Bắc'),
     FilterReionModel(idRegion: 'PT', nameRegion: 'Miền Trung'),
     FilterReionModel(idRegion: 'PN', nameRegion: 'Miền Nam'),
   ];
 
-  late DropDownRegionModel selectedDropDownRegionItem;
   int checkSelectedRegion = 1;
   String checkSelectedIdRegion = '';
   String selectedNameRegion = '';
 
+  String checkSelectedIdProvince = '';
+
+  List<ProvinceModel> itemProvince = [];
+  ProvinceModel? selectedDropDownProvinceItem;
+
   @override
   void initState() {
     super.initState();
-    selectedDropDownRegionItem = itemRegions[0];
     context
         .read<FilterTouristBloc>()
         .add(FilterTouristAttraction(idRegion: '', idProvines: ''));
+
+    final provinceBloc = context.read<ProvinceBloc>();
+    provinceBloc.add(FetchProvinces());
+
+    provinceBloc.stream.listen((state) {
+      if (state is ProvinceLoaded) {
+        setState(() {
+          itemProvince.clear();
+          itemProvince.addAll(state.provinces);
+        });
+      }
+    });
   }
 
   @override
@@ -127,7 +139,7 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                     const SizedBox(width: 15),
                     GestureDetector(
                       onTap: () {
-                        print(selectedDropDownRegionItem.idRegion);
+                        // print(selectedDropDownRegionItem.idRegion);
                         showModalBottomSheet(
                             shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
@@ -255,24 +267,27 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                                           ),
                                         ),
                                         Container(
-                                          width: 130,
+                                          width: 150,
                                           height: 40,
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(10),
-                                            color: Colors.white,
+                                            color: Colors.amber,
                                           ),
-                                          child: DropdownButton<
-                                              DropDownRegionModel>(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 5,
+                                          ),
+                                          child: DropdownButton<ProvinceModel>(
                                             isExpanded: true,
                                             menuMaxHeight: 150,
-                                            value: selectedDropDownRegionItem,
-                                            items: itemRegions.map(
-                                                (DropDownRegionModel item) {
+                                            value: selectedDropDownProvinceItem,
+                                            items: itemProvince
+                                                .map((ProvinceModel item) {
                                               return DropdownMenuItem(
                                                 value: item,
                                                 child: Text(
-                                                  item.nameRegion,
+                                                  item.nameprovince,
                                                   style: const TextStyle(
                                                     fontSize: 20,
                                                     color: Colors.black,
@@ -283,11 +298,14 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                                                 ),
                                               );
                                             }).toList(),
-                                            onChanged: (DropDownRegionModel?
-                                                newValue) {
+                                            onChanged:
+                                                (ProvinceModel? newValue) {
                                               setState(() {
-                                                selectedDropDownRegionItem =
+                                                selectedDropDownProvinceItem =
                                                     newValue!;
+                                                checkSelectedIdProvince =
+                                                    selectedDropDownProvinceItem!
+                                                        .idprovince;
                                               });
                                             },
                                           ),
@@ -296,14 +314,14 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                                           width: double.infinity,
                                           child: ElevatedButton(
                                             onPressed: () {
-                                              Navigator.pop(context);
                                               print(checkSelectedIdRegion);
-                                              print(selectedNameRegion);
-                                              context
-                                                  .read<FilterTouristBloc>()
-                                                  .add(FilterTouristAttraction(
-                                                      idRegion: '',
-                                                      idProvines: ''));
+                                              print(checkSelectedIdProvince);
+                                              Navigator.pop(context);
+                                              // context
+                                              //     .read<FilterTouristBloc>()
+                                              //     .add(FilterTouristAttraction(
+                                              //         idRegion: '',
+                                              //         idProvines: ''));
                                             },
                                             style: ButtonStyle(
                                               backgroundColor:

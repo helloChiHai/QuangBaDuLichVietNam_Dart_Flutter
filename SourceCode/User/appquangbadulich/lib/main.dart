@@ -12,6 +12,7 @@ import 'package:appquangbadulich/history/screens/history_page.dart';
 import 'package:appquangbadulich/login/bloc/login_bloc.dart';
 import 'package:appquangbadulich/login/screens/login_intro.dart';
 import 'package:appquangbadulich/createAccount/screens/login_signUpSuccesful.dart';
+import 'package:appquangbadulich/province/bloc/province_bloc.dart';
 import 'package:appquangbadulich/region/bloc/region_bloc.dart';
 import 'package:appquangbadulich/region/screens/region_page.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
@@ -82,6 +83,11 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<ProvinceBloc>(
+          create: (context) => ProvinceBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
         BlocProvider<FilterTouristBloc>(
           create: (context) => FilterTouristBloc(
             userRepository: UserRepository(),

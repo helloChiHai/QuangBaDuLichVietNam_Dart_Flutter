@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:appquangbadulich/model/cultureModel.dart';
 import 'package:appquangbadulich/model/historyModel.dart';
+import 'package:appquangbadulich/model/provinceModel.dart';
 import 'package:appquangbadulich/model/specialtyDishModel.dart';
 import 'package:appquangbadulich/model/touristAttractionModel.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +13,7 @@ class UserRepository {
   String urlMain = 'http://192.168.226.214:3090';
   String urlRegion = 'http://192.168.226.214:3090/regions';
   String urlLogin = 'http://192.168.226.214:3090/login';
+  String urlGetAllProvinces = 'http://192.168.226.214:3090/getAllProvinces';
   String urlCreateAccount = 'http://192.168.226.214:3090/createAccount';
   String urlgetAllCulture = 'http://192.168.226.214:3090/getAllCulture';
   String urlgetAllHistory = 'http://192.168.226.214:3090/getAllHistory';
@@ -19,6 +21,31 @@ class UserRepository {
       'http://192.168.226.214:3090/getAllTouristAttraction';
   String urlgetAllSpecialDish =
       'http://192.168.226.214:3090/getAllSpecialtyDish';
+
+  // fetch all tourist attraction
+  Future<List<ProvinceModel>> getAllProvinces() async {
+    try {
+      final response = await http.get(
+        Uri.parse(urlGetAllProvinces),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+        final provinceList = data['data'] as List<dynamic>;
+        final province = provinceList
+            .map((provinceData) => ProvinceModel.fromJson(provinceData))
+            .toList();
+        return province;
+      } else {
+        throw Exception(
+            'Failed to fetch province: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error while fetching province: $e');
+      throw Exception('Error while fetching province: $e');
+    }
+  }
 
   // filter tourist attraction by idRegion, idProvines
   Future<List<TouristAttractionModel>>
