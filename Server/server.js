@@ -12,6 +12,7 @@ mongoose.connect("mongodb://127.0.0.1/DACN_APP_DuLich", {
 
 const Region = require("./models/region");
 const Customer = require("./models/customer");
+const Province = require("./models/province");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -28,52 +29,57 @@ const checkMongoDBConnection = () => {
 
 checkMongoDBConnection();
 
-// lọc địa điểm du lịch theo idRegion và idProvines
-app.get('/api/tourist/:idRegion/:idProvines', async (req, res) => {
-  const { idRegion, idProvines } = req.params;
-
+// hiển thị danh sách các tỉnh thành phố
+app.get("/getAllProvinces", async (req, res) => {
   try {
-    if (idRegion === 'null' && idProvines !== 'null') {
-      // Tìm idRegion chứa idProvines
-      const region = await Region.findOne({
-        'provinces.idProvines': idProvines
-      });
-
-      if (!region) {
-        return res.status(404).json({ error: 'Không tìm thấy khu vực nào chứa idProvines.' });
-      }
-
-      const touristAttraction = region.provinces[0].touristAttraction;
-      res.json({ success: true, data: touristAttraction });
-    } else if (idProvines === 'null') {
-      // Nếu idProvines là 'null', hiển thị tất cả touristAttraction trong idRegion
-      const region = await Region.findOne({
-        'idRegion': idRegion
-      });
-
-      if (!region) {
-        return res.status(404).json({ error: 'Không tìm thấy khu vực phù hợp.' });
-      }
-
-      const touristAttraction = region.provinces[0].touristAttraction;
-      res.json({ success: true, data: touristAttraction });
-    } else {
-      // Nếu cả idProvines và idRegion được cung cấp, hiển thị touristAttraction theo idRegion và idProvines
-      const region = await Region.findOne({
-        'provinces.idProvines': idProvines,
-        'idRegion': idRegion
-      });
-
-      if (!region) {
-        return res.status(404).json({ error: 'Không tìm thấy khu vực hoặc tỉnh phù hợp.' });
-      }
-
-      const touristAttraction = region.provinces[0].touristAttraction;
-      res.json({ success: true, data: touristAttraction });
-    }
+    const province = await Province.find({});
+    res.status(200).json({ success: true, data: province });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Lỗi server.' });
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// lọc địa điểm du lịch theo idRegion và idProvines
+app.get("/filter-tourist-attractions", async (req, res) => {
+  try {
+    const idRegion = req.query.idRegion;
+    const idProvines = req.query.idProvines;
+    let touristAttractions = [];
+    const result = await Region.find({});
+
+    if (idRegion) {
+      result.forEach((region) => {
+        region.provinces.forEach((province) => {
+          province.touristAttraction.forEach((touristAttraction) => {
+            if (region.idRegion === idRegion) {
+              touristAttractions.push(touristAttraction);
+            }
+          });
+        });
+      });
+    } else if (idProvines) {
+      result.forEach((region) => {
+        region.provinces.forEach((province) => {
+          province.touristAttraction.forEach((touristAttraction) => {
+            if (province.idProvines === idProvines) {
+              touristAttractions.push(touristAttraction);
+            }
+          });
+        });
+      });
+    } else {
+      result.forEach((region) => {
+        region.provinces.forEach((province) => {
+          province.touristAttraction.forEach((touristAttraction) => {
+            touristAttractions.push(touristAttraction);
+          });
+        });
+      });
+    }
+
+    res.status(200).json({ success: true, data: touristAttractions });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

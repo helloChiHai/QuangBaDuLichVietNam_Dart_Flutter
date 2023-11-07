@@ -1,4 +1,4 @@
-import 'package:appquangbadulich/showFilterAllTouristCultureHistoryFood/screens/showFilterAllTouristCultureHistoryFood_page.dart';
+import 'package:appquangbadulich/showFilterAllTouristCultureHistoryFood/screens/showAllTouristAttraction_page.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/home_widget.dart';
@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     HomeWidget(),
-    ShowFilterAllTouristCultureHistoryFoodPage(),
+    ShowAllTouristAttraction(),
     HomeWidget(),
   ];
 

@@ -16,7 +16,8 @@ import 'package:appquangbadulich/region/bloc/region_bloc.dart';
 import 'package:appquangbadulich/region/screens/region_page.dart';
 import 'package:appquangbadulich/repositories/repositories.dart';
 import 'package:appquangbadulich/searchTouristAttraction/srceens/searchTouristAttraction_page.dart';
-import 'package:appquangbadulich/showFilterAllTouristCultureHistoryFood/screens/showFilterAllTouristCultureHistoryFood_page.dart';
+import 'package:appquangbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_bloc.dart';
+import 'package:appquangbadulich/showFilterAllTouristCultureHistoryFood/screens/showAllTouristAttraction_page.dart';
 import 'package:appquangbadulich/specialDish/bloc/specialDish_bloc.dart';
 import 'package:appquangbadulich/specialDish/screens/specialDish_page.dart';
 import 'package:appquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
         '/intro_login': (context) => LoginIntro(),
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
         '/home': (context) => HomePage(),
-        '/showFilterAllTouristCultureHistoryFood': (context) => ShowFilterAllTouristCultureHistoryFoodPage(),
+        '/showAllTouristAttraction': (context) =>
+            ShowAllTouristAttraction(),
         '/detail_touriestAttraction_about': (context) =>
             DetailTouristAttraction_About(),
         '/detail_touriestAttraction_culture': (context) =>
@@ -80,6 +82,11 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<FilterTouristBloc>(
+          create: (context) => FilterTouristBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
         BlocProvider<LoginBloc>(
           create: (context) => LoginBloc(
             userRepository: UserRepository(),

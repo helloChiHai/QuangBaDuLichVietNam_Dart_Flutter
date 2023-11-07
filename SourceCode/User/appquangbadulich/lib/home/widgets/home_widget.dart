@@ -212,15 +212,31 @@ class HomeWidget extends StatelessWidget {
                 horizontal: 15,
               ),
               width: double.infinity,
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Nhất định phải đến',
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushNamed('/showAllTouristAttraction');
+                    },
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Nhất định phải đến',
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Icon(
+                          Icons.navigate_next,
+                          size: 35,
+                          color: Colors.black,
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 10),

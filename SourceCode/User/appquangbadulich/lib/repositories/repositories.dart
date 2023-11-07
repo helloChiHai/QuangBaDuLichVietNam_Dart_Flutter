@@ -20,6 +20,40 @@ class UserRepository {
   String urlgetAllSpecialDish =
       'http://192.168.226.214:3090/getAllSpecialtyDish';
 
+  // filter tourist attraction by idRegion, idProvines
+  Future<List<TouristAttractionModel>>
+      filterTouristAttractionByIdRegionIdProvines(
+          String? idRegion, String? idProvines) async {
+    try {
+      final Map<String, String?> queryParams = {
+        'idRegion': idRegion,
+        'idProvines': idProvines,
+      };
+
+      final uri = Uri.http(
+          '192.168.226.214:3090', '/filter-tourist-attractions', queryParams);
+
+      final response = await http.get(
+        uri,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final touristList = data['data'] as List<dynamic>;
+        final touristAttractions = touristList
+            .map((touristData) => TouristAttractionModel.fromJson(touristData))
+            .toList();
+        return touristAttractions;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy thông tin Tourist Attraction: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Lỗi: $e');
+    }
+  }
+
   // fetch all tourist attraction
   Future<List<TouristAttractionModel>> getAllTouristAttraction() async {
     try {
@@ -69,7 +103,6 @@ class UserRepository {
           'Lỗi khi lấy tỉnh/ thành phố chứa Tourist theo idTourist: $e');
     }
   }
-
 
   // fetch tourist by idCulture
   Future<TouristAttractionModel?> getTouristWithCulture(
