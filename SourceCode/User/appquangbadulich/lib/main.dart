@@ -1,3 +1,4 @@
+import 'package:appquangbadulich/account/screens/account_page.dart';
 import 'package:appquangbadulich/culture/bloc/culture_bloc.dart';
 import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_culture/detailTourist_culture_bloc.dart';
 import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_history/detailTourist_history_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_h
 import 'package:appquangbadulich/detailTouristAttraction/screens/detailTourist_specialDish/detail_touristacctraction_specialDish.dart';
 import 'package:appquangbadulich/history/bloc/history_bloc.dart';
 import 'package:appquangbadulich/history/screens/history_page.dart';
+import 'package:appquangbadulich/imformationCustomer/bloc/imformationCus_bloc.dart';
 import 'package:appquangbadulich/login/bloc/login_bloc.dart';
 import 'package:appquangbadulich/login/screens/login_intro.dart';
 import 'package:appquangbadulich/createAccount/screens/login_signUpSuccesful.dart';
@@ -44,6 +46,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
+        '/account': (context) => AccountPage(),
         '/searchTouristAttraction': (context) => SearchTouristAttractionPage(),
         '/login': (context) => LoginPage(),
         '/createAccount': (context) => CreateAccountPage(),
@@ -55,8 +58,7 @@ class MyApp extends StatelessWidget {
         '/intro_login': (context) => LoginIntro(),
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
         '/home': (context) => HomePage(),
-        '/showAllTouristAttraction': (context) =>
-            ShowAllTouristAttraction(),
+        '/showAllTouristAttraction': (context) => ShowAllTouristAttraction(),
         '/detail_touriestAttraction_about': (context) =>
             DetailTouristAttraction_About(),
         '/detail_touriestAttraction_culture': (context) =>
@@ -74,7 +76,7 @@ class MyApp extends StatelessWidget {
         '/detail_specialtyDish': (context) =>
             DetailSpecialtyDish(dataSpecialtyDish: []),
       },
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
@@ -83,6 +85,9 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<CustomerBloc>(
+          create: (context) => CustomerBloc(),
+        ),
         BlocProvider<ProvinceBloc>(
           create: (context) => ProvinceBloc(
             userRepository: UserRepository(),

@@ -39,6 +39,38 @@ class HomeWidget extends StatelessWidget {
                   ),
                 ),
                 Positioned(
+                  top: 25,
+                  left: MediaQuery.of(context).size.width * 0.8,
+                  right: 15,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/account');
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(18),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      alignment: Alignment.center,
+                      child: const Icon(
+                        Icons.dehaze_outlined,
+                        size: 30,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
                   bottom: 25,
                   left: 15,
                   right: 15,

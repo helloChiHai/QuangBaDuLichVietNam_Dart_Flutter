@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:appquangbadulich/model/filterRegionModel.dart';
 import 'package:appquangbadulich/model/provinceModel.dart';
 import 'package:appquangbadulich/province/bloc/province_bloc.dart';
@@ -33,25 +35,37 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
   List<ProvinceModel> itemProvince = [];
   ProvinceModel? selectedDropDownProvinceItem;
 
-  @override
-  void initState() {
-    super.initState();
-    context
-        .read<FilterTouristBloc>()
-        .add(FilterTouristAttraction(idRegion: '', idProvines: ''));
+  StreamSubscription? _subscription;
 
-    final provinceBloc = context.read<ProvinceBloc>();
-    provinceBloc.add(FetchProvinces());
+@override
+void initState() {
+  super.initState();
+  context
+      .read<FilterTouristBloc>()
+      .add(FilterTouristAttraction(idRegion: '', idProvines: ''));
 
-    provinceBloc.stream.listen((state) {
+  final provinceBloc = context.read<ProvinceBloc>();
+  provinceBloc.add(FetchProvinces());
+
+  _subscription = provinceBloc.stream.listen((state) {
+    if (mounted) {  // Kiểm tra xem widget còn nằm trong cây widget trước khi gọi setState
       if (state is ProvinceLoaded) {
         setState(() {
           itemProvince.clear();
           itemProvince.addAll(state.provinces);
         });
       }
-    });
-  }
+    }
+  });
+}
+
+@override
+void dispose() {
+  // Hủy lắng nghe sự kiện stream ở đây
+  _subscription?.cancel();
+  super.dispose();
+}
+
 
   @override
   Widget build(BuildContext context) {

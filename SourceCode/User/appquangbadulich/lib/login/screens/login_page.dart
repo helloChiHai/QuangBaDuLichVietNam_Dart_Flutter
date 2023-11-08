@@ -1,3 +1,4 @@
+import 'package:appquangbadulich/imformationCustomer/bloc/imformationCus_bloc.dart';
 import 'package:appquangbadulich/login/bloc/login_bloc.dart';
 import 'package:appquangbadulich/login/bloc/login_state.dart';
 import 'package:appquangbadulich/login/screens/login_form.dart';
@@ -13,6 +14,9 @@ class LoginPage extends StatelessWidget {
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
+            final idCus = state.customer;
+            BlocProvider.of<CustomerBloc>(context).setCustomer(idCus);
+            
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text(
                 'Đăng nhập thành công!',
