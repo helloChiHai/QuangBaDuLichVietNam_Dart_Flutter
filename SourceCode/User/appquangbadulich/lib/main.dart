@@ -1,4 +1,5 @@
 import 'package:appquangbadulich/account/screens/account_page.dart';
+import 'package:appquangbadulich/account/screens/detailAccount_page.dart';
 import 'package:appquangbadulich/culture/bloc/culture_bloc.dart';
 import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_culture/detailTourist_culture_bloc.dart';
 import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_history/detailTourist_history_bloc.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
+        '/detailAccount': (context) => DetailAccountPage(),
         '/account': (context) => AccountPage(),
         '/searchTouristAttraction': (context) => SearchTouristAttractionPage(),
         '/login': (context) => LoginPage(),
