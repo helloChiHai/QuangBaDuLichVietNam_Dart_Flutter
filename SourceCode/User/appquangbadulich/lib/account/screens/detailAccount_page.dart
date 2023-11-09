@@ -54,6 +54,7 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                 ),
                 child: Column(
                   children: [
+                    const SizedBox(height: 20),
                     Center(
                       child: Container(
                         width: 100,
@@ -97,7 +98,10 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                           ],
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed('/editAccount_name');
+                          },
                           icon: const Icon(
                             Icons.edit_sharp,
                             size: 25,
@@ -145,7 +149,10 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                           ],
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed('/editAccount_gmail');
+                          },
                           icon: const Icon(
                             Icons.edit_sharp,
                             size: 25,
@@ -193,7 +200,10 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                           ],
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed('/editAccount_address');
+                          },
                           icon: const Icon(
                             Icons.edit_sharp,
                             size: 25,
@@ -241,7 +251,10 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                           ],
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed('/editAccount_birthday');
+                          },
                           icon: const Icon(
                             Icons.edit_sharp,
                             size: 25,
@@ -295,7 +308,9 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/editAccount_password');
+                      },
                       icon: const Icon(
                         Icons.navigate_next_sharp,
                         size: 35,
