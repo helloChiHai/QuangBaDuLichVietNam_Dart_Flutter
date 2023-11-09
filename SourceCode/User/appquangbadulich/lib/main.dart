@@ -1,12 +1,15 @@
 import 'package:appquangbadulich/account/screens/account_page.dart';
-import 'package:appquangbadulich/account/screens/deleteAccount_page.dart';
+import 'package:appquangbadulich/deleteAccount/bloc/deleteAccount_bloc.dart';
+import 'package:appquangbadulich/deleteAccount/screens/deleteAccount_page.dart';
 import 'package:appquangbadulich/account/screens/detailAccount_page.dart';
-import 'package:appquangbadulich/account/screens/editAccount_address_page.dart';
-import 'package:appquangbadulich/account/screens/editAccount_birthday_page.dart';
+import 'package:appquangbadulich/updateAddress/bloc/updateAddress_bloc.dart';
+import 'package:appquangbadulich/updateAddress/screens/updateAddress_page.dart';
+import 'package:appquangbadulich/updateBirthday/bloc/updateBirthday_bloc.dart';
+import 'package:appquangbadulich/updateBirthday/screens/updateBirthday_page.dart';
 import 'package:appquangbadulich/updateEmail/bloc/updateEmail_bloc.dart';
 import 'package:appquangbadulich/updateEmail/screens/updateEmail_page.dart';
-import 'package:appquangbadulich/account/screens/editAccount_name_page.dart';
-import 'package:appquangbadulich/account/screens/editAccount_password_page.dart';
+import 'package:appquangbadulich/updatePassword.dart/bloc/updatePassword_bloc.dart';
+import 'package:appquangbadulich/updatePassword.dart/screens/updatePassword_page.dart';
 import 'package:appquangbadulich/culture/bloc/culture_bloc.dart';
 import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_culture/detailTourist_culture_bloc.dart';
 import 'package:appquangbadulich/detailTouristAttraction/bloc/bloc_history/detailTourist_history_bloc.dart';
@@ -33,6 +36,8 @@ import 'package:appquangbadulich/specialDish/bloc/specialDish_bloc.dart';
 import 'package:appquangbadulich/specialDish/screens/specialDish_page.dart';
 import 'package:appquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
 import 'package:appquangbadulich/touristAttraction/screens/touristAttraction_page.dart';
+import 'package:appquangbadulich/updateName/bloc/updateName_bloc.dart';
+import 'package:appquangbadulich/updateName/screens/updateName_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -55,11 +60,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/deleteAccount': (context) => DeleteAccountPage(),
-        '/editAccount_password': (context) => EditAccount_Password_Page(),
-        '/editAccount_address': (context) => EditAccount_Address_Page(),
-        '/editAccount_birthday': (context) => EditAccount_Birthday_Page(),
+        '/editAccount_password': (context) => UpdatePasswordPage(),
+        '/editAccount_address': (context) => UpdateAddressPage(),
+        '/editAccount_birthday': (context) => UpdateBirthdayPage(),
         '/editAccount_gmail': (context) => UpdateEmailPage(),
-        '/editAccount_name': (context) => EditAccount_Name_Page(),
+        '/editAccount_name': (context) => UpdateNamePage(),
         '/detailAccount': (context) => DetailAccountPage(),
         '/account': (context) => AccountPage(),
         '/searchTouristAttraction': (context) => SearchTouristAttractionPage(),
@@ -100,6 +105,31 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<DeleteAccountBloc>(
+          create: (context) => DeleteAccountBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<UpdatePasswordBloc>(
+          create: (context) => UpdatePasswordBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<UpdateBirthdayBloc>(
+          create: (context) => UpdateBirthdayBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<UpdateAddressBloc>(
+          create: (context) => UpdateAddressBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<UpdateNameBloc>(
+          create: (context) => UpdateNameBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
         BlocProvider<UpdateEmailBloc>(
           create: (context) => UpdateEmailBloc(
             userRepository: UserRepository(),

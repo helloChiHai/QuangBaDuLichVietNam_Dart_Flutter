@@ -10,14 +10,15 @@ class DeleteAccountPage extends StatefulWidget {
 }
 
 class _DeleteAccountPageState extends State<DeleteAccountPage> {
+  late String customerId;
+  bool isDialogShown = false;
   @override
-  void initState() {
-    super.initState();
-  }
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-  @override
-  void dispose() {
-    super.dispose();
+    final Map<String, dynamic> args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    customerId = args['customerId'] as String;
   }
 
   @override
@@ -76,16 +77,14 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                     text: const TextSpan(
                       children: <TextSpan>[
                         TextSpan(
-                          text:
-                              'Bạn sẽ mất tất cả thông tin cá nhân bao gồm ',
+                          text: 'Bạn sẽ mất tất cả thông tin cá nhân bao gồm ',
                           style: TextStyle(
                             color: Color.fromARGB(255, 98, 98, 98),
                             fontSize: 20,
                           ),
                         ),
                         TextSpan(
-                          text:
-                              'địa điểm du lịch yêu thích.',
+                          text: 'địa điểm du lịch yêu thích.',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 20,
@@ -165,8 +164,6 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        // Navigator.popUntil(
-                        //     context, (route) => route.settings.name == '/');
                       },
                       child: const Text(
                         'Xóa tài khoản này',

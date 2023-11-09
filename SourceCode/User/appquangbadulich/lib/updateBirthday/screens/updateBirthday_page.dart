@@ -1,22 +1,21 @@
-import 'package:appquangbadulich/updateEmail/bloc/updateEmail_bloc.dart';
-import 'package:appquangbadulich/updateEmail/bloc/updateEmail_state.dart';
-import 'package:appquangbadulich/updateEmail/screens/updateEmail_form.dart';
+import 'package:appquangbadulich/updateBirthday/bloc/updateBirthday_bloc.dart';
+import 'package:appquangbadulich/updateBirthday/bloc/updateBirthday_state.dart';
+import 'package:appquangbadulich/updateBirthday/screens/updateBrithday_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UpdateEmailPage extends StatefulWidget {
-  const UpdateEmailPage({
+class UpdateBirthdayPage extends StatefulWidget {
+  const UpdateBirthdayPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<UpdateEmailPage> createState() => _UpdateEmailPageState();
+  _UpdateBirthdayPageState createState() => _UpdateBirthdayPageState();
 }
 
-class _UpdateEmailPageState extends State<UpdateEmailPage> {
+class _UpdateBirthdayPageState extends State<UpdateBirthdayPage> {
   late String customerId;
   bool isDialogShown = false;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -34,7 +33,7 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: const Text(
-          'Thay đổi email',
+          'Ngày sinh',
           style: TextStyle(
             fontSize: 22,
             color: Colors.black,
@@ -46,19 +45,21 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
           size: 30,
         ),
         leading: IconButton(
-          icon: const Icon(Icons.close),
           onPressed: () {
             Navigator.pop(context);
           },
+          icon: const Icon(
+            Icons.close,
+          ),
         ),
       ),
-      body: BlocListener<UpdateEmailBloc, UpdateEmailState>(
+      body: BlocListener<UpdateBirthdayBloc, UpdateBirthdayState>(
         listener: (context, state) {
-          if (state is UpdateEmailSuccess && !isDialogShown) {
+          if (state is UpdateBirthdaySuccess && !isDialogShown) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
-                  'Cập nhật Email thành công!',
+                  'Cập nhật Birthday thành công!',
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -73,7 +74,7 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
               builder: (context) {
                 return AlertDialog(
                   title: const Text(
-                    'Cập nhật Email thành công! Vui lòng đăng nhập lại để hoàn tất việc cập nhật',
+                    'Cập nhật Birthday thành công! Vui lòng đăng nhập lại để hoàn tất việc cập nhật',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -98,11 +99,11 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
                 );
               },
             );
-          } else if (state is UpdateEmailFailure) {
+          } else if (state is UpdateBirthdayFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
-                  'Cập nhật Email không thành công!',
+                  'Cập nhật Birthday không thành công!',
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -117,7 +118,7 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
             horizontal: 13,
             vertical: 25,
           ),
-          child: UpdateEmailForm(customerId: customerId),
+          child: UpdateBirthdayForm(customerId: customerId),
         ),
       ),
     );

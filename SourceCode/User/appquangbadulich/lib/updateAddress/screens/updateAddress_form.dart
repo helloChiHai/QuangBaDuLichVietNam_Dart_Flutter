@@ -1,55 +1,30 @@
+import 'package:appquangbadulich/updateAddress/bloc/updateAddress_bloc.dart';
+import 'package:appquangbadulich/updateAddress/bloc/updateAddress_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EditAccount_Address_Page extends StatefulWidget {
-  EditAccount_Address_Page({Key? key}) : super(key: key);
+class UpdateAddressForm extends StatefulWidget {
+  final String customerId;
+
+  const UpdateAddressForm({Key? key, required this.customerId}) : super(key: key);
 
   @override
-  State<EditAccount_Address_Page> createState() =>
-      _EditAccount_Address_PageState();
+  State<UpdateAddressForm> createState() => _UpdateAddressFormState();
 }
 
-class _EditAccount_Address_PageState extends State<EditAccount_Address_Page> {
+class _UpdateAddressFormState extends State<UpdateAddressForm> {
   String diaChi = '';
-
-  @override
+  late String idCus;
+    @override
   void initState() {
     super.initState();
+    idCus = widget.customerId;
   }
-
+  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        elevation: 0.5,
-        title: const Text(
-          'Thay đổi địa chỉ',
-          style: TextStyle(
-            fontSize: 22,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-          size: 30,
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.close,
-          ),
-        ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 13,
-          vertical: 25,
-        ),
-        child: Column(
+    final updateAddressBloc = BlocProvider.of<UpdateAddressBloc>(context);
+    return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
@@ -106,6 +81,12 @@ class _EditAccount_Address_PageState extends State<EditAccount_Address_Page> {
                         ? null
                         : () {
                             print(diaChi);
+                            updateAddressBloc.add(
+                              UpdateAddressButtonPressed(
+                                idCus: idCus,
+                                newAddress: diaChi,
+                              ),
+                            );
                           },
                     child: const Text(
                       'Lưu',
@@ -118,8 +99,6 @@ class _EditAccount_Address_PageState extends State<EditAccount_Address_Page> {
               ),
             ),
           ],
-        ),
-      ),
-    );
+        );
   }
 }

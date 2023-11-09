@@ -1,23 +1,24 @@
-import 'package:appquangbadulich/updateEmail/bloc/updateEmail_bloc.dart';
-import 'package:appquangbadulich/updateEmail/bloc/updateEmail_state.dart';
-import 'package:appquangbadulich/updateEmail/screens/updateEmail_form.dart';
+import 'package:appquangbadulich/updatePassword.dart/bloc/updatePassword_bloc.dart';
+import 'package:appquangbadulich/updatePassword.dart/bloc/updatePassword_state.dart';
+import 'package:appquangbadulich/updatePassword.dart/screens/updatePassword_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UpdateEmailPage extends StatefulWidget {
-  const UpdateEmailPage({
+class UpdatePasswordPage extends StatefulWidget {
+
+  UpdatePasswordPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<UpdateEmailPage> createState() => _UpdateEmailPageState();
+  State<UpdatePasswordPage> createState() => _UpdatePasswordPageState();
 }
 
-class _UpdateEmailPageState extends State<UpdateEmailPage> {
+class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
   late String customerId;
   bool isDialogShown = false;
 
-  @override
+    @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
@@ -25,7 +26,6 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     customerId = args['customerId'] as String;
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +34,7 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: const Text(
-          'Thay đổi email',
+          'Thay đổi mật khẩu',
           style: TextStyle(
             fontSize: 22,
             color: Colors.black,
@@ -46,19 +46,21 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
           size: 30,
         ),
         leading: IconButton(
-          icon: const Icon(Icons.close),
           onPressed: () {
             Navigator.pop(context);
           },
+          icon: const Icon(
+            Icons.close,
+          ),
         ),
       ),
-      body: BlocListener<UpdateEmailBloc, UpdateEmailState>(
+      body: BlocListener<UpdatePasswordBloc, UpdatePasswordState>(
         listener: (context, state) {
-          if (state is UpdateEmailSuccess && !isDialogShown) {
+          if (state is UpdatePasswordSuccess && !isDialogShown) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
-                  'Cập nhật Email thành công!',
+                  'Cập nhật Password thành công!',
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -73,7 +75,7 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
               builder: (context) {
                 return AlertDialog(
                   title: const Text(
-                    'Cập nhật Email thành công! Vui lòng đăng nhập lại để hoàn tất việc cập nhật',
+                    'Cập nhật Password thành công! Vui lòng đăng nhập lại để hoàn tất việc cập nhật',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -98,11 +100,11 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
                 );
               },
             );
-          } else if (state is UpdateEmailFailure) {
+          } else if (state is UpdatePasswordFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
-                  'Cập nhật Email không thành công!',
+                  'Cập nhật Password không thành công!',
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -117,7 +119,7 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
             horizontal: 13,
             vertical: 25,
           ),
-          child: UpdateEmailForm(customerId: customerId),
+          child: UpdatePasswordForm(customerId: customerId),
         ),
       ),
     );

@@ -1,61 +1,32 @@
+import 'package:appquangbadulich/updatePassword.dart/bloc/updatePassword_bloc.dart';
+import 'package:appquangbadulich/updatePassword.dart/bloc/updatePassword_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EditAccount_Password_Page extends StatefulWidget {
+class UpdatePasswordForm extends StatefulWidget {
+  final String customerId;
 
-  EditAccount_Password_Page({
-    Key? key,
-  }) : super(key: key);
+  const UpdatePasswordForm({Key? key, required this.customerId}) : super(key: key);
 
   @override
-  State<EditAccount_Password_Page> createState() => _EditAccount_Password_PageState();
+  State<UpdatePasswordForm> createState() => _UpdatePasswordFormState();
 }
 
-class _EditAccount_Password_PageState extends State<EditAccount_Password_Page> {
-  String matKhauMoi = '';
+class _UpdatePasswordFormState extends State<UpdatePasswordForm> {
+    String matKhauMoi = '';
   String xacNhanMatKhauMoi = '';
   bool hienThiThongBaoLoi_doDai = false;
   bool hienThiThongBaoLoi_trungKhopMatKhau = false;
-
-
+  late String idCus;
   @override
   void initState() {
     super.initState();
+    idCus = widget.customerId;
   }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.5,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: const Text(
-          'Thay đổi mật khẩu',
-          style: TextStyle(
-            fontSize: 22,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-          size: 30,
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.close,
-          ),
-        ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 13,
-          vertical: 25,
-        ),
-        child: Column(
+    final updatePaswordBloc = BlocProvider.of<UpdatePasswordBloc>(context);
+    return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
@@ -159,6 +130,12 @@ class _EditAccount_Password_PageState extends State<EditAccount_Password_Page> {
                     onPressed: (){
                       print('Mật khẩu mới: ${matKhauMoi}');
                       print('Mật khẩu mới: ${xacNhanMatKhauMoi}');
+                      updatePaswordBloc.add(
+                          UpdatePasswordButtonPressed(
+                            idCus: idCus,
+                            newPassword: xacNhanMatKhauMoi,
+                          ),
+                        );
                     },
                     child: const Text(
                       'Lưu',
@@ -171,8 +148,6 @@ class _EditAccount_Password_PageState extends State<EditAccount_Password_Page> {
               ),
             ),
           ],
-        ),
-      ),
-    );
+        );
   }
 }

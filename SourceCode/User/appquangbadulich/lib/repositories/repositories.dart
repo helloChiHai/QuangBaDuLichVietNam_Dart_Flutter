@@ -22,6 +22,24 @@ class UserRepository {
   String urlgetAllSpecialDish =
       'http://192.168.226.214:3090/getAllSpecialtyDish';
 
+  // DELETE ACCOUNT
+  Future<int> deleteAccount(String idCus) async {
+    final urlUpdate = '$urlMain/deleteCustomer/$idCus';
+    try {
+      final response = await http.delete(
+        Uri.parse(urlUpdate),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        return 1;
+      } else {
+        throw Exception('Lỗi cập nhật email: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   // UPDATE EMAIL CUSTOMER
   Future<CustomerModel?> updateEmail(String idCus, String newEmail) async {
     final urlUpdate = '$urlMain/updateEmail/$idCus';
@@ -35,6 +53,84 @@ class UserRepository {
         return customermodel;
       } else {
         throw Exception('Lỗi cập nhật email: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  // UPDATE Name CUSTOMER
+  Future<CustomerModel?> updateName(String idCus, String newName) async {
+    final urlUpdate = '$urlMain/updateName/$idCus';
+    try {
+      final response = await http.put(Uri.parse(urlUpdate),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'name': newName}));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final customermodel = CustomerModel.fromJson(data['data']);
+        return customermodel;
+      } else {
+        throw Exception('Lỗi cập nhật name: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  // UPDATE ADDRESS CUSTOMER
+  Future<CustomerModel?> updateAddress(String idCus, String newAddress) async {
+    final urlUpdate = '$urlMain/updateAddress/$idCus';
+    try {
+      final response = await http.put(Uri.parse(urlUpdate),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'address': newAddress}));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final customermodel = CustomerModel.fromJson(data['data']);
+        return customermodel;
+      } else {
+        throw Exception('Lỗi cập nhật address: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  // UPDATE BIRTHDAY CUSTOMER
+  Future<CustomerModel?> updateBirthday(
+      String idCus, String newBirthday) async {
+    final urlUpdate = '$urlMain/updateBirthday/$idCus';
+    try {
+      final response = await http.put(Uri.parse(urlUpdate),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'birthday': newBirthday}));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final customermodel = CustomerModel.fromJson(data['data']);
+        return customermodel;
+      } else {
+        throw Exception('Lỗi cập nhật birthday: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  // UPDATE PASSWORD CUSTOMER
+  Future<CustomerModel?> updatePassword(
+      String idCus, String newPassword) async {
+    final urlUpdate = '$urlMain/updatePassword/$idCus';
+    try {
+      final response = await http.put(Uri.parse(urlUpdate),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'password': newPassword}));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final customermodel = CustomerModel.fromJson(data['data']);
+        return customermodel;
+      } else {
+        throw Exception('Lỗi cập nhật PASSWORD: ${response.reasonPhrase}');
       }
     } catch (e) {
       throw Exception(e);

@@ -1,22 +1,19 @@
-import 'package:appquangbadulich/updateEmail/bloc/updateEmail_bloc.dart';
-import 'package:appquangbadulich/updateEmail/bloc/updateEmail_state.dart';
-import 'package:appquangbadulich/updateEmail/screens/updateEmail_form.dart';
+import 'package:appquangbadulich/updateAddress/bloc/updateAddress_bloc.dart';
+import 'package:appquangbadulich/updateAddress/bloc/updateAddress_state.dart';
+import 'package:appquangbadulich/updateAddress/screens/updateAddress_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UpdateEmailPage extends StatefulWidget {
-  const UpdateEmailPage({
-    Key? key,
-  }) : super(key: key);
+class UpdateAddressPage extends StatefulWidget {
+  UpdateAddressPage({Key? key}) : super(key: key);
 
   @override
-  State<UpdateEmailPage> createState() => _UpdateEmailPageState();
+  State<UpdateAddressPage> createState() => _UpdateAddressPageState();
 }
 
-class _UpdateEmailPageState extends State<UpdateEmailPage> {
+class _UpdateAddressPageState extends State<UpdateAddressPage> {
   late String customerId;
   bool isDialogShown = false;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -30,11 +27,11 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.5,
         backgroundColor: Colors.white,
         centerTitle: true,
+        elevation: 0.5,
         title: const Text(
-          'Thay đổi email',
+          'Thay đổi địa chỉ',
           style: TextStyle(
             fontSize: 22,
             color: Colors.black,
@@ -46,19 +43,21 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
           size: 30,
         ),
         leading: IconButton(
-          icon: const Icon(Icons.close),
           onPressed: () {
             Navigator.pop(context);
           },
+          icon: const Icon(
+            Icons.close,
+          ),
         ),
       ),
-      body: BlocListener<UpdateEmailBloc, UpdateEmailState>(
+      body: BlocListener<UpdateAddressBloc, UpdateAddressState>(
         listener: (context, state) {
-          if (state is UpdateEmailSuccess && !isDialogShown) {
+          if (state is UpdateAddressSuccess && !isDialogShown) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
-                  'Cập nhật Email thành công!',
+                  'Cập nhật Address thành công!',
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -73,7 +72,7 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
               builder: (context) {
                 return AlertDialog(
                   title: const Text(
-                    'Cập nhật Email thành công! Vui lòng đăng nhập lại để hoàn tất việc cập nhật',
+                    'Cập nhật Address thành công! Vui lòng đăng nhập lại để hoàn tất việc cập nhật',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -98,11 +97,11 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
                 );
               },
             );
-          } else if (state is UpdateEmailFailure) {
+          } else if (state is UpdateAddressFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
-                  'Cập nhật Email không thành công!',
+                  'Cập nhật Address không thành công!',
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -117,7 +116,7 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
             horizontal: 13,
             vertical: 25,
           ),
-          child: UpdateEmailForm(customerId: customerId),
+          child: UpdateAddressForm(customerId: customerId),
         ),
       ),
     );

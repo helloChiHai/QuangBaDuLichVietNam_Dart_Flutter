@@ -202,8 +202,9 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                         ),
                         IconButton(
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed('/editAccount_address');
+                            Navigator.of(context).pushNamed(
+                                '/editAccount_address',
+                                arguments: {'customerId': customer.idCus});
                           },
                           icon: const Icon(
                             Icons.edit_sharp,
@@ -238,7 +239,6 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
-                             
                             ),
                             const SizedBox(
                               height: 10,
@@ -254,8 +254,9 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                         ),
                         IconButton(
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed('/editAccount_birthday');
+                            Navigator.of(context).pushNamed(
+                                '/editAccount_birthday',
+                                arguments: {'customerId': customer.idCus});
                           },
                           icon: const Icon(
                             Icons.edit_sharp,
@@ -311,8 +312,8 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed('/editAccount_password');
+                        Navigator.of(context).pushNamed('/editAccount_password',
+                            arguments: {'customerId': customer.idCus});
                       },
                       icon: const Icon(
                         Icons.navigate_next_sharp,
@@ -343,7 +344,8 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/deleteAccount');
+                        Navigator.of(context).pushNamed('/deleteAccount',
+                            arguments: {'customerId': customer.idCus});
                       },
                       icon: const Icon(
                         Icons.navigate_next_sharp,

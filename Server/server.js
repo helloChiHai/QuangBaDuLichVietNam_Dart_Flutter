@@ -29,6 +29,27 @@ const checkMongoDBConnection = () => {
 
 checkMongoDBConnection();
 
+// XÓA TÀI KHOẢN DỰA VÀO IDCus
+app.delete("/deleteCustomer/:idCus", async (req, res) => {
+  const idCus = req.params.idCus;
+
+  try {
+    const deletedCustomer = await Customer.findOneAndRemove({ idCus });
+
+    if (!deletedCustomer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Không tìm thấy khách hàng" });
+    }
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Tài khoản đã được xoá thành công" });
+  } catch (error) {
+    return res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
 // CẬP NHẬT EMAIL DỰA TRÊN IDCUS
 app.put("/updateEmail/:idCus", async (req, res) => {
   const idCus = req.params.idCus;
@@ -72,6 +93,7 @@ app.put("/updateName/:idCus", async (req, res) => {
         .json({ success: false, message: "Không tìm thấy khách hàng" });
     }
 
+    console.log("cập nhật Name thành công: " + updatedCustomer);
     return res.status(200).json({ success: true, data: updatedCustomer });
   } catch (error) {
     return res.status(500).json({ error: "Lỗi server" });
