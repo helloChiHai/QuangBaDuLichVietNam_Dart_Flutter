@@ -30,14 +30,14 @@ class UserRepository {
           headers: {'Content-Type': 'application/json'},
           body: json.encode({'email': newEmail}));
       if (response.statusCode == 200) {
-        final customerJson = jsonDecode(response.body);
-        final customer = CustomerModel.fromJson(customerJson);
-        return customer;
+        final data = jsonDecode(response.body);
+        final customermodel = CustomerModel.fromJson(data['data']);
+        return customermodel;
       } else {
-        throw Exception('Lỗi cập nhật email');
+        throw Exception('Lỗi cập nhật email: ${response.reasonPhrase}');
       }
     } catch (e) {
-      throw Exception('Lỗi mạng');
+      throw Exception(e);
     }
   }
 

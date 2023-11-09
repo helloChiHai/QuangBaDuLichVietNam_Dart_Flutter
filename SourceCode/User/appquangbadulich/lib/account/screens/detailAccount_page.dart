@@ -238,6 +238,7 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
+                             
                             ),
                             const SizedBox(
                               height: 10,

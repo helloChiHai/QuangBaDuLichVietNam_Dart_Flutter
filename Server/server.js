@@ -48,7 +48,7 @@ app.put("/updateEmail/:idCus", async (req, res) => {
     }
 
     console.log("cập nhật Eamil thành công: " + updatedCustomer);
-    return res.status(200).json({ success: true, customer: updatedCustomer });
+    return res.status(200).json({ success: true, data: updatedCustomer });
   } catch (error) {
     return res.status(500).json({ error: "Lỗi server" });
   }
@@ -72,7 +72,7 @@ app.put("/updateName/:idCus", async (req, res) => {
         .json({ success: false, message: "Không tìm thấy khách hàng" });
     }
 
-    return res.status(200).json({ success: true, customer: updatedCustomer });
+    return res.status(200).json({ success: true, data: updatedCustomer });
   } catch (error) {
     return res.status(500).json({ error: "Lỗi server" });
   }
@@ -96,7 +96,7 @@ app.put("/updatePassword/:idCus", async (req, res) => {
         .json({ success: false, message: "Không tìm thấy khách hàng" });
     }
 
-    return res.status(200).json({ success: true, customer: updatedCustomer });
+    return res.status(200).json({ success: true, data: updatedCustomer });
   } catch (error) {
     return res.status(500).json({ error: "Lỗi server" });
   }
@@ -120,7 +120,7 @@ app.put("/updateAddress/:idCus", async (req, res) => {
         .json({ success: false, message: "Không tìm thấy khách hàng" });
     }
 
-    return res.status(200).json({ success: true, customer: updatedCustomer });
+    return res.status(200).json({ success: true, data: updatedCustomer });
   } catch (error) {
     return res.status(500).json({ error: "Lỗi server" });
   }
@@ -144,7 +144,7 @@ app.put("/updateBirthday/:idCus", async (req, res) => {
         .json({ success: false, message: "Không tìm thấy khách hàng" });
     }
 
-    return res.status(200).json({ success: true, customer: updatedCustomer });
+    return res.status(200).json({ success: true, data: updatedCustomer });
   } catch (error) {
     return res.status(500).json({ error: "Lỗi server" });
   }

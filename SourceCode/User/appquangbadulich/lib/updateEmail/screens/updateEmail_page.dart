@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:appquangbadulich/updateEmail/bloc/updateEmail_bloc.dart';
 import 'package:appquangbadulich/updateEmail/bloc/updateEmail_state.dart';
 import 'package:appquangbadulich/updateEmail/screens/updateEmail_form.dart';
@@ -15,6 +17,10 @@ class UpdateEmailPage extends StatefulWidget {
 
 class _UpdateEmailPageState extends State<UpdateEmailPage> {
   late String customerId;
+  int countdown = 5;
+  late Timer timer;
+  bool isDialogShown = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -22,6 +28,26 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
     final Map<String, dynamic> args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     customerId = args['customerId'] as String;
+  }
+
+  void startCountdonwn() {
+    timer = Timer.periodic(Duration(seconds: 1), (_timer) {
+      setState(() {
+        if (countdown > 0) {
+          countdown--;
+          print(countdown);
+        } else {
+          // Navigator.of(context).pushNamed('/login');
+          timer.cancel();
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -52,7 +78,9 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
       ),
       body: BlocListener<UpdateEmailBloc, UpdateEmailState>(
         listener: (context, state) {
-          if (state is UpdateEmailSuccess) {
+          if (state is UpdateEmailSuccess && !isDialogShown) {
+            startCountdonwn();
+
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
@@ -63,6 +91,38 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
                 ),
                 backgroundColor: Colors.green,
               ),
+            );
+
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text(
+                    'Cập nhật Email thành công! Vui lòng đăng nhập lại để hoàn tất việc cập nhật',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        'OK ($countdown s)',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             );
           } else if (state is UpdateEmailFailure) {
             ScaffoldMessenger.of(context).showSnackBar(

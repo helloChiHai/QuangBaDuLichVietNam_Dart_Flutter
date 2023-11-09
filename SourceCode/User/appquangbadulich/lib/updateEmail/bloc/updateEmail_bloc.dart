@@ -13,11 +13,14 @@ class UpdateEmailBloc extends Bloc<UpdateEmailEvent, UpdateEmailState> {
         final customer =
             await userRepository.updateEmail(event.idCus, event.newEmail);
         if (customer != null) {
+          print('thanh cong');
           emit(UpdateEmailSuccess(customer: customer));
         } else {
+          print('that bai');
           emit(UpdateEmailFailure(error: 'Cập nhật email không thành công!'));
         }
       } catch (e) {
+        print(e.toString());
         emit(UpdateEmailFailure(error: e.toString()));
       }
     });
