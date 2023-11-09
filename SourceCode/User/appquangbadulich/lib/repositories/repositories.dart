@@ -22,6 +22,25 @@ class UserRepository {
   String urlgetAllSpecialDish =
       'http://192.168.226.214:3090/getAllSpecialtyDish';
 
+  // UPDATE EMAIL CUSTOMER
+  Future<CustomerModel?> updateEmail(String idCus, String newEmail) async {
+    final urlUpdate = '$urlMain/updateEmail/$idCus';
+    try {
+      final response = await http.put(Uri.parse(urlUpdate),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({'email': newEmail}));
+      if (response.statusCode == 200) {
+        final customerJson = jsonDecode(response.body);
+        final customer = CustomerModel.fromJson(customerJson);
+        return customer;
+      } else {
+        throw Exception('Lỗi cập nhật email');
+      }
+    } catch (e) {
+      throw Exception('Lỗi mạng');
+    }
+  }
+
   // fetch all tourist attraction
   Future<List<ProvinceModel>> getAllProvinces() async {
     try {
@@ -38,8 +57,7 @@ class UserRepository {
             .toList();
         return province;
       } else {
-        throw Exception(
-            'Failed to fetch province: ${response.reasonPhrase}');
+        throw Exception('Failed to fetch province: ${response.reasonPhrase}');
       }
     } catch (e) {
       print('Error while fetching province: $e');

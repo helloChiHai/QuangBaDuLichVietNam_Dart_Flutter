@@ -1,8 +1,10 @@
 import 'package:appquangbadulich/account/screens/account_page.dart';
+import 'package:appquangbadulich/account/screens/deleteAccount_page.dart';
 import 'package:appquangbadulich/account/screens/detailAccount_page.dart';
 import 'package:appquangbadulich/account/screens/editAccount_address_page.dart';
 import 'package:appquangbadulich/account/screens/editAccount_birthday_page.dart';
-import 'package:appquangbadulich/account/screens/editAccount_gmail_page.dart';
+import 'package:appquangbadulich/updateEmail/bloc/updateEmail_bloc.dart';
+import 'package:appquangbadulich/updateEmail/screens/updateEmail_page.dart';
 import 'package:appquangbadulich/account/screens/editAccount_name_page.dart';
 import 'package:appquangbadulich/account/screens/editAccount_password_page.dart';
 import 'package:appquangbadulich/culture/bloc/culture_bloc.dart';
@@ -52,10 +54,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
+        '/deleteAccount': (context) => DeleteAccountPage(),
         '/editAccount_password': (context) => EditAccount_Password_Page(),
         '/editAccount_address': (context) => EditAccount_Address_Page(),
         '/editAccount_birthday': (context) => EditAccount_Birthday_Page(),
-        '/editAccount_gmail': (context) => EditAccount_Gmail_Page(),
+        '/editAccount_gmail': (context) => UpdateEmailPage(),
         '/editAccount_name': (context) => EditAccount_Name_Page(),
         '/detailAccount': (context) => DetailAccountPage(),
         '/account': (context) => AccountPage(),
@@ -97,6 +100,11 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<UpdateEmailBloc>(
+          create: (context) => UpdateEmailBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
         BlocProvider<CustomerBloc>(
           create: (context) => CustomerBloc(),
         ),

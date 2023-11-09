@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
-
 class LoginIntro extends StatefulWidget {
   const LoginIntro({super.key});
 
@@ -12,7 +11,7 @@ class LoginIntro extends StatefulWidget {
 class _LoginIntroState extends State<LoginIntro> {
   @override
   Widget build(BuildContext context) {
-     return MaterialApp(
+    return MaterialApp(
       home: IntroductionScreen(
         pages: [
           buildIntroPage("assets/img/img_4.png", "Page 1", "This is page 1"),
@@ -68,7 +67,7 @@ class _LoginIntroState extends State<LoginIntro> {
             right: 16,
             child: Text(
               body,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),

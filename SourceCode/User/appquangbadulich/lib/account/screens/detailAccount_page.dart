@@ -99,8 +99,8 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                         ),
                         IconButton(
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed('/editAccount_name');
+                            Navigator.of(context).pushNamed('/editAccount_name',
+                                arguments: {'customerId': customer.idCus});
                           },
                           icon: const Icon(
                             Icons.edit_sharp,
@@ -150,8 +150,9 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                         ),
                         IconButton(
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed('/editAccount_gmail');
+                            Navigator.of(context).pushNamed(
+                                '/editAccount_gmail',
+                                arguments: {'customerId': customer.idCus});
                           },
                           icon: const Icon(
                             Icons.edit_sharp,
@@ -309,7 +310,8 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/editAccount_password');
+                        Navigator.of(context)
+                            .pushNamed('/editAccount_password');
                       },
                       icon: const Icon(
                         Icons.navigate_next_sharp,
@@ -339,7 +341,9 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/deleteAccount');
+                      },
                       icon: const Icon(
                         Icons.navigate_next_sharp,
                         size: 35,

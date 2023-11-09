@@ -29,6 +29,127 @@ const checkMongoDBConnection = () => {
 
 checkMongoDBConnection();
 
+// CẬP NHẬT EMAIL DỰA TRÊN IDCUS
+app.put("/updateEmail/:idCus", async (req, res) => {
+  const idCus = req.params.idCus;
+  const newEmail = req.body.email;
+
+  try {
+    const updatedCustomer = await Customer.findOneAndUpdate(
+      { idCus },
+      { email: newEmail },
+      { new: true }
+    );
+
+    if (!updatedCustomer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Không tìm thấy khách hàng" });
+    }
+
+    console.log("cập nhật Eamil thành công: " + updatedCustomer);
+    return res.status(200).json({ success: true, customer: updatedCustomer });
+  } catch (error) {
+    return res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
+// CẬP NHẬT NAME DỰA TRÊN IDCUS
+app.put("/updateName/:idCus", async (req, res) => {
+  const idCus = req.params.idCus;
+  const newName = req.body.name;
+
+  try {
+    const updatedCustomer = await Customer.findOneAndUpdate(
+      { idCus },
+      { name: newName },
+      { new: true }
+    );
+
+    if (!updatedCustomer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Không tìm thấy khách hàng" });
+    }
+
+    return res.status(200).json({ success: true, customer: updatedCustomer });
+  } catch (error) {
+    return res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
+// CẬP NHẬT PASSWORD DỰA TRÊN IDCUS
+app.put("/updatePassword/:idCus", async (req, res) => {
+  const idCus = req.params.idCus;
+  const newPassword = req.body.password;
+
+  try {
+    const updatedCustomer = await Customer.findOneAndUpdate(
+      { idCus },
+      { password: newPassword },
+      { new: true }
+    );
+
+    if (!updatedCustomer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Không tìm thấy khách hàng" });
+    }
+
+    return res.status(200).json({ success: true, customer: updatedCustomer });
+  } catch (error) {
+    return res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
+// CẬP NHẬT ADDRESS DỰA TRÊN IDCUS
+app.put("/updateAddress/:idCus", async (req, res) => {
+  const idCus = req.params.idCus;
+  const newAddress = req.body.address;
+
+  try {
+    const updatedCustomer = await Customer.findOneAndUpdate(
+      { idCus },
+      { address: newAddress },
+      { new: true }
+    );
+
+    if (!updatedCustomer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Không tìm thấy khách hàng" });
+    }
+
+    return res.status(200).json({ success: true, customer: updatedCustomer });
+  } catch (error) {
+    return res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
+// CẬP NHẬT BIRTHDAY DỰA TRÊN IDCUS
+app.put("/updateBirthday/:idCus", async (req, res) => {
+  const idCus = req.params.idCus;
+  const newBirthday = req.body.birthday;
+
+  try {
+    const updatedCustomer = await Customer.findOneAndUpdate(
+      { idCus },
+      { birthday: newBirthday },
+      { new: true }
+    );
+
+    if (!updatedCustomer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Không tìm thấy khách hàng" });
+    }
+
+    return res.status(200).json({ success: true, customer: updatedCustomer });
+  } catch (error) {
+    return res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
 // hiển thị danh sách các tỉnh thành phố
 app.get("/getAllProvinces", async (req, res) => {
   try {
