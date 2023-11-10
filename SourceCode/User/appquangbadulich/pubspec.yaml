@@ -46,6 +46,8 @@ dependencies:
   scroll_date_picker: ^3.7.3
   full_screen_image: ^2.0.0
   image_picker: ^0.7.0
+  path: ^1.8.3
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:

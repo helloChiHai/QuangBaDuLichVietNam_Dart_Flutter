@@ -83,7 +83,8 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                             child: GestureDetector(
                               onTap: () {
                                 print('object');
-                                Navigator.of(context).pushNamed('/updateImage');
+                                Navigator.of(context).pushNamed('/updateImage',
+                                    arguments: {'customerId': customer.idCus});
                               },
                               child: Container(
                                 height: 50,

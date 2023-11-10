@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:appquangbadulich/updateImage/widgets/displayimg_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
 class UpdateImageWidget extends StatefulWidget {
-  const UpdateImageWidget({super.key});
+  const UpdateImageWidget({Key? key}) : super(key: key);
 
   @override
   State<UpdateImageWidget> createState() => _UpdateImageWidgetState();
@@ -13,6 +16,7 @@ class UpdateImageWidget extends StatefulWidget {
 class _UpdateImageWidgetState extends State<UpdateImageWidget> {
   bool isCheckUploadImg = false;
   String? imagePath;
+  List<String> savedImagePaths = [];
   final ImagePicker _imagePicker = ImagePicker();
 
   Future<void> _pickImage() async {
@@ -24,6 +28,34 @@ class _UpdateImageWidgetState extends State<UpdateImageWidget> {
         isCheckUploadImg = true;
         imagePath = pickedFile.path;
       });
+    }
+  }
+
+  Future<void> _updateImage(BuildContext context) async {
+    if (imagePath != null) {
+      final Directory appDirectory = await getApplicationDocumentsDirectory();
+      final String imgDirectoryPath =
+          path.join(appDirectory.path, 'assets/img/');
+
+      if (!Directory(imgDirectoryPath).existsSync()) {
+        Directory(imgDirectoryPath).createSync(recursive: true);
+      }
+
+      final String fileName = path.basename(imagePath!);
+
+      final String newPath = path.join(imgDirectoryPath, fileName);
+
+      await File(imagePath!).copy(newPath);
+
+      // Thêm đường dẫn mới vào danh sách
+      savedImagePaths.add(newPath);
+
+      // Hiển thị Snackbar khi hình ảnh được lưu thành công
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Hình ảnh đã được lưu tại: $newPath'),
+        ),
+      );
     }
   }
 
@@ -63,8 +95,41 @@ class _UpdateImageWidgetState extends State<UpdateImageWidget> {
                     ),
                   ),
                 ),
+                // GestureDetector(
+                //   onTap: () {
+                //     _updateImage(context);
+                //     print('Đây là tên file ảnh: ${path.basename(imagePath!)}');
+                //   },
+                //   child: Container(
+                //     padding: const EdgeInsets.symmetric(
+                //       horizontal: 30,
+                //       vertical: 10,
+                //     ),
+                //     decoration: BoxDecoration(
+                //       color: Colors.blue,
+                //       borderRadius: BorderRadius.circular(20),
+                //     ),
+                //     child: const Text(
+                //       'Cập nhật',
+                //       style: TextStyle(
+                //         fontSize: 20,
+                //         color: Colors.white,
+                //         fontWeight: FontWeight.bold,
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    _updateImage(context);
+                    print('Đây là tên file ảnh: ${path.basename(imagePath!)}');
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DisplayWidget(imagePaths: savedImagePaths),
+                      ),
+                    );
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 30,
@@ -75,7 +140,7 @@ class _UpdateImageWidgetState extends State<UpdateImageWidget> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: const Text(
-                      'Cập nhật',
+                      'Xem hình ảnh',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.white,
