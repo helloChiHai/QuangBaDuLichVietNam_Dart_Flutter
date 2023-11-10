@@ -26,7 +26,7 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
     FilterReionModel(idRegion: 'PN', nameRegion: 'Miền Nam'),
   ];
 
-  int checkSelectedRegion = 1;
+  int checkSelectedRegion = 0;
   String checkSelectedIdRegion = '';
   String selectedNameRegion = '';
 
@@ -48,7 +48,7 @@ void initState() {
   provinceBloc.add(FetchProvinces());
 
   _subscription = provinceBloc.stream.listen((state) {
-    if (mounted) {  // Kiểm tra xem widget còn nằm trong cây widget trước khi gọi setState
+    if (mounted) {  
       if (state is ProvinceLoaded) {
         setState(() {
           itemProvince.clear();
@@ -61,7 +61,6 @@ void initState() {
 
 @override
 void dispose() {
-  // Hủy lắng nghe sự kiện stream ở đây
   _subscription?.cancel();
   super.dispose();
 }

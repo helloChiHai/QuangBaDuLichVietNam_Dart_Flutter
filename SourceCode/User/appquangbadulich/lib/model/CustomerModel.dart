@@ -1,4 +1,3 @@
-
 import 'package:appquangbadulich/model/ListSaveTouristModel.dart';
 
 class CustomerModel {
@@ -7,8 +6,8 @@ class CustomerModel {
   final String password;
   final String name;
   final String? imgCus;
-  final String address;
-  final String birthday;
+  final String? address;
+  final String? birthday;
   final int role;
   final List<ListSaveTouristModel>? listSaveTourist;
 
@@ -18,8 +17,8 @@ class CustomerModel {
     required this.password,
     required this.name,
     this.imgCus,
-    required this.address,
-    required this.birthday,
+    this.address,
+    this.birthday,
     required this.role,
     this.listSaveTourist,
   });

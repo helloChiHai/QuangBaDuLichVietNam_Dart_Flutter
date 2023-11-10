@@ -44,6 +44,8 @@ dependencies:
   intl: ^0.18.1
   foundation: ^0.0.5
   scroll_date_picker: ^3.7.3
+  full_screen_image: ^2.0.0
+  image_picker: ^0.7.0
 
 dev_dependencies:
   flutter_test:

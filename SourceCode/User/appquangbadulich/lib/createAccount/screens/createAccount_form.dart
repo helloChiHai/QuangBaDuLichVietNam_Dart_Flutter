@@ -16,8 +16,6 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final nameController = TextEditingController();
-  final addressController = TextEditingController();
-  final birthdayController = TextEditingController();
 
   bool _obscureText_mk = true;
   bool _obscureText_nlmk = true;
@@ -69,9 +67,13 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
           ),
           child: TextField(
             controller: emailController,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+            ),
             decoration: const InputDecoration(
               labelText: 'Email',
-              labelStyle: TextStyle(fontSize: 18, color: Colors.black),
+              labelStyle: TextStyle(fontSize: 20, color: Colors.black),
               border: InputBorder.none,
             ),
           ),
@@ -89,9 +91,13 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
           child: TextField(
             obscureText: _obscureText_mk,
             controller: passwordController,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+            ),
             decoration: InputDecoration(
               labelText: 'Mật khẩu',
-              labelStyle: const TextStyle(fontSize: 18, color: Colors.black),
+              labelStyle: const TextStyle(fontSize: 20, color: Colors.black),
               border: InputBorder.none,
               suffixIcon: IconButton(
                 icon: Icon(
@@ -119,9 +125,13 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
           child: TextField(
             obscureText: _obscureText_nlmk,
             controller: confirmPasswordController,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+            ),
             decoration: InputDecoration(
               labelText: 'Nhập lại mật khẩu',
-              labelStyle: const TextStyle(fontSize: 18, color: Colors.black),
+              labelStyle: const TextStyle(fontSize: 20, color: Colors.black),
               border: InputBorder.none,
               suffixIcon: IconButton(
                 icon: Icon(
@@ -148,47 +158,13 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
           ),
           child: TextField(
             controller: nameController,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+            ),
             decoration: const InputDecoration(
               labelText: 'Họ tên',
-              labelStyle: TextStyle(fontSize: 18, color: Colors.black),
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        Container(
-          width: 0.9 * MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
-          child: TextField(
-            controller: addressController,
-            decoration: const InputDecoration(
-              labelText: 'Địa chỉ',
-              labelStyle: TextStyle(fontSize: 18, color: Colors.black),
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        Container(
-          width: 0.9 * MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
-          child: TextField(
-            controller: birthdayController,
-            decoration: const InputDecoration(
-              labelText: 'Ngày sinh',
-              labelStyle: TextStyle(fontSize: 18, color: Colors.black),
+              labelStyle: TextStyle(fontSize: 20, color: Colors.black),
               border: InputBorder.none,
             ),
           ),
@@ -204,8 +180,6 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                 final password = passwordController.text;
                 final confirmPassword = confirmPasswordController.text;
                 final name = nameController.text;
-                final address = addressController.text;
-                final birthday = birthdayController.text;
 
                 if (email.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -213,7 +187,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                       content: Text(
                         'Vui lòng nhập Email!',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                         ),
                       ),
                       backgroundColor: Colors.red,
@@ -225,7 +199,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                       content: Text(
                         'Vui lòng nhập Mật Khẩu!',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                         ),
                       ),
                       backgroundColor: Colors.red,
@@ -249,31 +223,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                       content: Text(
                         'Vui lòng nhập lại Họ Tên!',
                         style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                } else if (address.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Vui lòng nhập lại Địa Chỉ!',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                } else if (birthday == false) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Vui lòng nhập lại Ngày sinh!',
-                        style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                         ),
                       ),
                       backgroundColor: Colors.red,
@@ -285,7 +235,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                       content: Text(
                         'Mật khẩu trong trùng khớp!',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                         ),
                       ),
                       backgroundColor: Colors.red,
@@ -298,8 +248,8 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                       password: password,
                       name: name,
                       imgCus: "",
-                      address: address,
-                      birthday: birthday,
+                      address: "",
+                      birthday: "",
                       role: 1,
                     ),
                   );

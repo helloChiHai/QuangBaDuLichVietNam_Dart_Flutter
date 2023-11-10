@@ -10,17 +10,7 @@ import '../model/CustomerModel.dart';
 import '../model/regionModel.dart';
 
 class UserRepository {
-  String urlMain = 'http://192.168.226.214:3090';
-  String urlRegion = 'http://192.168.226.214:3090/regions';
-  String urlLogin = 'http://192.168.226.214:3090/login';
-  String urlGetAllProvinces = 'http://192.168.226.214:3090/getAllProvinces';
-  String urlCreateAccount = 'http://192.168.226.214:3090/createAccount';
-  String urlgetAllCulture = 'http://192.168.226.214:3090/getAllCulture';
-  String urlgetAllHistory = 'http://192.168.226.214:3090/getAllHistory';
-  String urlgetAllTouristAttraction =
-      'http://192.168.226.214:3090/getAllTouristAttraction';
-  String urlgetAllSpecialDish =
-      'http://192.168.226.214:3090/getAllSpecialtyDish';
+  String urlMain = 'http://192.168.51.214:3090';
 
   // DELETE ACCOUNT
   Future<int> deleteAccount(String idCus) async {
@@ -141,7 +131,7 @@ class UserRepository {
   Future<List<ProvinceModel>> getAllProvinces() async {
     try {
       final response = await http.get(
-        Uri.parse(urlGetAllProvinces),
+        Uri.parse('$urlMain/getAllProvinces'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
@@ -171,8 +161,11 @@ class UserRepository {
         'idProvines': idProvines,
       };
 
-      final uri = Uri.http(
-          '192.168.226.214:3090', '/filter-tourist-attractions', queryParams);
+      final uri =
+          Uri.http('$urlMain', '/filter-tourist-attractions', queryParams);
+
+      // final uri = Uri.http(
+      //     '192.168.226.214:3090', '/filter-tourist-attractions', queryParams);
 
       final response = await http.get(
         uri,
@@ -199,7 +192,7 @@ class UserRepository {
   Future<List<TouristAttractionModel>> getAllTouristAttraction() async {
     try {
       final response = await http.get(
-        Uri.parse(urlgetAllTouristAttraction),
+        Uri.parse('$urlMain/getAllTouristAttraction'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
@@ -225,8 +218,7 @@ class UserRepository {
       String idTourist) async {
     try {
       final response = await http.get(
-        Uri.parse(
-            'http://192.168.226.214:3090/getTouristAttractionByIdTourist/$idTourist'),
+        Uri.parse('$urlMain/getTouristAttractionByIdTourist/$idTourist'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
@@ -250,8 +242,7 @@ class UserRepository {
       String idCulture) async {
     try {
       final response = await http.get(
-        Uri.parse(
-            'http://192.168.226.214:3090/getTouristAttractionByIdCulture/$idCulture'),
+        Uri.parse('$urlMain/getTouristAttractionByIdCulture/$idCulture'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
@@ -275,8 +266,7 @@ class UserRepository {
       String idDish) async {
     try {
       final response = await http.get(
-        Uri.parse(
-            'http://192.168.226.214:3090/getTouristAttractionByIdDish/$idDish'),
+        Uri.parse('$urlMain/getTouristAttractionByIdDish/$idDish'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
@@ -301,7 +291,7 @@ class UserRepository {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.226.214:3090/getTouristAttractionByidHistoryStory/$idHistoryStory'),
+            '$urlMain/getTouristAttractionByidHistoryStory/$idHistoryStory'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
@@ -324,7 +314,7 @@ class UserRepository {
   Future<List<CultureModel>> getCultures() async {
     try {
       final response = await http.get(
-        Uri.parse(urlgetAllCulture),
+        Uri.parse('$urlMain/getAllCulture'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
@@ -348,7 +338,7 @@ class UserRepository {
   Future<List<HistoryModel>> getHistory() async {
     try {
       final response = await http.get(
-        Uri.parse(urlgetAllHistory),
+        Uri.parse('$urlMain/getAllHistory'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
@@ -372,7 +362,7 @@ class UserRepository {
   Future<List<SpecialtyDishModel>> getSpecialDish() async {
     try {
       final response = await http.get(
-        Uri.parse(urlgetAllSpecialDish),
+        Uri.parse('$urlMain/getAllSpecialtyDish'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
@@ -398,7 +388,7 @@ class UserRepository {
   Future<List<RegionModel>> getRegions() async {
     try {
       final response = await http.get(
-        Uri.parse(urlRegion),
+        Uri.parse('$urlMain/regions'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
@@ -422,7 +412,7 @@ class UserRepository {
   Future<CustomerModel?> login(String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse(urlLogin),
+        Uri.parse('$urlMain/login'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({"email": email, "password": password}),
       );
@@ -471,10 +461,10 @@ class UserRepository {
 
   // tạo tài khoản
   Future<int> createAccount(String email, String password, String name,
-      String? imgCus, String address, String birthday, int role) async {
+      String? imgCus, String? address, String? birthday, int role) async {
     try {
       final response = await http.post(
-        Uri.parse(urlCreateAccount),
+        Uri.parse('$urlMain/createAccount'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "email": email,

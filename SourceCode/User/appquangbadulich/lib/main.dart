@@ -8,6 +8,7 @@ import 'package:appquangbadulich/updateBirthday/bloc/updateBirthday_bloc.dart';
 import 'package:appquangbadulich/updateBirthday/screens/updateBirthday_page.dart';
 import 'package:appquangbadulich/updateEmail/bloc/updateEmail_bloc.dart';
 import 'package:appquangbadulich/updateEmail/screens/updateEmail_page.dart';
+import 'package:appquangbadulich/updateImage/screens/updateImage_page.dart';
 import 'package:appquangbadulich/updatePassword.dart/bloc/updatePassword_bloc.dart';
 import 'package:appquangbadulich/updatePassword.dart/screens/updatePassword_page.dart';
 import 'package:appquangbadulich/culture/bloc/culture_bloc.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
+        '/updateImage': (context) => UpdateImagePage(),
         '/deleteAccount': (context) => DeleteAccountPage(),
         '/editAccount_password': (context) => UpdatePasswordPage(),
         '/editAccount_address': (context) => UpdateAddressPage(),
@@ -96,7 +98,7 @@ class MyApp extends StatelessWidget {
         '/detail_specialtyDish': (context) =>
             DetailSpecialtyDish(dataSpecialtyDish: []),
       },
-      home: LoginPage(),
+      home: UpdateImagePage(),
     );
   }
 }

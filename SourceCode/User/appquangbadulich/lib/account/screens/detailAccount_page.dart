@@ -1,5 +1,6 @@
 import 'package:appquangbadulich/model/CustomerModel.dart';
 import 'package:flutter/material.dart';
+import 'package:full_screen_image/full_screen_image.dart';
 
 class DetailAccountPage extends StatefulWidget {
   const DetailAccountPage({super.key});
@@ -10,6 +11,7 @@ class DetailAccountPage extends StatefulWidget {
 
 class _DetailAccountPageState extends State<DetailAccountPage> {
   late CustomerModel customer;
+  double imageSize = 130.0;
 
   @override
   void didChangeDependencies() {
@@ -56,16 +58,49 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                   children: [
                     const SizedBox(height: 20),
                     Center(
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/img/SP_CUL_3.jpg'),
+                      child: Stack(
+                        children: [
+                          FullScreenWidget(
+                            disposeLevel: DisposeLevel.Medium,
+                            backgroundColor: Colors.transparent,
+                            backgroundIsTransparent: true,
+                            child: Container(
+                              width: 130,
+                              height: 130,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage('assets/img/SP_CUL_3.jpg'),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            left: 70,
+                            child: GestureDetector(
+                              onTap: () {
+                                print('object');
+                                Navigator.of(context).pushNamed('/updateImage');
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color.fromRGBO(169, 169, 169, 0.5),
+                                ),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  size: 30,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                     const SizedBox(
@@ -192,7 +227,10 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                               height: 10,
                             ),
                             Text(
-                              customer.address,
+                              customer.address != null &&
+                                      customer.address!.isNotEmpty
+                                  ? customer.address.toString()
+                                  : 'Vui lòng cập nhật địa chỉ',
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.black,
@@ -244,7 +282,10 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                               height: 10,
                             ),
                             Text(
-                              customer.birthday,
+                              customer.birthday != null &&
+                                      customer.birthday!.isNotEmpty
+                                  ? customer.birthday.toString()
+                                  : 'Vui lòng cập nhật ngày sinh',
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.black,

@@ -6,7 +6,8 @@ class CreateAccountSuccessful extends StatefulWidget {
   const CreateAccountSuccessful({super.key});
 
   @override
-  State<CreateAccountSuccessful> createState() => _CreateAccountSuccessfulState();
+  State<CreateAccountSuccessful> createState() =>
+      _CreateAccountSuccessfulState();
 }
 
 class _CreateAccountSuccessfulState extends State<CreateAccountSuccessful> {
@@ -65,12 +66,13 @@ class _CreateAccountSuccessfulState extends State<CreateAccountSuccessful> {
                 ),
               ),
               const SizedBox(height: 20),
-              const SizedBox(
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 width: double.infinity,
-                child: Text(
+                child: const Text(
                   'Cùng khám phá đất nước, văn hóa, lịch sử con người Việt Nam nhé!',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 20,
                   ),
                   textAlign: TextAlign.center,
                 ),

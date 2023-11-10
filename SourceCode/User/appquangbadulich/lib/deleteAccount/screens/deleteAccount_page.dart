@@ -1,4 +1,8 @@
+import 'package:appquangbadulich/deleteAccount/bloc/deleteAccount_bloc.dart';
+import 'package:appquangbadulich/deleteAccount/bloc/deleteAccount_state.dart';
+import 'package:appquangbadulich/deleteAccount/widgets/deleteAccount_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DeleteAccountPage extends StatefulWidget {
   const DeleteAccountPage({
@@ -32,149 +36,68 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
           size: 30,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 180,
-              color: const Color.fromARGB(255, 242, 239, 239),
-              child: const Image(
-                image: AssetImage('assets/img/img_12.png'),
+      body: BlocListener<DeleteAccountBloc, DeleteAccountState>(
+        listener: (context, state) {
+          if (state is DeleteAccountSuccess && !isDialogShown) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'Xóa tài khoản thành công!',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                backgroundColor: Colors.green,
               ),
-            ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 20,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Ủa tính nghỉ chơi VietWander thiệt hả?',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text(
-                    'Lưu ý: Tài khoản sau khi xóa sẽ không thể phục hồi lại được.',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.red,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  RichText(
-                    text: const TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Bạn sẽ mất tất cả thông tin cá nhân bao gồm ',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 98, 98, 98),
-                            fontSize: 20,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'địa điểm du lịch yêu thích.',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  RichText(
-                    text: const TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Sau khi xóa tài khoản, bạn sẽ ',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 98, 98, 98),
-                            fontSize: 20,
-                          ),
-                        ),
-                        TextSpan(
-                          text:
-                              'không thể dùng lại email và số điện thoại của tài khoản này để tạo tài khoản mới luôn nha bạn yêu.',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text(
-                    'Bộ phận CSKH của VietWander sẽ không thể hỗ trợ bạn phục hồi tài khoản.',
+            );
+
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text(
+                    'Xóa tài khoản thành công! Hẹn gặp lại bạn',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
-                  const SizedBox(
-                    height: 45,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: TextButton(
+                  actions: [
+                    TextButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.of(context).pushNamed('/login');
                       },
                       child: const Text(
-                        'Thôi không xóa nữa',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        'OK',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
+                  ],
+                );
+              },
+            );
+          } else if (state is DeleteAccountFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'Xóa tài khoản không thành công!',
+                  style: TextStyle(
+                    fontSize: 16,
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                      },
-                      child: const Text(
-                        'Xóa tài khoản này',
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
+                backgroundColor: Colors.red,
               ),
-            ),
-          ],
+            );
+          }
+        },
+        child: SingleChildScrollView(
+          child: DeleteAccount_Widget(customerId: customerId),
         ),
       ),
     );

@@ -63,9 +63,13 @@ class _LoginFormState extends State<LoginForm> {
           ),
           child: TextField(
             controller: emailController,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+            ),
             decoration: const InputDecoration(
               labelText: 'Email',
-              labelStyle: TextStyle(fontSize: 18, color: Colors.black),
+              labelStyle: TextStyle(fontSize: 20, color: Colors.black),
               border: InputBorder.none,
             ),
           ),
@@ -82,11 +86,14 @@ class _LoginFormState extends State<LoginForm> {
           ),
           child: TextField(
             obscureText: _obscureText,
-            style: const TextStyle(fontSize: 18),
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+            ),
             controller: passwordController,
             decoration: InputDecoration(
               labelText: 'Mật khẩu',
-              labelStyle: const TextStyle(fontSize: 18, color: Colors.black),
+              labelStyle: const TextStyle(fontSize: 20, color: Colors.black),
               border: InputBorder.none,
               suffixIcon: IconButton(
                 icon: Icon(
@@ -116,7 +123,7 @@ class _LoginFormState extends State<LoginForm> {
                     content: Text(
                       'Vui lòng nhập Email!',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                       ),
                     ),
                     backgroundColor: Colors.red,
@@ -128,7 +135,7 @@ class _LoginFormState extends State<LoginForm> {
                     content: Text(
                       'Vui lòng nhập mật khẩu!',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                       ),
                     ),
                     backgroundColor: Colors.red,
@@ -140,7 +147,7 @@ class _LoginFormState extends State<LoginForm> {
                     content: Text(
                       'Vui lòng nhập Email và mật khẩu!',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                       ),
                     ),
                     backgroundColor: Colors.red,

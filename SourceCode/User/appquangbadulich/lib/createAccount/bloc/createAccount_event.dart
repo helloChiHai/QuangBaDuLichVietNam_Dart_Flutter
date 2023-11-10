@@ -12,8 +12,8 @@ class CreateAccontButtonPressed extends CreateAccontEvent {
   final String password;
   final String name;
   final String? imgCus;
-  final String address;
-  final String birthday;
+  final String? address;
+  final String? birthday;
   final int role;
 
   CreateAccontButtonPressed({

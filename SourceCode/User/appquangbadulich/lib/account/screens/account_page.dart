@@ -67,13 +67,12 @@ class AccountPage extends StatelessWidget {
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(50),
                                         child: Image(
-                                          image: customer.imgCus!.isEmpty
-                                              ? const AssetImage(
-                                                  'assets/img/SP_CUL_3.jpg',
-                                                )
-                                              : AssetImage(
-                                                  'assets/img/${customer.imgCus}',
-                                                ),
+                                          image: customer.imgCus != null &&
+                                                  customer.imgCus!.isNotEmpty
+                                              ? AssetImage(
+                                                  'assets/img/${customer.imgCus}')
+                                              : const AssetImage(
+                                                  'assets/img/SP_CUL_3.jpg'),
                                           width: 75,
                                           height: 75,
                                           fit: BoxFit.cover,
