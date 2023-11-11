@@ -153,10 +153,10 @@ class AccountPage extends StatelessWidget {
                               children: [
                                 Image(
                                   image: AssetImage(
-                                    'assets/img/SP_CUL_3.jpg',
+                                    'assets/img/img_18.png',
                                   ),
-                                  width: 60,
-                                  height: 60,
+                                  width: 45,
+                                  height: 45,
                                 ),
                                 Text(
                                   'Danh sách địa điểm đã lưu',
@@ -229,7 +229,7 @@ class AccountPage extends StatelessWidget {
                       child: const Row(
                         children: [
                           Image(
-                            image: AssetImage('assets/img/img_12.png'),
+                            image: AssetImage('assets/img/img_21.png'),
                             fit: BoxFit.cover,
                             width: 30,
                             height: 30,
@@ -286,7 +286,7 @@ class AccountPage extends StatelessWidget {
                       child: const Row(
                         children: [
                           Image(
-                            image: AssetImage('assets/img/img_12.png'),
+                            image: AssetImage('assets/img/img_17.png'),
                             fit: BoxFit.cover,
                             width: 30,
                             height: 30,
@@ -343,7 +343,7 @@ class AccountPage extends StatelessWidget {
                       child: const Row(
                         children: [
                           Image(
-                            image: AssetImage('assets/img/img_12.png'),
+                            image: AssetImage('assets/img/img_20.png'),
                             fit: BoxFit.cover,
                             width: 30,
                             height: 30,
@@ -401,7 +401,7 @@ class AccountPage extends StatelessWidget {
                       child: const Row(
                         children: [
                           Image(
-                            image: AssetImage('assets/img/img_12.png'),
+                            image: AssetImage('assets/img/img_19.png'),
                             fit: BoxFit.cover,
                             width: 30,
                             height: 30,

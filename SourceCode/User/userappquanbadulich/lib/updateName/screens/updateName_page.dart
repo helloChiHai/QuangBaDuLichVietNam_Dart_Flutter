@@ -70,7 +70,7 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
 
             showDialog(
               context: context,
-              barrierDismissible: false,
+              // barrierDismissible: false,
               builder: (context) {
                 return AlertDialog(
                   title: const Text(

@@ -7,7 +7,9 @@ import '../bloc/updateName_event.dart';
 class UpdateNameForm extends StatefulWidget {
   final String customerId;
 
-  const UpdateNameForm({Key? key, required this.customerId}) : super(key: key);
+  const UpdateNameForm(
+      {Key? key, required this.customerId})
+      : super(key: key);
 
   @override
   State<UpdateNameForm> createState() => _UpdateNameFormState();
