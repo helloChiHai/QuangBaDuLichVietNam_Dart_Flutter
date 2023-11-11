@@ -50,6 +50,31 @@ app.delete("/deleteCustomer/:idCus", async (req, res) => {
   }
 });
 
+// CẬP NHẬT IMAGE DỰA TRÊN IDCUS
+app.put("/updateImage/:idCus", async (req, res) => {
+  const idCus = req.params.idCus;
+  const newImage = req.body.imgCus;
+
+  try {
+    const updatedCustomer = await Customer.findOneAndUpdate(
+      { idCus },
+      { imgCus: newImage },
+      { new: true }
+    );
+
+    if (!updatedCustomer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Không tìm thấy khách hàng" });
+    }
+
+    console.log("cập nhật hình ảnh thành công: " + updatedCustomer);
+    return res.status(200).json({ success: true, data: updatedCustomer });
+  } catch (error) {
+    return res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
 // CẬP NHẬT EMAIL DỰA TRÊN IDCUS
 app.put("/updateEmail/:idCus", async (req, res) => {
   const idCus = req.params.idCus;
