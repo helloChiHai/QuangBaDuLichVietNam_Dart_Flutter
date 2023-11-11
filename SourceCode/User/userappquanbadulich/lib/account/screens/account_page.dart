@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userappquanbadulich/imformationCustomer/bloc/imformationCus_bloc.dart';
@@ -5,6 +7,41 @@ import 'package:userappquanbadulich/model/CustomerModel.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
+
+  Future<bool> doesFileExist(String filePath) async {
+    return await File(filePath).exists();
+  }
+
+  Future<Image> _buildImage(CustomerModel cus) async {
+    if (cus.imgCus != null && cus.imgCus!.isNotEmpty) {
+      bool fileExists = await doesFileExist(cus.imgCus!);
+
+      if (fileExists) {
+        String assetPath = cus.imgCus!.replaceAll("//", "/");
+        return Image(
+          image: FileImage(File(assetPath)),
+          width: 75,
+          height: 75,
+          fit: BoxFit.cover,
+        );
+      } else {
+        String assetPath = cus.imgCus!.replaceAll("//", "/");
+        return Image(
+          image: AssetImage(assetPath),
+          width: 75,
+          height: 75,
+          fit: BoxFit.cover,
+        );
+      }
+    } else {
+      return Image.asset(
+        'assets/img/SP_CUL_3.jpg',
+        width: 75,
+        height: 75,
+        fit: BoxFit.cover,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,16 +103,18 @@ class AccountPage extends StatelessWidget {
                                     children: [
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(50),
-                                        child: Image(
-                                          image: customer.imgCus != null &&
-                                                  customer.imgCus!.isNotEmpty
-                                              ? AssetImage(
-                                                  'assets/img/${customer.imgCus}')
-                                              : const AssetImage(
-                                                  'assets/img/SP_CUL_3.jpg'),
-                                          width: 75,
-                                          height: 75,
-                                          fit: BoxFit.cover,
+                                        child: FutureBuilder<Image>(
+                                          future: _buildImage(customer),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot<Image> snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.done) {
+                                              return snapshot.data ??
+                                                  Container();
+                                            } else {
+                                              return const CircularProgressIndicator();
+                                            }
+                                          },
                                         ),
                                       ),
                                       const SizedBox(width: 10),

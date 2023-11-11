@@ -29,14 +29,48 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
   }
 
   Future<Widget> _buildImage(CustomerModel cus) async {
-    bool exists = await doesFileExist(cus.imgCus!);
+    if (cus.imgCus != null && cus.imgCus!.isNotEmpty) {
+      bool exists = await doesFileExist(cus.imgCus!);
 
-    if (exists) {
-      String assetPath = cus.imgCus!.replaceAll("//", "/");
-      return Image.file(File(assetPath));
+      if (exists) {
+        String assetPath = cus.imgCus!.replaceAll("//", "/");
+        return Container(
+          width: 130,
+          height: 130,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: FileImage(File(assetPath)),
+            ),
+          ),
+        );
+      } else {
+        String assetPath = cus.imgCus!.replaceAll("//", "/");
+        return Container(
+          width: 130,
+          height: 130,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(assetPath),
+            ),
+          ),
+        );
+      }
     } else {
-      String assetPath = cus.imgCus!.replaceAll("//", "/");
-      return Image.asset(assetPath);
+      return Container(
+        width: 130,
+        height: 130,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('assets/img/SP_CUL_3.jpg'),
+          ),
+        ),
+      );
     }
   }
 
@@ -78,23 +112,6 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                     Center(
                       child: Stack(
                         children: [
-                          // FullScreenWidget(
-                          //   disposeLevel: DisposeLevel.Medium,
-                          //   backgroundColor: Colors.transparent,
-                          //   backgroundIsTransparent: true,
-                          //   child: _buildImage(customer),
-                          //   // child: Container(
-                          //   //   width: 130,
-                          //   //   height: 130,
-                          //   //   decoration: const BoxDecoration(
-                          //   //     shape: BoxShape.circle,
-                          //   //     image: DecorationImage(
-                          //   //       fit: BoxFit.cover,
-                          //   //       image: AssetImage('assets/img/SP_CUL_3.jpg'),
-                          //   //     ),
-                          //   //   ),
-                          //   // ),
-                          // ),
                           FullScreenWidget(
                             disposeLevel: DisposeLevel.Medium,
                             backgroundColor: Colors.transparent,
@@ -111,7 +128,6 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                               },
                             ),
                           ),
-
                           Positioned(
                             bottom: 0,
                             right: 0,
