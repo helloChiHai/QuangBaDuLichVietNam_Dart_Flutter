@@ -9,7 +9,9 @@ import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTouris
 import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_specialtyDish.dart';
 import 'package:userappquanbadulich/model/touristAttractionModel.dart';
 
-import '../../../addTouristAttractionToFavoritesList/screens/addAndRemoveTourist_page.dart';
+import '../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_bloc.dart';
+import '../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_event.dart';
+import '../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_state.dart';
 import '../../../imformationCustomer/bloc/imformationCus_bloc.dart';
 import '../../../model/CustomerModel.dart';
 
@@ -27,6 +29,7 @@ class _DetailTouristAttraction_AboutState
   late int pageViewInit = 0;
   PageController pageController = PageController();
   bool isCheckFavourite = false;
+  bool isCheckVisibility = false;
 
   @override
   void initState() {
@@ -100,19 +103,6 @@ class _DetailTouristAttraction_AboutState
                                           size: 30),
                                     ),
                                   ),
-                                  // BlocBuilder<CustomerBloc, CustomerModel?>(
-                                  //     builder: (context, customer) {
-                                  //   if (customer == null) {
-                                  //     return const Text(
-                                  //         'Chưa có thông tin khách hàng');
-                                  //   } else {
-                                  //     return AddAndRemoveTouristPage(
-                                  //       isCheckFavourite: isCheckFavourite,
-                                  //       idCus: customer.idCus,
-                                  //       idTourist: tourist!.idTourist,
-                                  //     );
-                                  //   }
-                                  // }),
                                   Container(
                                     decoration: BoxDecoration(
                                       color: Colors.white,
@@ -121,9 +111,8 @@ class _DetailTouristAttraction_AboutState
                                     child: IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          isCheckFavourite = !isCheckFavourite;
+                                          isCheckVisibility = true;
                                         });
-                                        print(isCheckFavourite);
                                       },
                                       icon: Icon(
                                         isCheckFavourite
@@ -371,17 +360,189 @@ class _DetailTouristAttraction_AboutState
                           ],
                         ),
                       ),
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: Container(
-                          height: 50,
-                          width: 50,
-                          color: Colors.black,
+                      if (!isCheckFavourite)
+                        Visibility(
+                          visible: isCheckVisibility,
+                          child: Positioned(
+                            top:
+                                (MediaQuery.of(context).size.height * 0.5) - 75,
+                            left:
+                                (MediaQuery.of(context).size.width * 0.5) - 125,
+                            child: Center(
+                              child: Container(
+                                height: 150,
+                                width: 250,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 249, 232, 232),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Bạn muốn thêm ${tourist.nameTourist} vào danh sách yêu thích của mình?',
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        BlocBuilder<CustomerBloc,
+                                                CustomerModel?>(
+                                            builder: (context, customer) {
+                                          if (customer == null) {
+                                            return const Text(
+                                                'Chưa có thông tin khách hàng');
+                                          } else {
+                                            return BlocBuilder<
+                                                AddAndRemoveTouristListBloc,
+                                                AddAndRemoveTouristListState>(
+                                              builder: (context, state) {
+                                                if (state
+                                                    is AddTouristToListSuccess) {
+                                                  print('Thêm thành công');
+                                                }
+                                                if (state
+                                                    is AddTouristToListFailure) {
+                                                  print('Thêm thất bại');
+                                                }
+                                                return TextButton(
+                                                  onPressed: () {
+                                                    BlocProvider.of<
+                                                                AddAndRemoveTouristListBloc>(
+                                                            context)
+                                                        .add(
+                                                      AddTouristToListButtonPressed(
+                                                        idCus: customer.idCus,
+                                                        idTourist:
+                                                            tourist.idTourist,
+                                                      ),
+                                                    );
+                                                    setState(() {
+                                                      isCheckVisibility = false;
+                                                      isCheckFavourite = true;
+                                                    });
+                                                  },
+                                                  child: const Text(
+                                                    'OK',
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          }
+                                        }),
+                                        TextButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              isCheckVisibility =
+                                                  !isCheckVisibility;
+                                              isCheckFavourite = false;
+                                            });
+                                          },
+                                          child: const Text(
+                                            'No',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      )
+                      if (isCheckFavourite)
+                        Visibility(
+                          visible: isCheckVisibility,
+                          child: Positioned(
+                            top:
+                                (MediaQuery.of(context).size.height * 0.5) - 75,
+                            left:
+                                (MediaQuery.of(context).size.width * 0.5) - 125,
+                            child: Center(
+                              child: Container(
+                                height: 150,
+                                width: 250,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 249, 232, 232),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Bạn muốn xóa ${tourist.nameTourist} khỏi danh sách yêu thích của mình?',
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              isCheckVisibility =
+                                                  !isCheckVisibility;
+                                              isCheckFavourite = false;
+                                            });
+                                          },
+                                          child: const Text(
+                                            'OK',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              isCheckVisibility =
+                                                  !isCheckVisibility;
+                                              isCheckFavourite = true;
+                                            });
+                                          },
+                                          child: const Text(
+                                            'No',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ],
