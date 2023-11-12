@@ -100,19 +100,42 @@ class _DetailTouristAttraction_AboutState
                                           size: 30),
                                     ),
                                   ),
-                                  BlocBuilder<CustomerBloc, CustomerModel?>(
-                                      builder: (context, customer) {
-                                    if (customer == null) {
-                                      return const Text(
-                                          'Chưa có thông tin khách hàng');
-                                    } else {
-                                      return AddAndRemoveTouristPage(
-                                        isCheckFavourite: isCheckFavourite,
-                                        idCus: customer.idCus,
-                                        idTourist: tourist!.idTourist,
-                                      );
-                                    }
-                                  }),
+                                  // BlocBuilder<CustomerBloc, CustomerModel?>(
+                                  //     builder: (context, customer) {
+                                  //   if (customer == null) {
+                                  //     return const Text(
+                                  //         'Chưa có thông tin khách hàng');
+                                  //   } else {
+                                  //     return AddAndRemoveTouristPage(
+                                  //       isCheckFavourite: isCheckFavourite,
+                                  //       idCus: customer.idCus,
+                                  //       idTourist: tourist!.idTourist,
+                                  //     );
+                                  //   }
+                                  // }),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isCheckFavourite = !isCheckFavourite;
+                                        });
+                                        print(isCheckFavourite);
+                                      },
+                                      icon: Icon(
+                                        isCheckFavourite
+                                            ? Icons.favorite
+                                            : Icons.favorite_border_outlined,
+                                        size: 30,
+                                        color: isCheckFavourite
+                                            ? Colors.red
+                                            : null,
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -348,6 +371,17 @@ class _DetailTouristAttraction_AboutState
                           ],
                         ),
                       ),
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          color: Colors.black,
+                        ),
+                      )
                     ],
                   ),
                 ],

@@ -24,9 +24,6 @@ class _AddAndRemoveTouristPageState extends State<AddAndRemoveTouristPage> {
   late bool isCheckFavourite;
   late String idCus;
   late String idTourist;
-  final GlobalKey<_AddAndRemoveTouristPageState> _key =
-      GlobalKey<_AddAndRemoveTouristPageState>();
-
   @override
   void initState() {
     super.initState();
@@ -34,17 +31,6 @@ class _AddAndRemoveTouristPageState extends State<AddAndRemoveTouristPage> {
     idCus = widget.idCus;
     idTourist = widget.idTourist;
   }
-
-  void reloadWidget() {
-    Future.delayed(Duration.zero, () {
-      if (mounted) {
-        setState(() {
-          // Bạn có thể đặt bất kỳ logic khởi tạo nào ở đây
-        });
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddAndRemoveTouristListBloc,
@@ -52,10 +38,8 @@ class _AddAndRemoveTouristPageState extends State<AddAndRemoveTouristPage> {
       builder: (context, state) {
         if (state is AddTouristToListSuccess) {
           print('Thêm thành công');
-          reloadWidget(); // Tải lại widget khi thêm địa điểm du lịch thành công
         } else if (state is RemoveTouristFromListSuccess) {
           print('Xóa thành công');
-          reloadWidget(); // Tải lại widget khi xóa địa điểm du lịch thành công
         }
         return Container(
           decoration: BoxDecoration(
@@ -64,21 +48,21 @@ class _AddAndRemoveTouristPageState extends State<AddAndRemoveTouristPage> {
           ),
           child: IconButton(
             onPressed: () {
-              if (isCheckFavourite) {
-                BlocProvider.of<AddAndRemoveTouristListBloc>(context).add(
-                  AddTouristToListButtonPressed(
-                    idCus: idCus,
-                    idTourist: idTourist,
-                  ),
-                );
-              } else {
-                BlocProvider.of<AddAndRemoveTouristListBloc>(context).add(
-                  RemoveTouristFromListButtonPressed(
-                    idCus: idCus,
-                    idTourist: idTourist,
-                  ),
-                );
-              }
+              // if (isCheckFavourite) {
+              //   BlocProvider.of<AddAndRemoveTouristListBloc>(context).add(
+              //     AddTouristToListButtonPressed(
+              //       idCus: idCus,
+              //       idTourist: idTourist,
+              //     ),
+              //   );
+              // } else {
+              //   BlocProvider.of<AddAndRemoveTouristListBloc>(context).add(
+              //     RemoveTouristFromListButtonPressed(
+              //       idCus: idCus,
+              //       idTourist: idTourist,
+              //     ),
+              //   );
+              // }
 
               setState(() {
                 isCheckFavourite = !isCheckFavourite;
