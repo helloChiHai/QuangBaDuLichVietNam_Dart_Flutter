@@ -12,7 +12,51 @@ import '../model/regionModel.dart';
 class UserRepository {
   String urlMain = 'http://192.168.51.214:3090';
 
-  // DELETE ACCOUNT
+  // XÓA TOURIST VÀO DANH SÁCH YÊU THÍCH
+  Future<CustomerModel> removeTouristAttractionFromFavouriteList(
+      String idCus, String idTourist) async {
+    final urlRemoveTouristFromFavouriteList =
+        '$urlMain/removeTourist/$idCus/$idTourist';
+    try {
+      final response = await http.post(
+        Uri.parse(urlRemoveTouristFromFavouriteList),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final customermodel = CustomerModel.fromJson(data['data']);
+        return customermodel;
+      } else {
+        throw Exception('Lỗi xóa địa điểm: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  // THÊM TOURIST VÀO DANH SÁCH YÊU THÍCH
+  Future<CustomerModel> addTouristAttractionToFavouriteList(
+      String idCus, String idTourist) async {
+    final urlAddTouristToFavouriteList =
+        '$urlMain/addTourist/$idCus/$idTourist';
+    try {
+      final response = await http.post(
+        Uri.parse(urlAddTouristToFavouriteList),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final customermodel = CustomerModel.fromJson(data['data']);
+        return customermodel;
+      } else {
+        throw Exception('Lỗi thêm địa điểm: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  // XÓA TÀI KHOẢN
   Future<int> deleteAccount(String idCus) async {
     final urlUpdate = '$urlMain/deleteCustomer/$idCus';
     try {
@@ -23,14 +67,14 @@ class UserRepository {
       if (response.statusCode == 200) {
         return 1;
       } else {
-        throw Exception('Lỗi cập nhật email: ${response.reasonPhrase}');
+        throw Exception('Lỗi xóa tài khoản: ${response.reasonPhrase}');
       }
     } catch (e) {
       throw Exception(e);
     }
   }
 
-  // UPDATE IMAGE CUSTOMER
+  // CẬP NHẬT HÌNH ẢNH
   Future<CustomerModel?> updateImage(String idCus, String newImage) async {
     final urlUpdate = '$urlMain/updateImage/$idCus';
     try {
@@ -49,7 +93,7 @@ class UserRepository {
     }
   }
 
-  // UPDATE EMAIL CUSTOMER
+  // CẬP NHẬT EMAIL
   Future<CustomerModel?> updateEmail(String idCus, String newEmail) async {
     final urlUpdate = '$urlMain/updateEmail/$idCus';
     try {

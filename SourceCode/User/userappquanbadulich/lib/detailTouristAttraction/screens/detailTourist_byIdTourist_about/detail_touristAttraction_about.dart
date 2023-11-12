@@ -9,6 +9,10 @@ import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTouris
 import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_specialtyDish.dart';
 import 'package:userappquanbadulich/model/touristAttractionModel.dart';
 
+import '../../../addTouristAttractionToFavoritesList/screens/addAndRemoveTourist_page.dart';
+import '../../../imformationCustomer/bloc/imformationCus_bloc.dart';
+import '../../../model/CustomerModel.dart';
+
 class DetailTouristAttraction_About extends StatefulWidget {
   const DetailTouristAttraction_About({super.key});
 
@@ -96,28 +100,19 @@ class _DetailTouristAttraction_AboutState
                                           size: 30),
                                     ),
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          isCheckFavourite = !isCheckFavourite;
-                                        });
-                                      },
-                                      icon: Icon(
-                                        isCheckFavourite
-                                            ? Icons.favorite
-                                            : Icons.favorite_border_outlined,
-                                        size: 30,
-                                        color: isCheckFavourite
-                                            ? Colors.red
-                                            : null,
-                                      ),
-                                    ),
-                                  ),
+                                  BlocBuilder<CustomerBloc, CustomerModel?>(
+                                      builder: (context, customer) {
+                                    if (customer == null) {
+                                      return const Text(
+                                          'Chưa có thông tin khách hàng');
+                                    } else {
+                                      return AddAndRemoveTouristPage(
+                                        isCheckFavourite: isCheckFavourite,
+                                        idCus: customer.idCus,
+                                        idTourist: tourist!.idTourist,
+                                      );
+                                    }
+                                  }),
                                 ],
                               ),
                             ),

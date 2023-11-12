@@ -42,6 +42,7 @@ import 'package:userappquanbadulich/updateName/screens/updateName_page.dart';
 import 'package:userappquanbadulich/updatePassword.dart/bloc/updatePassword_bloc.dart';
 import 'package:userappquanbadulich/updatePassword.dart/screens/updatePassword_page.dart';
 
+import 'addTouristAttractionToFavoritesList/bloc/addTouristToList_bloc.dart';
 import 'createAccount/bloc/createAccount_bloc.dart';
 import 'createAccount/screens/createAccont_page.dart';
 import 'culture/screens/culture_page.dart';
@@ -108,6 +109,11 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<AddAndRemoveTouristListBloc>(
+          create: (context) => AddAndRemoveTouristListBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
         BlocProvider<UpdateImageBloc>(
           create: (context) => UpdateImageBloc(
             userRepository: UserRepository(),

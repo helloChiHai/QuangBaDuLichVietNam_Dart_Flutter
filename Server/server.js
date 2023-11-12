@@ -29,6 +29,66 @@ const checkMongoDBConnection = () => {
 
 checkMongoDBConnection();
 
+// XÓA TOURIST KHỎI DANH SÁCH YÊU THÍCH
+app.delete("/removeTourist/:idCus/:idTourist", async (req, res) => {
+  try {
+    const { idCus, idTourist } = req.params;
+    const customer = await Customer.findOne({ idCus });
+    if (!customer) {
+      return res.json({ success: false, message: "Customer not found" });
+    }
+    const touristIndex = customer.listSaveTourist.findIndex(
+      (tourist) => tourist.idTourist === idTourist
+    );
+
+    if (touristIndex === -1) {
+      return res.json({
+        success: false,
+        message: "Không tìm thấy địa điểm du lịch yêu thích",
+      });
+    }
+    customer.listSaveTourist.splice(touristIndex, 1);
+
+    await customer.save();
+
+    return res.status(200).json({ success: true, data: customer });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Lỗi kết nối server" });
+  }
+});
+
+// THÊM TOURIST VÀO DANH SÁCH YÊU THÍCH
+app.post("/addTourist/:idCus/:idTourist", async (req, res) => {
+  try {
+    const { idCus, idTourist } = req.params;
+
+    const customer = await Customer.findOne({ idCus });
+
+    if (!customer) {
+      return res.json({ success: false, message: "Customer not found" });
+    }
+
+    const touristIndex = customer.listSaveTourist.findIndex(
+      (tourist) => tourist.idTourist === idTourist
+    );
+
+    if (touristIndex !== -1) {
+      return res.json({
+        success: false,
+        message: "Địa điểm du lịch đã tồn tại trong danh sách",
+      });
+    }
+
+    customer.listSaveTourist.push({ idTourist });
+    await customer.save();
+    return res.status(200).json({ success: true, data: customer });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "lỗi kết nối server" });
+  }
+});
+
 // XÓA TÀI KHOẢN DỰA VÀO IDCus
 app.delete("/deleteCustomer/:idCus", async (req, res) => {
   const idCus = req.params.idCus;
