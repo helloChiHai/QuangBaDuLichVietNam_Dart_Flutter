@@ -1,4 +1,3 @@
-
 import 'package:userappquanbadulich/model/commentModel.dart';
 import 'package:userappquanbadulich/model/cultureModel.dart';
 import 'package:userappquanbadulich/model/historyModel.dart';
@@ -16,6 +15,19 @@ class TouristAttractionModel {
   final List<CultureModel> culture;
   final List<SpecialtyDishModel> specialtyDish;
   final List<CommentModel> comment;
+
+  TouristAttractionModel.defaultValues()
+      : history = [],
+        idTourist = '',
+        nameTourist = '',
+        address = '',
+        ticket = '',
+        imgTourist = '',
+        touristIntroduction = '',
+        rightTime = [],
+        culture = [],
+        specialtyDish = [],
+        comment = [];
 
   TouristAttractionModel({
     required this.history,

@@ -10,6 +10,20 @@ class AddAndRemoveTouristListBloc
 
   AddAndRemoveTouristListBloc({required this.userRepository})
       : super(AddTouristToListInitial()) {
+    on<CheckTouristInList>((event, emit) async {
+      try {
+        final result =
+            await userRepository.checkTouristAttractionInFavouriteList(
+                event.idCus, event.idTourist);
+        if (result) {
+          emit(CheckTouristInListSuccess(result: true));
+        } else {
+          emit(CheckTouristInListSuccess(result: false));
+        }
+      } catch (e) {
+        emit(AddTouristToListFailure(error: e.toString()));
+      }
+    });
     on<AddTouristToListButtonPressed>((event, emit) async {
       try {
         final result = await userRepository.addTouristAttractionToFavouriteList(

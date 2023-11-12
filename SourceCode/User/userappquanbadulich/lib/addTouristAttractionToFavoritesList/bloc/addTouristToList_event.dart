@@ -8,6 +8,17 @@ abstract class AddAndRemoveTouristListEvent extends Equatable {
 }
 
 // ======= THÊM ========
+class CheckTouristInList extends AddAndRemoveTouristListEvent {
+  final String idCus;
+  final String idTourist;
+
+  CheckTouristInList({required this.idCus, required this.idTourist});
+
+  @override
+  List<Object?> get props => [idCus, idTourist];
+}
+
+// ======= THÊM ========
 class AddTouristToListButtonPressed extends AddAndRemoveTouristListEvent {
   final String idCus;
   final String idTourist;

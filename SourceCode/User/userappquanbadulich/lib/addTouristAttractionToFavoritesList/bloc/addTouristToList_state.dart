@@ -7,6 +7,25 @@ abstract class AddAndRemoveTouristListState extends Equatable {
   List<Object?> get props => [];
 }
 
+// ========== KIỂM TRA ===============
+class CheckTouristInListSuccess extends AddAndRemoveTouristListState {
+  final bool result;
+
+  CheckTouristInListSuccess({required this.result});
+
+  @override
+  List<Object?> get props => [result];
+}
+
+class CheckTouristInListFailure extends AddAndRemoveTouristListState {
+  final String error;
+
+  CheckTouristInListFailure({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
 // ============ THÊM ============
 class AddTouristToListInitial extends AddAndRemoveTouristListState {}
 

@@ -403,7 +403,7 @@ void dispose() {
                       return GestureDetector(
                         onTap: () {
                           Navigator.of(context).pushNamed(
-                              '/detail_touriestAttraction_about',
+                              '/detailTouristAttractionPage',
                               arguments: {
                                 'aboutTouristData': touristAttraction,
                               });

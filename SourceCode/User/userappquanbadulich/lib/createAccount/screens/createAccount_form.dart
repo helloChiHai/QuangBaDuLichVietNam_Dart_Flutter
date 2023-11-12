@@ -49,7 +49,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
         ),
         const SizedBox(height: 30),
         const Text(
-          'Tạo Tài Tài Khoản',
+          'Tạo Tài Khoản',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,

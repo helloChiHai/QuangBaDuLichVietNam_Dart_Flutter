@@ -29,6 +29,28 @@ const checkMongoDBConnection = () => {
 
 checkMongoDBConnection();
 
+// KIỂM TRA TOURIST CÓ TRONG DANH SÁCH YÊU THÍCH HAY CHƯA
+app.get("/check-tourist/:idCus/:idTourist", async (req, res) => {
+  try {
+    const { idCus, idTourist } = req.params;
+
+    const customer = await Customer.findOne({ idCus });
+
+    if (!customer) {
+      return res.status(404).json({ message: "Người dùng không tồn tại" });
+    }
+
+    const isTouristSaved = customer.listSaveTourist.some(
+      (tourist) => tourist.idTourist === idTourist
+    );
+
+    res.json({ isTouristSaved });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Lỗi server" });
+  }
+});
+
 // XÓA TOURIST KHỎI DANH SÁCH YÊU THÍCH
 app.delete("/removeTourist/:idCus/:idTourist", async (req, res) => {
   try {
@@ -74,7 +96,7 @@ app.post("/addTourist/:idCus/:idTourist", async (req, res) => {
     );
 
     if (touristIndex !== -1) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "Địa điểm du lịch đã tồn tại trong danh sách",
       });

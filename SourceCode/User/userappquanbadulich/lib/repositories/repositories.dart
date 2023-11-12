@@ -13,6 +13,26 @@ class UserRepository {
   String urlMain = 'http://192.168.51.214:3090';
 
   // XÓA TOURIST VÀO DANH SÁCH YÊU THÍCH
+  Future<bool> checkTouristAttractionInFavouriteList(
+      String idCus, String idTourist) async {
+    final urlcheckTouristFromFavouriteList =
+        '$urlMain/check-tourist/$idCus/$idTourist';
+    try {
+      final response = await http.post(
+        Uri.parse(urlcheckTouristFromFavouriteList),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  // XÓA TOURIST VÀO DANH SÁCH YÊU THÍCH
   Future<CustomerModel> removeTouristAttractionFromFavouriteList(
       String idCus, String idTourist) async {
     final urlRemoveTouristFromFavouriteList =
@@ -199,7 +219,6 @@ class UserRepository {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
         final provinceList = data['data'] as List<dynamic>;
         final province = provinceList
             .map((provinceData) => ProvinceModel.fromJson(provinceData))
@@ -260,7 +279,6 @@ class UserRepository {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
         final touristList = data['data'] as List<dynamic>;
         final touristAttractions = touristList
             .map((touristData) => TouristAttractionModel.fromJson(touristData))
@@ -286,7 +304,6 @@ class UserRepository {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
         final touristAcctractionModel =
             TouristAttractionModel.fromJson(data['data']);
         return touristAcctractionModel;
