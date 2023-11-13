@@ -15,13 +15,9 @@ class AddAndRemoveTouristListBloc
         final result =
             await userRepository.checkTouristAttractionInFavouriteList(
                 event.idCus, event.idTourist);
-        if (result) {
-          emit(CheckTouristInListSuccess(result: true));
-        } else {
-          emit(CheckTouristInListSuccess(result: false));
-        }
+        emit(CheckTouristInListSuccess(result: result));
       } catch (e) {
-        emit(AddTouristToListFailure(error: e.toString()));
+        emit(CheckTouristInListFailure(error: e.toString()));
       }
     });
     on<AddTouristToListButtonPressed>((event, emit) async {
@@ -32,7 +28,7 @@ class AddAndRemoveTouristListBloc
         if (result != null) {
           emit(AddTouristToListSuccess(customer: result));
         } else {
-          emit(AddTouristToListFailure(error: 'Thêm thành công'));
+          emit(AddTouristToListFailure(error: 'Thêm không thành công'));
         }
       } catch (e) {
         emit(AddTouristToListFailure(error: e.toString()));
@@ -45,12 +41,12 @@ class AddAndRemoveTouristListBloc
                 event.idCus, event.idTourist);
         // ignore: unnecessary_null_comparison
         if (result != null) {
-          emit(AddTouristToListSuccess(customer: result));
+          emit(RemoveTouristFromListSuccess(customer: result));
         } else {
-          emit(AddTouristToListFailure(error: 'Xóa thành công'));
+          emit(RemoveTouristFromListFailure(error: 'Xóa không  thành công'));
         }
       } catch (e) {
-        emit(AddTouristToListFailure(error: e.toString()));
+        emit(RemoveTouristFromListFailure(error: e.toString()));
       }
     });
   }

@@ -44,7 +44,7 @@ app.get("/check-tourist/:idCus/:idTourist", async (req, res) => {
       (tourist) => tourist.idTourist === idTourist
     );
 
-    res.json({ isTouristSaved });
+    res.status(200).json({ isTouristSaved });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Lỗi server" });

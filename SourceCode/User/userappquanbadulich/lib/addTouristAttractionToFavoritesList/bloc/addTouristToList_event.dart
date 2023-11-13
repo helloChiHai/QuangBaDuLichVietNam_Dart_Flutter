@@ -7,7 +7,7 @@ abstract class AddAndRemoveTouristListEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-// ======= THÊM ========
+// ======= KIỂM TRA ========
 class CheckTouristInList extends AddAndRemoveTouristListEvent {
   final String idCus;
   final String idTourist;

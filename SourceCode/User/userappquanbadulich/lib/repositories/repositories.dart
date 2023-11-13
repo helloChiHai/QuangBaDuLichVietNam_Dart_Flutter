@@ -10,22 +10,23 @@ import '../model/CustomerModel.dart';
 import '../model/regionModel.dart';
 
 class UserRepository {
-  String urlMain = 'http://192.168.51.214:3090';
+  String urlMain = 'http://192.168.88.214:3090';
 
-  // XÓA TOURIST VÀO DANH SÁCH YÊU THÍCH
+  // KIỂM TRA TOURIST VÀO DANH SÁCH YÊU THÍCH
   Future<bool> checkTouristAttractionInFavouriteList(
       String idCus, String idTourist) async {
     final urlcheckTouristFromFavouriteList =
         '$urlMain/check-tourist/$idCus/$idTourist';
     try {
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse(urlcheckTouristFromFavouriteList),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
-        return true;
+        final Map<String, dynamic> data = json.decode(response.body);
+        return data['isTouristSaved'];
       } else {
-        return false;
+        throw Exception('Failed to load data');
       }
     } catch (e) {
       throw Exception(e);
@@ -327,7 +328,6 @@ class UserRepository {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
         final touristAcctractionModel =
             TouristAttractionModel.fromJson(data['data']);
         return touristAcctractionModel;
@@ -351,7 +351,6 @@ class UserRepository {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
         final touristAcctractionModel =
             TouristAttractionModel.fromJson(data['data']);
         return touristAcctractionModel;
@@ -376,7 +375,6 @@ class UserRepository {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
         final touristAcctractionModel =
             TouristAttractionModel.fromJson(data['data']);
         return touristAcctractionModel;
@@ -399,7 +397,6 @@ class UserRepository {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
         final cultureList = data['data'] as List<dynamic>;
         final cultures = cultureList
             .map((cultureData) => CultureModel.fromJson(cultureData))
@@ -423,7 +420,6 @@ class UserRepository {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
         final historyList = data['data'] as List<dynamic>;
         final history_ = historyList
             .map((historyData) => HistoryModel.fromJson(historyData))
@@ -447,7 +443,6 @@ class UserRepository {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
         final specialDishList = data['data'] as List<dynamic>;
         final specialDishs = specialDishList
             .map((specialDishData) =>
@@ -473,7 +468,6 @@ class UserRepository {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
         final regionList = data['data'] as List<dynamic>;
         final regions = regionList
             .map((regionData) => RegionModel.fromJson(regionData))
