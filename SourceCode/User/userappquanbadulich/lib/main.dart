@@ -16,6 +16,7 @@ import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTouris
 import 'package:userappquanbadulich/history/bloc/history_bloc.dart';
 import 'package:userappquanbadulich/history/screens/history_page.dart';
 import 'package:userappquanbadulich/imformationCustomer/bloc/imformationCus_bloc.dart';
+import 'package:userappquanbadulich/listFavoriteTouristAttraction/screens/listFavoriteTouristAttraction_page.dart';
 import 'package:userappquanbadulich/login/bloc/login_bloc.dart';
 import 'package:userappquanbadulich/login/screens/login_intro.dart';
 import 'package:userappquanbadulich/province/bloc/province_bloc.dart';
@@ -53,6 +54,7 @@ import 'detailTouristAttraction/screens/detailTourist_culture.dart';
 import 'detailTouristAttraction/screens/detailTourist_history.dart';
 import 'detailTouristAttraction/screens/detailTourist_specialtyDish.dart';
 import 'home/screens/home_page.dart';
+import 'listFavoriteTouristAttraction/bloc/getTouristInFavoriteList_bloc.dart';
 import 'login/screens/login_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -62,6 +64,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
+        '/listFavoriteTouristAttraction': (context) => ListFavoriteTouristAttractionPage(),
         '/updateImage': (context) => UpdateImagePage(),
         '/deleteAccount': (context) => DeleteAccountPage(),
         '/editAccount_password': (context) => UpdatePasswordPage(),
@@ -109,6 +112,11 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<GetTouristInFavoriteListBloc>(
+          create: (context) => GetTouristInFavoriteListBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
         BlocProvider<AddAndRemoveTouristListBloc>(
           create: (context) => AddAndRemoveTouristListBloc(
             userRepository: UserRepository(),

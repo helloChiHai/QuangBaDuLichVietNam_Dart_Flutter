@@ -44,8 +44,12 @@ class TouristAttractionModel {
   });
 
   factory TouristAttractionModel.fromJson(Map<String, dynamic> json) {
+    // final rightTimeJson = json['rightTime'];
+    // final List<String> rightTime = rightTimeJson.cast<String>();
     final rightTimeJson = json['rightTime'];
-    final List<String> rightTime = rightTimeJson.cast<String>();
+    final List<String> rightTime = (rightTimeJson is List)
+        ? List<String>.from(rightTimeJson)
+        : <String>[];
 
     List<HistoryModel> history = [];
     if (json['history'] != null) {

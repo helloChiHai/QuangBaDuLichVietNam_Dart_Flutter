@@ -29,6 +29,53 @@ const checkMongoDBConnection = () => {
 
 checkMongoDBConnection();
 
+// HIỂN THỊ ĐỊA ĐIỂM DU LỊCH TRONG DANH SÁCH YÊU THÍCH
+app.get("/getTouristInFavoriteList/:idCus", async (req, res) => {
+  const { idCus } = req.params;
+
+  try {
+    const customer = await Customer.findOne({ idCus });
+    if (!customer) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy thông tin khách hàng.",
+      });
+    }
+    const idTouristList = customer.listSaveTourist.map(
+      (tourist) => tourist.idTourist
+    );
+    const touristAttractions = await Region.aggregate([
+      {
+        $unwind: "$provinces",
+      },
+      {
+        $unwind: "$provinces.touristAttraction",
+      },
+      {
+        $match: {
+          "provinces.touristAttraction.idTourist": { $in: idTouristList },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          touristAttraction: "$provinces.touristAttraction",
+        },
+      },
+    ]);
+    return res.json({
+      success: true,
+      data: touristAttractions.map((item) => item.touristAttraction),
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Đã xảy ra lỗi trong quá trình xử lý.",
+    });
+  }
+});
+
 // KIỂM TRA TOURIST CÓ TRONG DANH SÁCH YÊU THÍCH HAY CHƯA
 app.get("/check-tourist/:idCus/:idTourist", async (req, res) => {
   try {

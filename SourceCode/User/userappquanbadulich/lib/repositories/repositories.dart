@@ -12,6 +12,31 @@ import '../model/regionModel.dart';
 class UserRepository {
   String urlMain = 'http://192.168.88.214:3090';
 
+  // HIỂN THỊ TẤT CẢ CÁC ĐỊA ĐIỂM DU LỊCH TRONG DANH SÁCH ĐỊA ĐIỂM YÊU THÍCH
+  Future<List<TouristAttractionModel>> getTouristInFavoritelistByIdCus(
+      String idCus) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$urlMain/getTouristInFavoriteList/$idCus'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final touristList = data['data'] as List<dynamic>;
+        final touristAttractions = touristList
+            .map((touristData) => TouristAttractionModel.fromJson(touristData))
+            .toList();
+        return touristAttractions;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy địa điểm du lịch trong danh sách yêu thích ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(
+          'Lỗi khi lấy địa điểm du lịch trong danh sách yêu thích theo idCus: $e');
+    }
+  }
+
   // KIỂM TRA TOURIST VÀO DANH SÁCH YÊU THÍCH
   Future<bool> checkTouristAttractionInFavouriteList(
       String idCus, String idTourist) async {
@@ -133,7 +158,7 @@ class UserRepository {
     }
   }
 
-  // UPDATE Name CUSTOMER
+  // CẬP NHẬT TÊN
   Future<CustomerModel?> updateName(String idCus, String newName) async {
     final urlUpdate = '$urlMain/updateName/$idCus';
     try {
@@ -152,7 +177,7 @@ class UserRepository {
     }
   }
 
-  // UPDATE ADDRESS CUSTOMER
+  // CẬP NHẬT ĐỊA CHỈ
   Future<CustomerModel?> updateAddress(String idCus, String newAddress) async {
     final urlUpdate = '$urlMain/updateAddress/$idCus';
     try {
@@ -171,7 +196,7 @@ class UserRepository {
     }
   }
 
-  // UPDATE BIRTHDAY CUSTOMER
+  // CẬP NHẬT NGÀY SINH
   Future<CustomerModel?> updateBirthday(
       String idCus, String newBirthday) async {
     final urlUpdate = '$urlMain/updateBirthday/$idCus';
@@ -191,7 +216,7 @@ class UserRepository {
     }
   }
 
-  // UPDATE PASSWORD CUSTOMER
+  // CẬP NHẬT MẬT KHẨU
   Future<CustomerModel?> updatePassword(
       String idCus, String newPassword) async {
     final urlUpdate = '$urlMain/updatePassword/$idCus';
@@ -211,7 +236,7 @@ class UserRepository {
     }
   }
 
-  // fetch all tourist attraction
+  // LẤY TẤT CẢ CÁC TỈNH THÀNH PHỐ
   Future<List<ProvinceModel>> getAllProvinces() async {
     try {
       final response = await http.get(
@@ -234,7 +259,7 @@ class UserRepository {
     }
   }
 
-  // filter tourist attraction by idRegion, idProvines
+  // LỌC ĐỊA ĐIỂM THEO idRegion, idProvines
   Future<List<TouristAttractionModel>>
       filterTouristAttractionByIdRegionIdProvines(
           String? idRegion, String? idProvines) async {
@@ -271,7 +296,7 @@ class UserRepository {
     }
   }
 
-  // fetch all tourist attraction
+  // HIỂN THỊ TẤT CẢ CÁC ĐỊA ĐIỂM DU LỊCH
   Future<List<TouristAttractionModel>> getAllTouristAttraction() async {
     try {
       final response = await http.get(
@@ -295,7 +320,7 @@ class UserRepository {
     }
   }
 
-  // detail tourist by idCulture
+  // CHI TIẾT ĐỊA ĐIỂM THEO idCulture
   Future<TouristAttractionModel?> getDetailTouristWithIdTourist(
       String idTourist) async {
     try {
@@ -318,7 +343,7 @@ class UserRepository {
     }
   }
 
-  // fetch tourist by idCulture
+  // HIỂN THỊ ĐỊA ĐIỂM DU LỊCH THEO idCulture
   Future<TouristAttractionModel?> getTouristWithCulture(
       String idCulture) async {
     try {
@@ -341,7 +366,7 @@ class UserRepository {
     }
   }
 
-  // fetch tourist by idDish
+  // HIỂN THỊ ĐỊA ĐIỂM DU LỊCH THEO idDish
   Future<TouristAttractionModel?> getTouristWithSpecialDish(
       String idDish) async {
     try {
@@ -364,7 +389,7 @@ class UserRepository {
     }
   }
 
-  // fetch tourist by idHistory
+  // HIỂN THỊ ĐIỂM DU LỊCH THEO idHistory
   Future<TouristAttractionModel?> getTouristWithHistory(
       String idHistoryStory) async {
     try {
@@ -388,7 +413,7 @@ class UserRepository {
     }
   }
 
-  // fetch all culture
+  // HIỂN THỊ TẤT CẢ VĂN HÓA
   Future<List<CultureModel>> getCultures() async {
     try {
       final response = await http.get(
@@ -411,7 +436,7 @@ class UserRepository {
     }
   }
 
-  // FETCH ALL HISTORY
+  // HIỂN THỊ TẤT CẢ LỊCH SỬ
   Future<List<HistoryModel>> getHistory() async {
     try {
       final response = await http.get(
@@ -434,7 +459,7 @@ class UserRepository {
     }
   }
 
-  // fetch all special dish
+  // HIỂN THỊ TẤT CẢ CÁC MÓN ĂN
   Future<List<SpecialtyDishModel>> getSpecialDish() async {
     try {
       final response = await http.get(
@@ -459,7 +484,7 @@ class UserRepository {
     }
   }
 
-  // fetch region
+  // HIỂN THỊ KHU VỰC
   Future<List<RegionModel>> getRegions() async {
     try {
       final response = await http.get(
@@ -482,7 +507,7 @@ class UserRepository {
     }
   }
 
-  // đăng nhập
+  // ĐĂNG NHẬP
   Future<CustomerModel?> login(String email, String password) async {
     try {
       final response = await http.post(
@@ -533,7 +558,7 @@ class UserRepository {
     return null;
   }
 
-  // tạo tài khoản
+  // TẠO TÀI KHOẢN
   Future<int> createAccount(String email, String password, String name,
       String? imgCus, String? address, String? birthday, int role) async {
     try {
