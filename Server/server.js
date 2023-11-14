@@ -380,31 +380,18 @@ app.get("/filter-tourist-attractions", async (req, res) => {
   }
 });
 
+// ----------------------------------------------------------------------------
+
 // thêm bình luận
-app.post("/addComment", async (req, res) => {
+app.post("/tourist/addComment", async (req, res) => {
   try {
-    const { regionId, provinceId, touristId, idCus, commentData } = req.body;
-    const region = await Region.findOne({ idRegion: regionId });
+    const { touristId, idCus, commentData } = req.body;
+
+    const region = await Region.findOne({});
     if (!region) {
       return res
         .status(404)
         .json({ success: false, message: "Khu vực không tồn tại" });
-    }
-    const province = region.provinces.find(
-      (prov) => prov.idProvines === provinceId
-    );
-    if (!province) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Tỉnh/thành phố không tồn tại" });
-    }
-    const touristAttraction = province.touristAttraction.find(
-      (attraction) => attraction.idTourist === touristId
-    );
-    if (!touristAttraction) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Điểm du lịch không tồn tại" });
     }
 
     const customer = await Customer.findOne({ idCus: idCus });
@@ -415,25 +402,94 @@ app.post("/addComment", async (req, res) => {
         .json({ success: false, message: "Khách hàng không tồn tại" });
     }
 
-    const newComment = {
-      idcmt: uuidv4(),
-      idCus: idCus,
-      name: customer.name,
-      content: commentData,
-      atTime: new Date().toISOString(),
-    };
-    touristAttraction.comment.push(newComment);
+    let found = false;
+
+    region.provinces.forEach((province) => {
+      province.touristAttraction.forEach((attraction) => {
+        if (attraction.idTourist === touristId) {
+          const newComment = {
+            idcmt: `CMT_${uuidv4()}`,
+            idCus: idCus,
+            nameCus: customer.name,
+            content: commentData,
+            atTime: new Date().toISOString(),
+          };
+
+          attraction.comment.push(newComment);
+          found = true;
+        }
+      });
+    });
+    if (!found) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Điểm du lịch không tồn tại" });
+    }
+
     await region.save();
+
     res
       .status(200)
       .json({ success: true, message: "Bình luận đã được thêm thành công" });
     console.log("Bình luận đã được thêm thành công");
-    console.log(newComment);
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: "Lỗi khi thêm bình luận" });
   }
 });
+// // thêm bình luận
+// app.post("/tourist/addComment", async (req, res) => {
+//   try {
+//     const { touristId, idCus, commentData } = req.body;
+//     const region = await Region.findOne({});
+//     if (!region) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "Khu vực không tồn tại" });
+//     }
+
+//     const touristAttraction = region.some((region) => {
+//       return region.provinces.some((province) => {
+//         return province.touristAttraction.some((attraction) => {
+//           if (attraction.idTourist === touristId) {
+//             attraction.idTourist === touristId;
+//           }
+//         });
+//       });
+//     });
+//     if (!touristAttraction) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "Điểm du lịch không tồn tại" });
+//     }
+
+//     const customer = await Customer.findOne({ idCus: idCus });
+
+//     if (!customer) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "Khách hàng không tồn tại" });
+//     }
+
+//     const newComment = {
+//       idcmt: uuidv4(),
+//       idCus: idCus,
+//       nameCus: customer.name,
+//       content: commentData,
+//       atTime: new Date().toISOString(),
+//     };
+//     touristAttraction.comment.push(newComment);
+//     await region.save();
+//     res
+//       .status(200)
+//       .json({ success: true, message: "Bình luận đã được thêm thành công" });
+//     console.log("Bình luận đã được thêm thành công");
+//     console.log(newComment);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ success: false, error: "Lỗi khi thêm bình luận" });
+//   }
+// });
 
 // sửa bình luận
 app.put("/editComment", async (req, res) => {
@@ -554,6 +610,8 @@ app.delete("/deleteComment", async (req, res) => {
     res.status(500).json({ success: false, error: "Lỗi khi xóa bình luận" });
   }
 });
+
+// ----------------------------------------------------------------------------
 
 // hiển thị danh sách các khu vực
 app.get("/regions", async (req, res) => {
