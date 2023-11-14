@@ -34,16 +34,33 @@ class AddAndRemoveTouristListBloc
         emit(AddTouristToListFailure(error: e.toString()));
       }
     });
+    // on<RemoveTouristFromListButtonPressed>((event, emit) async {
+    //   try {
+    //     final result =
+    //         await userRepository.removeTouristAttractionFromFavouriteList(
+    //             event.idCus, event.idTourist);
+    //     // ignore: unnecessary_null_comparison
+    //     if (result != null) {
+    //       emit(RemoveTouristFromListSuccess(customer: result));
+    //     } else {
+    //       emit(RemoveTouristFromListFailure(error: 'Xóa không  thành công'));
+    //     }
+    //   } catch (e) {
+    //     emit(RemoveTouristFromListFailure(error: e.toString()));
+    //   }
+    // });
     on<RemoveTouristFromListButtonPressed>((event, emit) async {
       try {
         final result =
             await userRepository.removeTouristAttractionFromFavouriteList(
-                event.idCus, event.idTourist);
-        // ignore: unnecessary_null_comparison
+          event.idCus,
+          event.idTourist,
+        );
+
         if (result != null) {
           emit(RemoveTouristFromListSuccess(customer: result));
         } else {
-          emit(RemoveTouristFromListFailure(error: 'Xóa không  thành công'));
+          emit(RemoveTouristFromListFailure(error: 'Xóa không thành công'));
         }
       } catch (e) {
         emit(RemoveTouristFromListFailure(error: e.toString()));

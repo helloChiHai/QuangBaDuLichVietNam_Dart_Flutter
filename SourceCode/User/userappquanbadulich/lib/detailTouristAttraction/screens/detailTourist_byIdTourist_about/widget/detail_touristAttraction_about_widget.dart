@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:userappquanbadulich/model/CustomerModel.dart';
 import 'package:userappquanbadulich/model/touristAttractionModel.dart';
 
 import '../../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_bloc.dart';
@@ -15,13 +14,13 @@ class DetailTouristAttraction_AboutWidget extends StatefulWidget {
   final bool isCheckFavourite;
   final TouristAttractionModel tourist;
   final bool isCheckVisibility;
-  final CustomerModel customer;
+  final String idCustomer;
   const DetailTouristAttraction_AboutWidget({
     Key? key,
     required this.isCheckFavourite,
     required this.tourist,
     required this.isCheckVisibility,
-    required this.customer,
+    required this.idCustomer,
   }) : super(key: key);
 
   @override
@@ -34,13 +33,14 @@ class _DetailTouristAttraction_AboutWidgetState
   late bool isCheckFavourite;
   late bool isCheckVisibility;
   late TouristAttractionModel tourist;
-  late CustomerModel customer;
+  late String idCustomer;
   PageController pageController = PageController();
   late int pageViewInit = 0;
 
   @override
   void initState() {
     super.initState();
+    idCustomer = widget.idCustomer;
     isCheckFavourite = widget.isCheckFavourite;
     tourist = widget.tourist;
     isCheckVisibility = widget.isCheckVisibility;
@@ -372,7 +372,7 @@ class _DetailTouristAttraction_AboutWidgetState
                                                 context)
                                             .add(
                                           AddTouristToListButtonPressed(
-                                            idCus: customer.idCus,
+                                            idCus: idCustomer,
                                             idTourist: tourist.idTourist,
                                           ),
                                         );

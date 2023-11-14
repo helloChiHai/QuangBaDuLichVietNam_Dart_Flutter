@@ -143,8 +143,9 @@ class AccountPage extends StatelessWidget {
                         const SizedBox(height: 15),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context)
-                                .pushNamed('/listFavoriteTouristAttraction');
+                            Navigator.of(context).pushNamed(
+                                '/listFavoriteTouristAttraction',
+                                arguments: {'idCus': customer.idCus});
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(

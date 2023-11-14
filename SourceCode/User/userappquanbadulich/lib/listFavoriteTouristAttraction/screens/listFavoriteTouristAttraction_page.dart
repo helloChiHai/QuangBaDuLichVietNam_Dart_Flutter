@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:userappquanbadulich/imformationCustomer/bloc/imformationCus_bloc.dart';
-import 'package:userappquanbadulich/model/CustomerModel.dart';
 
+import '../../addTouristAttractionToFavoritesList/bloc/addTouristToList_bloc.dart';
+import '../../addTouristAttractionToFavoritesList/bloc/addTouristToList_event.dart';
+import '../../addTouristAttractionToFavoritesList/bloc/addTouristToList_state.dart';
 import '../bloc/getTouristInFavoriteList_bloc.dart';
 import '../bloc/getTouristInFavoriteList_event.dart';
 import '../bloc/getTouristInFavoriteList_state.dart';
@@ -18,9 +19,25 @@ class ListFavoriteTouristAttractionPage extends StatefulWidget {
 
 class _ListFavoriteTouristAttractionPageState
     extends State<ListFavoriteTouristAttractionPage> {
+  // Tạo key cho ListView
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  String? idCus;
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final Map<String, dynamic> arguments =
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+      idCus = arguments['idCus'];
+      if (idCus != null) {
+        context.read<GetTouristInFavoriteListBloc>().add(
+              FetchTouristAttractionInFavoriteList(
+                idCus: idCus!,
+              ),
+            );
+      }
+    });
   }
 
   @override
@@ -42,36 +59,41 @@ class _ListFavoriteTouristAttractionPageState
           color: Colors.black,
         ),
       ),
-      body: BlocBuilder<CustomerBloc, CustomerModel?>(
-        builder: (context, customer) {
-          if (customer == null) {
-            return const Text('Bạn đưa đăng nhập');
-          } else {
-            return BlocBuilder<GetTouristInFavoriteListBloc,
-                GetTouristInFavoriteListState>(
-              builder: (context, state) {
-                if (state is GetTouristInFavoriteListInitial) {
-                  context.read<GetTouristInFavoriteListBloc>().add(
-                        FetchTouristAttractionInFavoriteList(
-                          idCus: customer.idCus,
-                        ),
-                      );
-                }
+      body: BlocBuilder<GetTouristInFavoriteListBloc,
+          GetTouristInFavoriteListState>(
+        builder: (context, state) {
+          // if (state is GetTouristInFavoriteListInitial) {
+          //   if (idCus != null) {
+          //     context.read<GetTouristInFavoriteListBloc>().add(
+          //           FetchTouristAttractionInFavoriteList(
+          //             idCus: idCus!,
+          //           ),
+          //         );
+          //   }
+          // }
 
-                if (state is GetTouristInFavoriteListLoaded) {
-                  final touristList = state.touristAttractions;
+          if (state is GetTouristInFavoriteListLoaded) {
+            final touristList = state.touristAttractions;
 
-                  return SizedBox(
+            return touristList.isNotEmpty
+                ? SizedBox(
                     width: double.infinity,
                     height: 500,
                     child: ListView.builder(
+                      // Sử dụng key
+                      key: _listKey,
                       scrollDirection: Axis.vertical,
                       itemCount: touristList.length,
                       itemBuilder: (context, index) {
                         final touristAttraction = touristList[index];
                         return GestureDetector(
                           onTap: () {
-                            print(touristAttraction.idTourist);
+                            Navigator.of(context).pushNamed(
+                                '/detail_touriestAttraction_about',
+                                arguments: {
+                                  'aboutTouristData': touristAttraction,
+                                  'idCus': idCus,
+                                });
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -168,15 +190,56 @@ class _ListFavoriteTouristAttractionPageState
                                         const SizedBox(
                                           height: 20,
                                         ),
-                                        IconButton(
-                                          onPressed: () {
-                                            // Xử lý thêm/xóa yêu thích
+                                        BlocBuilder<AddAndRemoveTouristListBloc,
+                                            AddAndRemoveTouristListState>(
+                                          builder: (context, state) {
+                                            if (state
+                                                is RemoveTouristFromListSuccess) {
+                                              print('Xóa thành công');
+                                              if (idCus != null) {
+                                                context
+                                                    .read<
+                                                        GetTouristInFavoriteListBloc>()
+                                                    .add(
+                                                      FetchTouristAttractionInFavoriteList(
+                                                        idCus: idCus!,
+                                                      ),
+                                                    );
+                                              }
+
+                                              _listKey.currentState?.removeItem(
+                                                index,
+                                                (context, animation) =>
+                                                    Container(),
+                                                duration:
+                                                    const Duration(seconds: 1),
+                                              );
+                                            } else if (state
+                                                is RemoveTouristFromListFailure) {
+                                              print(
+                                                  'Xóa thất bại: ${state.error}');
+                                            }
+
+                                            return IconButton(
+                                              onPressed: () {
+                                                BlocProvider.of<
+                                                            AddAndRemoveTouristListBloc>(
+                                                        context)
+                                                    .add(
+                                                  RemoveTouristFromListButtonPressed(
+                                                    idCus: idCus!,
+                                                    idTourist: touristAttraction
+                                                        .idTourist,
+                                                  ),
+                                                );
+                                              },
+                                              icon: const Icon(
+                                                Icons.favorite,
+                                                size: 30,
+                                                color: Colors.red,
+                                              ),
+                                            );
                                           },
-                                          icon: const Icon(
-                                            Icons.favorite,
-                                            size: 30,
-                                            color: Colors.red,
-                                          ),
                                         ),
                                       ],
                                     ),
@@ -188,17 +251,78 @@ class _ListFavoriteTouristAttractionPageState
                         );
                       },
                     ),
+                  )
+                : Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 50,
+                      vertical: 50,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Image(
+                          image: AssetImage(
+                            'assets/img/img_22.png',
+                          ),
+                          height: 150,
+                          width: 150,
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Địa điểm thích yêu',
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Chỉ cần nhấn vào biểu tượng trái tim ở trên cùng mỗi trang địa điểm du lịch, địa điểm du lịch bạn lưu sẽ xuất hiện tại đây.',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 20),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/home');
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 25,
+                              vertical: 15,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: Colors.blue,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Text(
+                              'Lưu địa điểm',
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   );
-                } else if (state is GetTouristInFavoriteListFailure) {
-                  print(state.error);
-                  print(customer.idCus);
-                  return const Text('Lỗi');
-                }
-
-                return Container();
-              },
-            );
+          } else if (state is GetTouristInFavoriteListFailure) {
+            print(state.error);
+            print(idCus);
+            return const Text('Lỗi');
           }
+
+          return Container();
         },
       ),
     );

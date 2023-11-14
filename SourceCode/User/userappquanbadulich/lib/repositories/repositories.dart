@@ -64,7 +64,7 @@ class UserRepository {
     final urlRemoveTouristFromFavouriteList =
         '$urlMain/removeTourist/$idCus/$idTourist';
     try {
-      final response = await http.post(
+      final response = await http.delete(
         Uri.parse(urlRemoveTouristFromFavouriteList),
         headers: {'Content-Type': 'application/json'},
       );

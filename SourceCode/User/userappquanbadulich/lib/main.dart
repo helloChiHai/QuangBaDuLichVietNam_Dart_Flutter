@@ -64,7 +64,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/listFavoriteTouristAttraction': (context) => ListFavoriteTouristAttractionPage(),
+        '/listFavoriteTouristAttraction': (context) =>
+            ListFavoriteTouristAttractionPage(),
         '/updateImage': (context) => UpdateImagePage(),
         '/deleteAccount': (context) => DeleteAccountPage(),
         '/editAccount_password': (context) => UpdatePasswordPage(),
@@ -80,7 +81,7 @@ class MyApp extends StatelessWidget {
         '/regions': (context) => RegionPage(),
         '/cultures': (context) => CulturePage(),
         '/history': (context) => HistoryPage(),
-        '/touristAttraction': (context) => TouristAttractionPage(),
+        '/touristAttraction': (context) => TouristAttractionPage(idCus: ''),
         '/specialDishs': (context) => SpecialDishPage(),
         '/intro_login': (context) => LoginIntro(),
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),

@@ -6,16 +6,20 @@ import '../bloc/touristAttraction_event.dart';
 import '../bloc/touristAttraction_state.dart';
 
 class TouristAttractionPage extends StatefulWidget {
-  const TouristAttractionPage({super.key});
+  final String idCus;
+  const TouristAttractionPage({Key? key, required this.idCus});
 
   @override
   State<TouristAttractionPage> createState() => TouristAttractionPageState();
 }
 
 class TouristAttractionPageState extends State<TouristAttractionPage> {
+  late String idCus;
+
   @override
   void initState() {
     super.initState();
+    idCus = widget.idCus;
     context.read<TouristAttractionBloc>().add(FetchTouristAttraction());
   }
 
@@ -41,6 +45,7 @@ class TouristAttractionPageState extends State<TouristAttractionPage> {
                         '/detail_touriestAttraction_about',
                         arguments: {
                           'aboutTouristData': touristAttraction,
+                          'idCus': idCus,
                         });
                   },
                   child: Container(
