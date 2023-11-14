@@ -5,6 +5,7 @@ import 'package:userappquanbadulich/model/touristAttractionModel.dart';
 import '../../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_bloc.dart';
 import '../../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_event.dart';
 import '../../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_state.dart';
+import '../../../../comment/screens/comment_page.dart';
 import '../../detailTourist_content.dart';
 import '../../detailTourist_culture.dart';
 import '../../detailTourist_history.dart';
@@ -217,93 +218,120 @@ class _DetailTouristAttraction_AboutWidgetState
                     const SizedBox(height: 15),
                     Container(
                       color: Colors.white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      height: 50,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
                         children: [
-                          TextButton(
-                            onPressed: () {
-                              pageController.animateToPage(
-                                0,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            },
-                            child: Text(
-                              'Giới thiệu',
-                              style: TextStyle(
-                                color: pageViewInit == 0
-                                    ? Colors.black
-                                    : const Color.fromARGB(255, 77, 76, 76),
-                                fontSize: pageViewInit == 0 ? 25 : 20,
-                                fontWeight: FontWeight.bold,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  pageController.animateToPage(
+                                    0,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                  );
+                                },
+                                child: Text(
+                                  'Giới thiệu',
+                                  style: TextStyle(
+                                    color: pageViewInit == 0
+                                        ? Colors.black
+                                        : const Color.fromARGB(255, 77, 76, 76),
+                                    fontSize: pageViewInit == 0 ? 25 : 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              pageController.animateToPage(
-                                1,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            },
-                            child: Text(
-                              'Văn hóa',
-                              style: TextStyle(
-                                color: pageViewInit == 1
-                                    ? Colors.black
-                                    : const Color.fromARGB(255, 77, 76, 76),
-                                fontSize: pageViewInit == 1 ? 25 : 20,
-                                fontWeight: FontWeight.bold,
+                              TextButton(
+                                onPressed: () {
+                                  pageController.animateToPage(
+                                    1,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                  );
+                                },
+                                child: Text(
+                                  'Văn hóa',
+                                  style: TextStyle(
+                                    color: pageViewInit == 1
+                                        ? Colors.black
+                                        : const Color.fromARGB(255, 77, 76, 76),
+                                    fontSize: pageViewInit == 1 ? 25 : 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              pageController.animateToPage(
-                                2,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            },
-                            child: Text(
-                              'Lịch sử',
-                              style: TextStyle(
-                                color: pageViewInit == 2
-                                    ? Colors.black
-                                    : const Color.fromARGB(255, 77, 76, 76),
-                                fontSize: pageViewInit == 2 ? 25 : 20,
-                                fontWeight: FontWeight.bold,
+                              TextButton(
+                                onPressed: () {
+                                  pageController.animateToPage(
+                                    2,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                  );
+                                },
+                                child: Text(
+                                  'Lịch sử',
+                                  style: TextStyle(
+                                    color: pageViewInit == 2
+                                        ? Colors.black
+                                        : const Color.fromARGB(255, 77, 76, 76),
+                                    fontSize: pageViewInit == 2 ? 25 : 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              pageController.animateToPage(
-                                3,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            },
-                            child: Text(
-                              'Đặc sản',
-                              style: TextStyle(
-                                color: pageViewInit == 3
-                                    ? Colors.black
-                                    : const Color.fromARGB(255, 77, 76, 76),
-                                fontSize: pageViewInit == 3 ? 25 : 20,
-                                fontWeight: FontWeight.bold,
+                              TextButton(
+                                onPressed: () {
+                                  pageController.animateToPage(
+                                    3,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                  );
+                                },
+                                child: Text(
+                                  'Đặc sản',
+                                  style: TextStyle(
+                                    color: pageViewInit == 3
+                                        ? Colors.black
+                                        : const Color.fromARGB(255, 77, 76, 76),
+                                    fontSize: pageViewInit == 3 ? 25 : 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
+                              TextButton(
+                                onPressed: () {
+                                  pageController.animateToPage(
+                                    4,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                  );
+                                },
+                                child: Text(
+                                  'Bình luận',
+                                  style: TextStyle(
+                                    color: pageViewInit == 4
+                                        ? Colors.black
+                                        : const Color.fromARGB(255, 77, 76, 76),
+                                    fontSize: pageViewInit == 4 ? 25 : 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -323,6 +351,7 @@ class _DetailTouristAttraction_AboutWidgetState
                           DetailHistory(dataHistory: tourist.history),
                           DetailSpecialtyDish(
                               dataSpecialtyDish: tourist.specialtyDish),
+                          CommentPage(),
                         ],
                       ),
                     ),
