@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userappquanbadulich/comment/bloc/comment_bloc.dart';
+import 'package:userappquanbadulich/comment/bloc/comment_event.dart';
+import 'package:userappquanbadulich/comment/bloc/comment_state.dart';
+import 'package:userappquanbadulich/model/commentModel.dart';
 
 class CommentPage extends StatefulWidget {
-  const CommentPage({super.key});
+  const CommentPage({Key? key, });
 
   @override
   State<CommentPage> createState() => _CommentPageState();
 }
 
 class _CommentPageState extends State<CommentPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  // void _refreshComments() {
+  //   context.read<CommentBloc>().add(LoadComment(idTourist: idTourist));
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -93,7 +107,6 @@ class _CommentPageState extends State<CommentPage> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      // Hiển thị dialog khi nhấn vào
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
@@ -223,7 +236,7 @@ class _CommentPageState extends State<CommentPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Vương Chí Hải',
+                                            'listComment',
                                             style: const TextStyle(
                                               fontSize: 20,
                                               color: Colors.black,
@@ -260,7 +273,7 @@ class _CommentPageState extends State<CommentPage> {
                 );
               },
             ),
-          ),
+          )
         ],
       ),
     );
