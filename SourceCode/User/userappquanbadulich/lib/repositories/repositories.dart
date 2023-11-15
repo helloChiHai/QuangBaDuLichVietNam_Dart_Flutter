@@ -24,8 +24,8 @@ class UserRepository {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
-        if (data['data'] is List) {
-          final commentList = data['data'] as List<dynamic>;
+        if (data['comments'] is List) {
+          final commentList = data['comments'] as List<dynamic>;
 
           if (commentList.isNotEmpty) {
             final comments = commentList
@@ -39,7 +39,8 @@ class UserRepository {
           throw Exception('Dữ liệu không phải là một danh sách');
         }
       } else {
-        throw Exception('Lỗi khi lấy bình luận: ${response.reasonPhrase}');
+        // throw Exception('Lỗi khi lấy bình luận: ${response.reasonPhrase}');
+        return [];
       }
     } catch (e) {
       throw Exception('Lỗi khi lấy bình luận theo idTourist: $e');

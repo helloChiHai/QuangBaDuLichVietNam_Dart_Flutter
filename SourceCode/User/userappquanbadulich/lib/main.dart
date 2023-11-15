@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userappquanbadulich/account/screens/account_page.dart';
 import 'package:userappquanbadulich/account/screens/detailAccount_page.dart';
 import 'package:userappquanbadulich/comment/bloc/comment_bloc.dart';
+import 'package:userappquanbadulich/comment/screens/comment_page.dart';
 import 'package:userappquanbadulich/createAccount/screens/login_signUpSuccesful.dart';
 import 'package:userappquanbadulich/culture/bloc/culture_bloc.dart';
 import 'package:userappquanbadulich/deleteAccount/bloc/deleteAccount_bloc.dart';
@@ -66,6 +67,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
+        '/commentPage': (context) => CommentPage(
+              idTourist: '',
+            ),
         '/updateComment': (context) => UpdateCommentPage(),
         '/listFavoriteTouristAttraction': (context) =>
             ListFavoriteTouristAttractionPage(),
