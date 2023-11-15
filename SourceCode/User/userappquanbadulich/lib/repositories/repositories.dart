@@ -14,7 +14,8 @@ class UserRepository {
   String urlMain = 'http://192.168.88.214:3090';
 
   // THÊM BÌNH LUẬN
-  Future<int> addComment(String idTourist, String idCus, String commentData) async {
+  Future<int> addComment(
+      String idTourist, String idCus, String commentData) async {
     try {
       final response = await http.post(
         Uri.parse('$urlMain/tourist/addComment/'),
@@ -42,27 +43,16 @@ class UserRepository {
         Uri.parse('$urlMain/tourist/getComments/$idTourist'),
         headers: {'Content-Type': 'application/json'},
       );
-
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-
-        if (data['comments'] is List) {
-          final commentList = data['comments'] as List<dynamic>;
-
-          if (commentList.isNotEmpty) {
-            final comments = commentList
-                .map((commentData) => CommentModel.fromJson(commentData))
-                .toList();
-            return comments;
-          } else {
-            return [];
-          }
-        } else {
-          throw Exception('Dữ liệu không phải là một danh sách');
-        }
+        final commentList = data['data'] as List<dynamic>;
+        final comments = commentList
+            .map((cmtData) => CommentModel.fromJson(cmtData))
+            .toList();
+        return comments;
       } else {
-        // throw Exception('Lỗi khi lấy bình luận: ${response.reasonPhrase}');
-        return [];
+        throw Exception(
+            'Failed to fetch special dish: ${response.reasonPhrase}');
       }
     } catch (e) {
       throw Exception('Lỗi khi lấy bình luận theo idTourist: $e');
@@ -328,9 +318,6 @@ class UserRepository {
 
       final uri =
           Uri.http('$urlMain', '/filter-tourist-attractions', queryParams);
-
-      // final uri = Uri.http(
-      //     '192.168.226.214:3090', '/filter-tourist-attractions', queryParams);
 
       final response = await http.get(
         uri,
