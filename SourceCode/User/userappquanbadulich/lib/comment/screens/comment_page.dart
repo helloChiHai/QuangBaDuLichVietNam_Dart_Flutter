@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class CommentPage extends StatefulWidget {
@@ -70,12 +68,119 @@ class _CommentPageState extends State<CommentPage> {
                       onLongPress: () {
                         showModalBottomSheet(
                           context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
                           builder: (BuildContext context) {
                             return Container(
-                              height: 100,
-                              color: Colors.amber,
-                              child: Center(
-                                child: Text('This is the bottom sheet content'),
+                              height: 150,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 20,
+                              ),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      // Hiển thị dialog khi nhấn vào
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            content: const Text(
+                                              'Bạn có chắc chắn muốn xóa bình luận này không?',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text(
+                                                  'HỦY',
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                              // Nút No
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .pop(); // Đóng dialog
+                                                },
+                                                child: const Text(
+                                                  'XÓA',
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.delete,
+                                          size: 30,
+                                        ),
+                                        SizedBox(width: 5),
+                                        Text(
+                                          'Xóa',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed('/updateComment');
+                                    },
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.update_sharp,
+                                          size: 30,
+                                        ),
+                                        SizedBox(width: 5),
+                                        Text(
+                                          'Chỉnh sửa',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.black,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
                             );
                           },
@@ -126,7 +231,7 @@ class _CommentPageState extends State<CommentPage> {
                                             ),
                                           ),
                                           Text(
-                                            'asld;fasasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf',
+                                            'asld;fassdfasdf',
                                             style: const TextStyle(
                                               fontSize: 20,
                                               color: Colors.black,

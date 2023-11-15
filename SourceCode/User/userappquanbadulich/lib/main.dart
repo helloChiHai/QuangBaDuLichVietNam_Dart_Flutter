@@ -44,6 +44,7 @@ import 'package:userappquanbadulich/updatePassword.dart/bloc/updatePassword_bloc
 import 'package:userappquanbadulich/updatePassword.dart/screens/updatePassword_page.dart';
 
 import 'addTouristAttractionToFavoritesList/bloc/addTouristToList_bloc.dart';
+import 'comment/screens/updateComment_page.dart';
 import 'createAccount/bloc/createAccount_bloc.dart';
 import 'createAccount/screens/createAccont_page.dart';
 import 'culture/screens/culture_page.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
+        '/updateComment': (context) => UpdateCommentPage(),
         '/listFavoriteTouristAttraction': (context) =>
             ListFavoriteTouristAttractionPage(),
         '/updateImage': (context) => UpdateImagePage(),
