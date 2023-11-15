@@ -351,7 +351,7 @@ class _DetailTouristAttraction_AboutWidgetState
                           DetailHistory(dataHistory: tourist.history),
                           DetailSpecialtyDish(
                               dataSpecialtyDish: tourist.specialtyDish),
-                          CommentPage(idTourist: tourist.idTourist),
+                          CommentPage(idTourist: tourist.idTourist, idCus: idCustomer),
                         ],
                       ),
                     ),

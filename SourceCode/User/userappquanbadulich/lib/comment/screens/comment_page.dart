@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userappquanbadulich/addComment/bloc/addComment_bloc.dart';
+import 'package:userappquanbadulich/addComment/bloc/addComment_event.dart';
 import 'package:userappquanbadulich/comment/bloc/comment_bloc.dart';
 import 'package:userappquanbadulich/comment/bloc/comment_event.dart';
 import 'package:userappquanbadulich/comment/bloc/comment_state.dart';
 
 class CommentPage extends StatefulWidget {
   final String idTourist;
-  const CommentPage({Key? key, required this.idTourist});
+  final String idCus;
+  const CommentPage({Key? key, required this.idTourist, required this.idCus});
 
   @override
   State<CommentPage> createState() => _CommentPageState();
@@ -14,15 +17,73 @@ class CommentPage extends StatefulWidget {
 
 class _CommentPageState extends State<CommentPage> {
   late String idTourist;
+  late String idCus;
+  TextEditingController contentCommentController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     idTourist = widget.idTourist;
+    idCus = widget.idCus;
     context.read<CommentBloc>().add(LoadComment(idTourist: idTourist));
   }
 
-  void _refreshComments() {
+  Future<void> _refreshComments() async {
     context.read<CommentBloc>().add(LoadComment(idTourist: idTourist));
+  }
+
+  Future<void> onAddCommentPressed() async {
+    String commentContent = contentCommentController.text;
+    if (commentContent.isNotEmpty) {
+      try {
+        context.read<AddCommentBloc>().add(
+              AddCommentButtonPress(
+                idTourist: idTourist,
+                idCus: idCus,
+                commentData: commentContent,
+              ),
+            );
+        contentCommentController.clear();
+
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          final snackBar = SnackBar(
+            content: Text(
+              'Thêm bình luận thành công',
+              style: TextStyle(fontSize: 20),
+            ),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+          await _refreshComments(); // Gọi _refreshComments sau khi thêm bình luận thành công
+        });
+      } catch (e) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          const snackBar = SnackBar(
+            content: Text(
+              'Thêm bình luận thất bại',
+              style: TextStyle(fontSize: 20),
+            ),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 2),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        });
+      }
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        const snackBar = SnackBar(
+          content: Text(
+            'Nội dung bình luận không được để trống',
+            style: TextStyle(fontSize: 20),
+          ),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 2),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
   }
 
   @override
@@ -42,6 +103,7 @@ class _CommentPageState extends State<CommentPage> {
                 Expanded(
                   flex: 9,
                   child: TextField(
+                    controller: contentCommentController,
                     style: const TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -61,7 +123,11 @@ class _CommentPageState extends State<CommentPage> {
                 Expanded(
                   flex: 2,
                   child: IconButton(
-                    onPressed: () {},
+                    // onPressed: () {
+                    //   print(idTourist);
+                    //   print(idCus);
+                    // },
+                    onPressed: onAddCommentPressed,
                     icon: const Icon(
                       Icons.send,
                       size: 35,
@@ -75,12 +141,42 @@ class _CommentPageState extends State<CommentPage> {
           BlocBuilder<CommentBloc, CommentState>(
             builder: (context, state) {
               if (state is CommentLoading) {
-                return CircularProgressIndicator(); // Hiển thị biểu tượng loading khi đang tải
+                return const CircularProgressIndicator();
               } else if (state is CommentLoaded) {
                 final comments = state.comments;
                 return comments.isEmpty
                     ? Container(
-                        child: Text('khong co comment'),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
+                        ),
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.messenger,
+                              size: 150,
+                              color: Colors.grey,
+                            ),
+                            Text(
+                              'Chưa có bình luận nào',
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.black,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              'Hãy là người đầu tiên bình luận',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                       )
                     : Expanded(
                         child: ListView.builder(
@@ -88,7 +184,10 @@ class _CommentPageState extends State<CommentPage> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: comments.length,
                           itemBuilder: (context, index) {
-                            final comment = comments[index];
+                            final sortedComments = List.from(comments);
+                            sortedComments
+                                .sort((a, b) => b.atTime.compareTo(a.atTime));
+                            final comment = sortedComments[index];
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

@@ -24,5 +24,3 @@ class CommentFailure extends CommentState {
   @override
   List<Object?> get props => [error];
 }
-
-class CommentEmpty extends CommentState {}

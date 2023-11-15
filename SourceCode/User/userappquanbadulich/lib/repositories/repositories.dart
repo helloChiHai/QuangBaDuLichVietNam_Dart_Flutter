@@ -13,6 +13,28 @@ import '../model/regionModel.dart';
 class UserRepository {
   String urlMain = 'http://192.168.88.214:3090';
 
+  // THÊM BÌNH LUẬN
+  Future<int> addComment(String idTourist, String idCus, String commentData) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$urlMain/tourist/addComment/'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'idTourist': idTourist,
+          'idCus': idCus,
+          'commentData': commentData,
+        }),
+      );
+      if (response.statusCode == 200) {
+        return 1;
+      } else {
+        throw Exception('Lỗi khi thêm bình luận ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Lỗi khi thêm bình luận: $e');
+    }
+  }
+
   // HIỂN THỊ TẤT CẢ BÌNH LUẬN
   Future<List<CommentModel>> getAllCommentByIdTourist(String idTourist) async {
     try {

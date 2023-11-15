@@ -419,7 +419,7 @@ app.get("/tourist/getComments/:touristId", async (req, res) => {
 // thêm bình luận
 app.post("/tourist/addComment", async (req, res) => {
   try {
-    const { touristId, idCus, commentData } = req.body;
+    const { idTourist, idCus, commentData } = req.body;
 
     const region = await Region.findOne({});
     const customer = await Customer.findOne({ idCus: idCus });
@@ -434,7 +434,7 @@ app.post("/tourist/addComment", async (req, res) => {
 
     region.provinces.forEach((province) => {
       province.touristAttraction.forEach((attraction) => {
-        if (attraction.idTourist === touristId) {
+        if (attraction.idTourist === idTourist) {
           const newComment = {
             idcmt: `CMT_${uuidv4()}`,
             idCus: idCus,

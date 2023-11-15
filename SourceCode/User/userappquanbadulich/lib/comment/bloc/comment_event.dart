@@ -6,6 +6,7 @@ abstract class CommentEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+// HIỂN THỊ COMMENT
 class LoadComment extends CommentEvent {
   final String idTourist;
   LoadComment({required this.idTourist});
