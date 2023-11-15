@@ -383,6 +383,57 @@ app.get("/filter-tourist-attractions", async (req, res) => {
 
 // ----------------------------------------------------------------------------
 
+// kiểm tra bình luận có phải người đó đăng hay không
+app.get("/tourist/checkCommentOwnership", async (req, res) => {
+  try {
+    const { idTourist, idCus, idcmt } = req.body;
+    const regions = await Region.find({});
+    const customer = await Customer.findOne({ idCus: idCus });
+    if (!customer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Khách hàng không tồn tại" });
+    }
+    let isCommentOwner = false;
+
+    for (const region of regions) {
+      for (const province of region.provinces) {
+        for (const attraction of province.touristAttraction) {
+          if (attraction.idTourist === idTourist) {
+            const existingComment = attraction.comment.find(
+              (comment) => comment.idcmt === idcmt
+            );
+
+            if (!existingComment) {
+              return res
+                .status(404)
+                .json({ success: false, message: "Bình luận không tồn tại" });
+            }
+
+            if (existingComment.idCus !== idCus) {
+              return res.status(403).json({
+                success: false,
+                message: "Bạn không có quyền xóa bình luận này",
+              });
+            } else {
+              isCommentOwner = true;
+            }
+          }
+        }
+      }
+    }
+    console.log("la chu so huu");
+    res.status(200).json({ success: true, isCommentOwner });
+  } catch (error) {
+    console.log("kh phai chu so huu");
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      error: "Lỗi khi kiểm tra quyền sở hữu bình luận",
+    });
+  }
+});
+
 // hiển thị tất cả bình luận của địa điểm đó (IdTourist)
 app.get("/tourist/getComments/:touristId", async (req, res) => {
   try {

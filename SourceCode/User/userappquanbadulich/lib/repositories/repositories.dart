@@ -13,6 +13,26 @@ import '../model/regionModel.dart';
 class UserRepository {
   String urlMain = 'http://192.168.88.214:3090';
 
+  // KIỂM TRA COMMENT
+  Future<int> checkCommentOwnership(
+      String idTourist, String idCus, String idcmt) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '$urlMain/tourist/checkCommentOwnership?idTourist=$idTourist&idCus=$idCus&idcmt=$idcmt'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        return 1;
+      } else {
+        throw Exception(
+            'Lỗi khi kiểm tra chủ sở hữu bình luận ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Lỗi khi kiểm tra chủ sở hữu bình luận: $e');
+    }
+  }
+
   // THÊM BÌNH LUẬN
   Future<int> addComment(
       String idTourist, String idCus, String commentData) async {

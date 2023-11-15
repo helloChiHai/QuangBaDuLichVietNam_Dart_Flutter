@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userappquanbadulich/account/screens/account_page.dart';
 import 'package:userappquanbadulich/account/screens/detailAccount_page.dart';
 import 'package:userappquanbadulich/addComment/bloc/addComment_bloc.dart';
+import 'package:userappquanbadulich/checkCommentOwnership/bloc/checkCommentOwnership_bloc.dart';
 import 'package:userappquanbadulich/comment/bloc/comment_bloc.dart';
 import 'package:userappquanbadulich/comment/screens/comment_page.dart';
 import 'package:userappquanbadulich/createAccount/screens/login_signUpSuccesful.dart';
@@ -122,6 +123,11 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<CheckCommentOwnerShipBloc>(
+          create: (context) => CheckCommentOwnerShipBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
         BlocProvider<AddCommentBloc>(
           create: (context) => AddCommentBloc(
             userRepository: UserRepository(),
