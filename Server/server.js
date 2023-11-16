@@ -725,9 +725,9 @@ app.get("/getAllSpecialtyDish", async (req, res) => {
     regions.forEach((region) => {
       region.provinces.forEach((province) => {
         province.touristAttraction.forEach((attraction) => {
-          attraction.specialtyDish.forEach((specialtyDish) => {
-            tatCaMonDacSan.push(specialtyDish);
-          });
+          if (attraction.specialtyDish.length > 0) {
+            tatCaMonDacSan.push(attraction.specialtyDish[0]);
+          }
         });
       });
     });
@@ -750,9 +750,9 @@ app.get("/getAllCulture", async (req, res) => {
     regions.forEach((region) => {
       region.provinces.forEach((province) => {
         province.touristAttraction.forEach((attraction) => {
-          attraction.culture.forEach((culture) => {
-            tatCaThongTinVanHoa.push(culture);
-          });
+          if (attraction.culture.length > 0) {
+            tatCaThongTinVanHoa.push(attraction.culture[0]);
+          }
         });
       });
     });
@@ -776,9 +776,9 @@ app.get("/getAllHistory", async (req, res) => {
     regions.forEach((region) => {
       region.provinces.forEach((province) => {
         province.touristAttraction.forEach((attraction) => {
-          attraction.history.forEach((_history) => {
-            tatCaThongTinLichSu.push(_history);
-          });
+          if (attraction.history.length > 0) {
+            tatCaThongTinLichSu.push(attraction.history[0]);
+          }
         });
       });
     });

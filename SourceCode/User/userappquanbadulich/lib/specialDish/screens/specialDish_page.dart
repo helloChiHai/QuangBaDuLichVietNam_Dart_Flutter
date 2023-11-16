@@ -6,16 +6,24 @@ import 'package:userappquanbadulich/specialDish/bloc/specialDish_event.dart';
 import '../bloc/specialDish_state.dart';
 
 class SpecialDishPage extends StatefulWidget {
-  const SpecialDishPage({super.key});
+  final String idCus;
+
+  const SpecialDishPage({
+    Key? key,
+    required this.idCus,
+  }) : super(key: key);
 
   @override
   State<SpecialDishPage> createState() => _SpecialDishPageState();
 }
 
 class _SpecialDishPageState extends State<SpecialDishPage> {
+  late String idCus;
+
   @override
   void initState() {
     super.initState();
+    idCus = widget.idCus;
     context.read<SpecialDishBloc>().add(FetchSpecialDish());
   }
 
@@ -31,7 +39,7 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
             final specialDishs = state.specialDishs;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: specialDishs.length,
+              itemCount: 4,
               itemBuilder: (context, index) {
                 final specialDish = specialDishs[index];
                 return GestureDetector(
@@ -41,6 +49,7 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
                         '/detail_touriestAttraction_specialDish',
                         arguments: {
                           'specialDishData': specialDish,
+                          'idCus': idCus,
                         });
                   },
                   child: Container(

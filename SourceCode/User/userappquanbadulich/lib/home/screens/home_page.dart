@@ -299,10 +299,10 @@ class _HomePageState extends State<HomePage> {
                       horizontal: 15,
                     ),
                     width: double.infinity,
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Người Việt Nam dễ thương lắm',
                           style: TextStyle(
                             fontSize: 22,
@@ -310,8 +310,8 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10),
-                        CulturePage(),
+                        const SizedBox(height: 10),
+                        CulturePage(idCus: customer.idCus),
                       ],
                     ),
                   ),
@@ -322,10 +322,10 @@ class _HomePageState extends State<HomePage> {
                       horizontal: 15,
                     ),
                     width: double.infinity,
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Đặc sản Việt Nam: Món ngon đầy hương vị',
                           style: TextStyle(
                             fontSize: 22,
@@ -333,8 +333,8 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10),
-                        SpecialDishPage(),
+                        const SizedBox(height: 10),
+                        SpecialDishPage(idCus: customer.idCus),
                       ],
                     ),
                   ),
@@ -345,10 +345,10 @@ class _HomePageState extends State<HomePage> {
                       horizontal: 15,
                     ),
                     width: double.infinity,
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Cùng nhìn lại lịch sử hào hùng của dân tộc Việt Nam',
                           style: TextStyle(
                             fontSize: 22,
@@ -356,8 +356,8 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10),
-                        HistoryPage(),
+                        const SizedBox(height: 10),
+                        HistoryPage(idCus: customer.idCus),
                       ],
                     ),
                   ),

@@ -16,12 +16,14 @@ class DetailTouristAttraction_AboutWidget extends StatefulWidget {
   final TouristAttractionModel tourist;
   final bool isCheckVisibility;
   final String idCustomer;
+  final int pageViewInit;
   const DetailTouristAttraction_AboutWidget({
     Key? key,
     required this.isCheckFavourite,
     required this.tourist,
     required this.isCheckVisibility,
     required this.idCustomer,
+    required this.pageViewInit,
   }) : super(key: key);
 
   @override
@@ -45,6 +47,7 @@ class _DetailTouristAttraction_AboutWidgetState
     isCheckFavourite = widget.isCheckFavourite;
     tourist = widget.tourist;
     isCheckVisibility = widget.isCheckVisibility;
+    pageViewInit = widget.pageViewInit;
     pageController = PageController(initialPage: pageViewInit);
   }
 

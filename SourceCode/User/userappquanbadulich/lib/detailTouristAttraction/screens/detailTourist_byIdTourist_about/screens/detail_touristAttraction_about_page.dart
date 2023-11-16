@@ -44,6 +44,11 @@ class _DetailTouristAttraction_AboutPageState
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<DetailTourist_AboutBloc, DetailTourist_AboutState>(
@@ -68,6 +73,7 @@ class _DetailTouristAttraction_AboutPageState
                       tourist: touristData,
                       isCheckVisibility: isCheckVisibility,
                       idCustomer: idCus!,
+                      pageViewInit: 0,
                     );
                   } else if (state is CheckTouristInListFailure) {
                     return Text(state.error);

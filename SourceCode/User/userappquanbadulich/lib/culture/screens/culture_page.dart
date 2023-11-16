@@ -5,16 +5,24 @@ import 'package:userappquanbadulich/culture/bloc/culture_event.dart';
 import 'package:userappquanbadulich/culture/bloc/culture_state.dart';
 
 class CulturePage extends StatefulWidget {
-  const CulturePage({super.key});
+  final String idCus;
+
+  const CulturePage({
+    Key? key,
+    required this.idCus,
+  }) : super(key: key);
 
   @override
   State<CulturePage> createState() => _CulturePageState();
 }
 
 class _CulturePageState extends State<CulturePage> {
+  late String idCus;
+
   @override
   void initState() {
     super.initState();
+    idCus = widget.idCus;
     context.read<CultureBloc>().add(FetchCultures());
   }
 
@@ -30,15 +38,17 @@ class _CulturePageState extends State<CulturePage> {
             final cultures = state.cultures;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: cultures.length,
+              itemCount: 4,
               itemBuilder: (context, index) {
                 final culture = cultures[index];
                 return GestureDetector(
                   onTap: () {
-                    print(culture.idCulture);
                     Navigator.of(context).pushNamed(
                         '/detail_touriestAttraction_culture',
-                        arguments: {'cultureData': culture});
+                        arguments: {
+                          'cultureData': culture,
+                          'idCus': idCus,
+                        });
                   },
                   child: Container(
                     width: 180,

@@ -6,16 +6,22 @@ import '../bloc/history_event.dart';
 import '../bloc/history_state.dart';
 
 class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key});
+  final String idCus;
+  const HistoryPage({
+    Key? key,
+    required this.idCus,
+  }) : super(key: key);
 
   @override
   State<HistoryPage> createState() => HistoryPageState();
 }
 
 class HistoryPageState extends State<HistoryPage> {
+  late String idCus;
   @override
   void initState() {
     super.initState();
+    idCus = widget.idCus;
     context.read<HistoryBloc>().add(FetchHistory());
   }
 
@@ -31,7 +37,7 @@ class HistoryPageState extends State<HistoryPage> {
             final historyList = state.history;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: historyList.length,
+              itemCount: 4,
               itemBuilder: (context, index) {
                 final history = historyList[index];
                 return GestureDetector(
@@ -39,7 +45,10 @@ class HistoryPageState extends State<HistoryPage> {
                     print(history.idHistoryStory);
                     Navigator.of(context).pushNamed(
                         '/detail_touriestAttraction_history',
-                        arguments: {'HistoryData': history});
+                        arguments: {
+                          'HistoryData': history,
+                          'idCus': idCus,
+                        });
                   },
                   child: Container(
                     width: 180,

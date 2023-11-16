@@ -7,7 +7,10 @@ import '../bloc/touristAttraction_state.dart';
 
 class TouristAttractionPage extends StatefulWidget {
   final String idCus;
-  const TouristAttractionPage({Key? key, required this.idCus});
+  const TouristAttractionPage({
+    Key? key,
+    required this.idCus,
+  }) : super(key: key);
 
   @override
   State<TouristAttractionPage> createState() => TouristAttractionPageState();
@@ -35,12 +38,11 @@ class TouristAttractionPageState extends State<TouristAttractionPage> {
             final touristAttractions = state.touristAttraction;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: touristAttractions.length,
+              itemCount: 4,
               itemBuilder: (context, index) {
                 final touristAttraction = touristAttractions[index];
                 return GestureDetector(
                   onTap: () {
-                    print(touristAttraction.idTourist);
                     Navigator.of(context).pushNamed(
                         '/detail_touriestAttraction_about',
                         arguments: {
