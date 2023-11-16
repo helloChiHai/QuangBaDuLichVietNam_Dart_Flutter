@@ -38,6 +38,7 @@ import 'package:userappquanbadulich/updateAddress/bloc/updateAddress_bloc.dart';
 import 'package:userappquanbadulich/updateAddress/screens/updateAddress_page.dart';
 import 'package:userappquanbadulich/updateBirthday/bloc/updateBirthday_bloc.dart';
 import 'package:userappquanbadulich/updateBirthday/screens/updateBirthday_page.dart';
+import 'package:userappquanbadulich/updateComment/bloc/updateComment_bloc.dart';
 import 'package:userappquanbadulich/updateEmail/bloc/updateEmail_bloc.dart';
 import 'package:userappquanbadulich/updateEmail/screens/updateEmail_page.dart';
 import 'package:userappquanbadulich/updateImage/bloc/updateImage_bloc.dart';
@@ -53,6 +54,7 @@ import 'createAccount/bloc/createAccount_bloc.dart';
 import 'createAccount/screens/createAccont_page.dart';
 import 'culture/screens/culture_page.dart';
 import 'deleteAccount/screens/deleteAccount_page.dart';
+import 'deleteComment/bloc/deleteComment_bloc.dart';
 import 'detailTouristAttraction/screens/detailTourist_comment.dart';
 import 'detailTouristAttraction/screens/detailTourist_content.dart';
 import 'detailTouristAttraction/screens/detailTourist_culture.dart';
@@ -73,7 +75,8 @@ class MyApp extends StatelessWidget {
               idTourist: '',
               idCus: '',
             ),
-        '/updateComment': (context) => UpdateCommentPage(),
+        '/updateComment': (context) =>
+            UpdateCommentPage(touristId: '', idCus: '', idcmt: ''),
         '/listFavoriteTouristAttraction': (context) =>
             ListFavoriteTouristAttractionPage(),
         '/updateImage': (context) => UpdateImagePage(),
@@ -123,6 +126,16 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<UpdateCommentBloc>(
+          create: (context) => UpdateCommentBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<DeleteCommentBloc>(
+          create: (context) => DeleteCommentBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
         BlocProvider<CheckCommentOwnerShipBloc>(
           create: (context) => CheckCommentOwnerShipBloc(
             userRepository: UserRepository(),

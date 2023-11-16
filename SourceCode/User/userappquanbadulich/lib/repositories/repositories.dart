@@ -33,6 +33,53 @@ class UserRepository {
     }
   }
 
+  // CẬP NHẬT BÌNH LUẬN
+  Future<int> updateComment(String touristId, String idCus, String idcmt,
+      String newCommentData) async {
+    try {
+      final response = await http.put(
+        Uri.parse('$urlMain/tourist/updateComment'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'touristId': touristId,
+          'idCus': idCus,
+          'idcmt': idcmt,
+          'newCommentData': newCommentData,
+        }),
+      );
+      if (response.statusCode == 200) {
+        return 1;
+      } else {
+        throw Exception('Lỗi cập nhật bình luận ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Lỗi khi cập nhật bình luận: $e');
+    }
+  }
+
+  // XÓA BÌNH LUẬN
+  Future<int> deleteComment(
+      String touristId, String idCus, String idcmt) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('$urlMain/tourist/deleteComment'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'touristId': touristId,
+          'idCus': idCus,
+          'idcmt': idcmt,
+        }),
+      );
+      if (response.statusCode == 200) {
+        return 1;
+      } else {
+        throw Exception('Lỗi khi xóa bình luận ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Lỗi khi xóa bình luận: $e');
+    }
+  }
+
   // THÊM BÌNH LUẬN
   Future<int> addComment(
       String idTourist, String idCus, String commentData) async {

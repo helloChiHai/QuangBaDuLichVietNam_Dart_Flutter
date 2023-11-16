@@ -10,11 +10,11 @@ class AddCommentButtonPress extends AddCommentEvent {
   final String idTourist;
   final String idCus;
   final String commentData;
-  AddCommentButtonPress(
-      {required this.idTourist,
-      required this.idCus,
-      required this.commentData});
+  AddCommentButtonPress({
+    required this.idTourist,
+    required this.idCus,
+    required this.commentData,
+  });
   @override
   List<Object?> get props => [idTourist, idCus, commentData];
 }
-
