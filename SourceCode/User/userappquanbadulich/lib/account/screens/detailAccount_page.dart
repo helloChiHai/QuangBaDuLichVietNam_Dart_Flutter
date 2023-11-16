@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:userappquanbadulich/model/CustomerModel.dart';
+import 'dart:convert';
+import 'dart:typed_data';
 
 class DetailAccountPage extends StatefulWidget {
   const DetailAccountPage({super.key});
@@ -24,32 +26,31 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
     customer = args['customerData'] as CustomerModel;
   }
 
-  Future<bool> doesFileExist(String filePath) async {
-    return await File(filePath).exists();
-  }
-
   Future<Widget> _buildImage(CustomerModel cus) async {
     if (cus.imgCus != null && cus.imgCus!.isNotEmpty) {
-      bool exists = await doesFileExist(cus.imgCus!);
-
-      if (exists) {
-        String assetPath = cus.imgCus!.replaceAll("//", "/");
+      try {
+        // Thử giải mã dữ liệu base64
+        List<int> imageBytes = Base64Decoder().convert(cus.imgCus!);
         return Container(
-          width: 130,
-          height: 130,
+          width: imageSize,
+          height: imageSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: FileImage(File(assetPath)),
+              image: Image.memory(
+                Uint8List.fromList(imageBytes),
+                fit: BoxFit.cover,
+              ).image,
             ),
           ),
         );
-      } else {
+      } catch (e) {
+        // Nếu có lỗi khi giải mã, sử dụng AssetImage
         String assetPath = cus.imgCus!.replaceAll("//", "/");
         return Container(
-          width: 130,
-          height: 130,
+          width: imageSize,
+          height: imageSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             image: DecorationImage(
@@ -60,9 +61,10 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
         );
       }
     } else {
+      // Trả về hình ảnh mặc định nếu không có hình ảnh
       return Container(
-        width: 130,
-        height: 130,
+        width: imageSize,
+        height: imageSize,
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(
@@ -118,7 +120,8 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
                             backgroundIsTransparent: true,
                             child: FutureBuilder<Widget>(
                               future: _buildImage(customer),
-                              builder: (context, snapshot) {
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<Widget> snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.done) {
                                   return snapshot.data ?? Container();

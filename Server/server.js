@@ -15,8 +15,9 @@ const Region = require("./models/region");
 const Customer = require("./models/customer");
 const Province = require("./models/province");
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// Middleware để tăng giới hạn kích thước payload
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 const checkMongoDBConnection = () => {
   mongoose.connection.on("open", () => {

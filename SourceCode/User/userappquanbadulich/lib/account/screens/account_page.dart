@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,32 +10,29 @@ import 'package:userappquanbadulich/model/CustomerModel.dart';
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
 
-  Future<bool> doesFileExist(String filePath) async {
-    return await File(filePath).exists();
-  }
-
-  Future<Image> _buildImage(CustomerModel cus) async {
+  Future<Widget> _buildImage(CustomerModel cus) async {
     if (cus.imgCus != null && cus.imgCus!.isNotEmpty) {
-      bool fileExists = await doesFileExist(cus.imgCus!);
-
-      if (fileExists) {
-        String assetPath = cus.imgCus!.replaceAll("//", "/");
-        return Image(
-          image: FileImage(File(assetPath)),
+      try {
+        // Thử giải mã dữ liệu base64
+        List<int> imageBytes = Base64Decoder().convert(cus.imgCus!);
+        return Image.memory(
+          Uint8List.fromList(imageBytes),
           width: 75,
           height: 75,
           fit: BoxFit.cover,
         );
-      } else {
+      } catch (e) {
+        // Nếu có lỗi khi giải mã, sử dụng AssetImage
         String assetPath = cus.imgCus!.replaceAll("//", "/");
-        return Image(
-          image: AssetImage(assetPath),
+        return Image.asset(
+          assetPath,
           width: 75,
           height: 75,
           fit: BoxFit.cover,
         );
       }
     } else {
+      // Trả về hình ảnh mặc định nếu không có hình ảnh
       return Image.asset(
         'assets/img/SP_CUL_3.jpg',
         width: 75,
@@ -103,16 +102,16 @@ class AccountPage extends StatelessWidget {
                                     children: [
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(50),
-                                        child: FutureBuilder<Image>(
+                                        child: FutureBuilder<Widget>(
                                           future: _buildImage(customer),
                                           builder: (BuildContext context,
-                                              AsyncSnapshot<Image> snapshot) {
+                                              AsyncSnapshot<Widget> snapshot) {
                                             if (snapshot.connectionState ==
                                                 ConnectionState.done) {
                                               return snapshot.data ??
                                                   Container();
                                             } else {
-                                              return const CircularProgressIndicator();
+                                              return CircularProgressIndicator();
                                             }
                                           },
                                         ),

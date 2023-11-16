@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import '../bloc/updateImage_bloc.dart';
 
 class UpdateImageWidget extends StatefulWidget {
   final String customerId;
+
   const UpdateImageWidget({Key? key, required this.customerId})
       : super(key: key);
 
@@ -58,13 +60,36 @@ class _UpdateImageWidgetState extends State<UpdateImageWidget> {
 
       // Di chuyển hình ảnh vào thư mục mới
       await File(imagePath!).copy(newFilePath);
+
+      // Chuyển đổi ảnh thành dữ liệu base64
+      String base64Data = await convertImageToBase64(File(newFilePath));
+
+      // Truyền dữ liệu base64 cho sự kiện UpdateImageButtonPressed
+      final updateImageBloc = BlocProvider.of<UpdateImageBloc>(context);
+      updateImageBloc.add(
+        UpdateImageButtonPressed(
+          idCus: idCus,
+          newImage: base64Data,
+        ),
+      );
+
+      // Điều hướng đến trang hiển thị hình ảnh
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => DisplayWidget(imagePaths: imagePath),
+        ),
+      );
     }
+  }
+
+  Future<String> convertImageToBase64(File imageFile) async {
+    List<int> imageBytes = await imageFile.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+    return base64Image;
   }
 
   @override
   Widget build(BuildContext context) {
-    final updateImageBloc = BlocProvider.of<UpdateImageBloc>(context);
-
     return Container(
       color: Colors.white,
       child: Stack(
@@ -100,24 +125,9 @@ class _UpdateImageWidgetState extends State<UpdateImageWidget> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: ()  {
-                  
-
+                  onTap: () {
                     print('Đây là tên file ảnh: ${path.basename(imagePath!)}');
                     _updateImage();
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            DisplayWidget(imagePaths: imagePath),
-                      ),
-                    );
-                    updateImageBloc.add(
-                      UpdateImageButtonPressed(
-                        idCus: idCus,
-                        newImage: imagePath!,
-                      ),
-                    );
-                    print(imagePath);
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
