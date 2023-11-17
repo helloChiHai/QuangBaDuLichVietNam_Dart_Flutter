@@ -11,6 +11,10 @@ import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/bloc/
 import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_event.dart';
 import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_state.dart';
 
+import '../../touristAttraction/bloc/touristAttraction_bloc.dart';
+import '../../touristAttraction/bloc/touristAttraction_event.dart';
+import '../../touristAttraction/bloc/touristAttraction_state.dart';
+
 class ShowAllTouristAttraction extends StatefulWidget {
   const ShowAllTouristAttraction({super.key});
 
@@ -37,34 +41,37 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
 
   StreamSubscription? _subscription;
 
-@override
-void initState() {
-  super.initState();
-  context
-      .read<FilterTouristBloc>()
-      .add(FilterTouristAttraction(idRegion: '', idProvines: ''));
+  bool isContainerVisible = true;
 
-  final provinceBloc = context.read<ProvinceBloc>();
-  provinceBloc.add(FetchProvinces());
+  @override
+  void initState() {
+    super.initState();
+    context
+        .read<FilterTouristBloc>()
+        .add(FilterTouristAttraction(idRegion: '', idProvines: ''));
 
-  _subscription = provinceBloc.stream.listen((state) {
-    if (mounted) {  
-      if (state is ProvinceLoaded) {
-        setState(() {
-          itemProvince.clear();
-          itemProvince.addAll(state.provinces);
-        });
+    final provinceBloc = context.read<ProvinceBloc>();
+    provinceBloc.add(FetchProvinces());
+
+    _subscription = provinceBloc.stream.listen((state) {
+      if (mounted) {
+        if (state is ProvinceLoaded) {
+          setState(() {
+            itemProvince.clear();
+            itemProvince.addAll(state.provinces);
+          });
+        }
       }
-    }
-  });
-}
+    });
 
-@override
-void dispose() {
-  _subscription?.cancel();
-  super.dispose();
-}
+    context.read<TouristAttractionBloc>().add(FetchTouristAttraction());
+  }
 
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +96,10 @@ void dispose() {
               color: Colors.black,
             ),
             onPressed: () {
-              Navigator.of(context).pushNamed('/searchTouristAttraction');
+              // Navigator.of(context).pushNamed('/searchTouristAttraction');
+              setState(() {
+                isContainerVisible = !isContainerVisible;
+              });
             },
           ),
         ],
@@ -327,14 +337,14 @@ void dispose() {
                                           width: double.infinity,
                                           child: ElevatedButton(
                                             onPressed: () {
+                                              setState(() {
+                                                isContainerVisible =
+                                                    false;
+                                              });
+                                              print(isContainerVisible);
                                               print(checkSelectedIdRegion);
                                               print(checkSelectedIdProvince);
                                               Navigator.pop(context);
-                                              // context
-                                              //     .read<FilterTouristBloc>()
-                                              //     .add(FilterTouristAttraction(
-                                              //         idRegion: '',
-                                              //         idProvines: ''));
                                             },
                                             style: ButtonStyle(
                                               backgroundColor:
@@ -384,101 +394,90 @@ void dispose() {
               ),
             ),
             const SizedBox(height: 15),
-            // danh sách các địa điểm du lịch khi lọc
-            BlocBuilder<FilterTouristBloc, FilterTouristState>(
-              builder: (context, state) {
-                if (state is FilterTouristLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state is FilterTouristLoaded) {
-                  final touristAttractions = state.tourist;
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    itemCount: touristAttractions.length,
-                    itemBuilder: (context, index) {
-                      final touristAttraction = touristAttractions[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
-                              '/detailTouristAttractionPage',
-                              arguments: {
-                                'aboutTouristData': touristAttraction,
-                              });
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 5,
-                          ),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            border: Border(
-                              bottom: BorderSide(width: 1, color: Colors.grey),
-                            ),
-                          ),
-                          margin: const EdgeInsets.only(bottom: 15),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 4,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: touristAttraction.imgTourist != null
-                                      ? Image.asset(
-                                          'assets/img/${touristAttraction.imgTourist!}',
-                                          width: 145,
-                                          height: 145,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : Image.asset(
-                                          'assets/img/img_12.png',
-                                          width: 145,
-                                          height: 145,
-                                          fit: BoxFit.cover,
-                                        ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                flex: 7,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      touristAttraction.nameTourist,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      touristAttraction.address,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+            Visibility(
+              visible: isContainerVisible,
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child:
+                    BlocBuilder<TouristAttractionBloc, TouristAttractionState>(
+                  builder: (context, state) {
+                    if (state is TouristAttractionLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is TouristAttractionLoaded) {
+                      final touristAttractions = state.touristAttraction;
+                      return GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 8.0,
+                          mainAxisSpacing: 8.0,
                         ),
+                        itemCount: touristAttractions.length,
+                        itemBuilder: (context, index) {
+                          final touristAttraction = touristAttractions[index];
+                          return GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: touristAttraction.imgTourist != null
+                                        ? Image.asset(
+                                            'assets/img/${touristAttraction.imgTourist!}',
+                                            width: double.infinity,
+                                            height: double.infinity,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.asset(
+                                            'assets/img/img_12.png',
+                                            width: double.infinity,
+                                            height: 180,
+                                            fit: BoxFit.cover,
+                                          ),
+                                  ),
+                                  Positioned(
+                                    bottom: 10,
+                                    left: 10,
+                                    right: 10,
+                                    child: Container(
+                                      height: 50,
+                                      width: double.infinity,
+                                      color: Colors.transparent,
+                                      alignment: Alignment.bottomLeft,
+                                      child: touristAttraction
+                                              .nameTourist.isNotEmpty
+                                          ? Text(
+                                              touristAttraction.nameTourist,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                            )
+                                          : Container(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       );
-                    },
-                  );
-                }
-                return Container();
-              },
-            ),
+                    }
+                    return Container();
+                  },
+                ),
+              ),
+            )
           ],
         ),
       ),

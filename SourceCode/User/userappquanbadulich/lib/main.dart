@@ -88,7 +88,9 @@ class MyApp extends StatelessWidget {
         '/editAccount_name': (context) => UpdateNamePage(),
         '/detailAccount': (context) => DetailAccountPage(),
         '/account': (context) => AccountPage(),
-        '/searchTouristAttraction': (context) => SearchTouristAttractionPage(idCus: '',),
+        '/searchTouristAttraction': (context) => SearchTouristAttractionPage(
+              idCus: '',
+            ),
         '/login': (context) => LoginPage(),
         '/createAccount': (context) => CreateAccountPage(),
         '/regions': (context) => RegionPage(),
@@ -117,7 +119,7 @@ class MyApp extends StatelessWidget {
         '/detail_specialtyDish': (context) =>
             DetailSpecialtyDish(dataSpecialtyDish: []),
       },
-      home: LoginPage(),
+      home: ShowAllTouristAttraction(),
     );
   }
 }
