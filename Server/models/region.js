@@ -39,6 +39,7 @@ const regionSchema = new mongoose.Schema({
             {
               idDish: String,
               nameDish: String,
+              addressDish: String,
               imgDish: String,
               dishIntroduction: String,
             },

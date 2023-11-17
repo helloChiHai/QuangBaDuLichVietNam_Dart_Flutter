@@ -45,6 +45,16 @@ class _DetailSpecialtyDishState extends State<DetailSpecialtyDish> {
                         fontSize: 20,
                       ),
                     ),
+              const SizedBox(height: 5),
+              Text(
+                'Địa chỉ: ${specialtyDish.addressDish}',
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              const SizedBox(height: 10),
               Text(
                 specialtyDish.dishIntroduction,
                 style: const TextStyle(
@@ -55,7 +65,7 @@ class _DetailSpecialtyDishState extends State<DetailSpecialtyDish> {
               const SizedBox(height: 15),
               specialtyDish.imgDish!.isEmpty
                   ? const SizedBox()
-                  : Container(
+                  : SizedBox(
                       width: double.infinity,
                       height: 250,
                       child: Image.asset(
@@ -65,7 +75,7 @@ class _DetailSpecialtyDishState extends State<DetailSpecialtyDish> {
                         fit: BoxFit.cover,
                       ),
                     ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 30),
             ],
           );
         },
