@@ -6,7 +6,11 @@ import 'package:userappquanbadulich/touristAttraction/bloc/touristAttraction_eve
 import 'package:userappquanbadulich/touristAttraction/bloc/touristAttraction_state.dart';
 
 class SearchTouristAttractionPage extends StatefulWidget {
-  const SearchTouristAttractionPage({super.key});
+  final String idCus;
+  const SearchTouristAttractionPage({
+    Key? key,
+    required this.idCus,
+  }) : super(key: key);
 
   @override
   State<SearchTouristAttractionPage> createState() =>
@@ -17,10 +21,12 @@ class _SearchTouristAttractionPageState
     extends State<SearchTouristAttractionPage> {
   TextEditingController textSearchTouristAttraction = TextEditingController();
   List<TouristAttractionModel> filteredTouristAttractions = [];
+  late String idCus;
 
   @override
   void initState() {
     super.initState();
+    idCus = widget.idCus;
     context.read<TouristAttractionBloc>().add(FetchTouristAttraction());
   }
 
@@ -183,6 +189,7 @@ class _SearchTouristAttractionPageState
                                 '/detail_touriestAttraction_about',
                                 arguments: {
                                   'aboutTouristData': touristAttraction,
+                                  'idCus': idCus,
                                 });
                           },
                           child: Container(
@@ -282,11 +289,12 @@ class _SearchTouristAttractionPageState
                                   return GestureDetector(
                                     onTap: () {
                                       Navigator.of(context).pushNamed(
-                                        '/detail_touriestAttraction_about',
-                                        arguments: {
-                                          'aboutTouristData': touristAttraction,
-                                        },
-                                      );
+                                          '/detail_touriestAttraction_about',
+                                          arguments: {
+                                            'aboutTouristData':
+                                                touristAttraction,
+                                            'idCus': idCus,
+                                          });
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.all(8),

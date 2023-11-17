@@ -4,6 +4,7 @@ import 'package:userappquanbadulich/imformationCustomer/bloc/imformationCus_bloc
 import '../../culture/screens/culture_page.dart';
 import '../../history/screens/history_page.dart';
 import '../../model/CustomerModel.dart';
+import '../../searchTouristAttraction/srceens/searchTouristAttraction_page.dart';
 import '../../specialDish/screens/specialDish_page.dart';
 import '../../touristAttraction/screens/touristAttraction_page.dart';
 
@@ -88,8 +89,14 @@ class _HomePageState extends State<HomePage> {
                         right: 15,
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context)
-                                .pushNamed('/searchTouristAttraction');
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      SearchTouristAttractionPage(
+                                    idCus: customer.idCus,
+                                  ),
+                                ));
                           },
                           child: Container(
                             height: 50,

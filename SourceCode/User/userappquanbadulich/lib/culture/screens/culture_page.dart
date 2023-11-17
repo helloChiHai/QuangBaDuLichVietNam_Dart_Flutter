@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userappquanbadulich/culture/bloc/culture_bloc.dart';
@@ -38,7 +40,7 @@ class _CulturePageState extends State<CulturePage> {
             final cultures = state.cultures;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 4,
+              itemCount: min(3, cultures.length),
               itemBuilder: (context, index) {
                 final culture = cultures[index];
                 return GestureDetector(
@@ -74,14 +76,23 @@ class _CulturePageState extends State<CulturePage> {
                         Positioned(
                           bottom: 10,
                           left: 10,
-                          child: Text(
-                            culture.titleCulture,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          right: 10,
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            color: Colors.transparent,
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              culture.titleCulture,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ),
                       ],

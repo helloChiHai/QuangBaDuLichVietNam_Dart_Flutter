@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
         '/editAccount_name': (context) => UpdateNamePage(),
         '/detailAccount': (context) => DetailAccountPage(),
         '/account': (context) => AccountPage(),
-        '/searchTouristAttraction': (context) => SearchTouristAttractionPage(),
+        '/searchTouristAttraction': (context) => SearchTouristAttractionPage(idCus: '',),
         '/login': (context) => LoginPage(),
         '/createAccount': (context) => CreateAccountPage(),
         '/regions': (context) => RegionPage(),

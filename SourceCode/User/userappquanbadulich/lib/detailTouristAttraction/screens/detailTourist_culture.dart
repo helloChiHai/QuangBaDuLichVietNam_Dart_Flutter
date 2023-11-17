@@ -50,6 +50,18 @@ class _DetailCultureState extends State<DetailCulture> {
                   fontSize: 20,
                 ),
               ),
+              culture.imgCulture!.isEmpty
+                  ? const SizedBox()
+                  : Container(
+                      width: double.infinity,
+                      height: 250,
+                      child: Image.asset(
+                        'assets/img/${culture.imgCulture}',
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
               if (culture.videoCulture != null &&
                   culture.videoCulture!.isNotEmpty)
                 PlayVideoWidget(videoPath: 'assets/img/${culture.videoCulture}')

@@ -46,14 +46,16 @@ class _DetailSpecialtyDishState extends State<DetailSpecialtyDish> {
                       ),
                     ),
               const SizedBox(height: 5),
-              Text(
-                'Địa chỉ: ${specialtyDish.addressDish}',
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
+              specialtyDish.addressDish.isNotEmpty
+                  ? Text(
+                      'Địa chỉ: ${specialtyDish.addressDish}',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    )
+                  : Container(),
               const SizedBox(height: 10),
               Text(
                 specialtyDish.dishIntroduction,

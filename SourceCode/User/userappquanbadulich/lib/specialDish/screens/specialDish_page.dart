@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userappquanbadulich/specialDish/bloc/specialDish_bloc.dart';
@@ -30,7 +32,7 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 180,
+      height: 170,
       child: BlocBuilder<SpecialDishBloc, SpecialDishState>(
         builder: (context, state) {
           if (state is SpecialDishLoading) {
@@ -39,12 +41,11 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
             final specialDishs = state.specialDishs;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 4,
+              itemCount: min(3, specialDishs.length),
               itemBuilder: (context, index) {
                 final specialDish = specialDishs[index];
                 return GestureDetector(
                   onTap: () {
-                    print(specialDish.idDish);
                     Navigator.of(context).pushNamed(
                         '/detail_touriestAttraction_specialDish',
                         arguments: {
@@ -53,7 +54,7 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
                         });
                   },
                   child: Container(
-                    width: 180,
+                    width: 250,
                     margin: const EdgeInsets.only(right: 10),
                     child: Stack(
                       children: [
@@ -76,14 +77,23 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
                         Positioned(
                           bottom: 10,
                           left: 10,
-                          child: Text(
-                            specialDish.nameDish,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          right: 10,
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            color: Colors.transparent,
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              specialDish.nameDish,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ),
                       ],

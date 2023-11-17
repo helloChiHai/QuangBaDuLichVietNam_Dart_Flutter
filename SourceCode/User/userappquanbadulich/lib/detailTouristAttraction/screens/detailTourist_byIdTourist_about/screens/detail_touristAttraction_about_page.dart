@@ -8,7 +8,7 @@ import 'package:userappquanbadulich/model/touristAttractionModel.dart';
 import '../../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_bloc.dart';
 import '../../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_event.dart';
 import '../../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_state.dart';
-import '../widget/detail_touristAttraction_about_widget.dart';
+import '../../../widgets/detail_touristAttraction_about_widget.dart';
 
 class DetailTouristAttraction_AboutPage extends StatefulWidget {
   const DetailTouristAttraction_AboutPage({Key? key}) : super(key: key);
@@ -68,7 +68,7 @@ class _DetailTouristAttraction_AboutPageState
                     bool isCheckFavourite = state.result;
                     TouristAttractionModel touristData = tourist;
                     print(state.result);
-                    return DetailTouristAttraction_AboutWidget(
+                    return DetailTouristAttractionWidget(
                       isCheckFavourite: isCheckFavourite,
                       tourist: touristData,
                       isCheckVisibility: isCheckVisibility,

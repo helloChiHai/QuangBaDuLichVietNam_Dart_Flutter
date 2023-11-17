@@ -38,7 +38,7 @@ class TouristAttractionPageState extends State<TouristAttractionPage> {
             final touristAttractions = state.touristAttraction;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 4,
+              itemCount: touristAttractions.length,
               itemBuilder: (context, index) {
                 final touristAttraction = touristAttractions[index];
                 return GestureDetector(
@@ -74,14 +74,23 @@ class TouristAttractionPageState extends State<TouristAttractionPage> {
                         Positioned(
                           bottom: 10,
                           left: 10,
-                          child: Text(
-                            touristAttraction.nameTourist,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          right: 10,
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            color: Colors.transparent,
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              touristAttraction.nameTourist,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ),
                       ],

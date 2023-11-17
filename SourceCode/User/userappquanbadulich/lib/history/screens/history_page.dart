@@ -37,12 +37,11 @@ class HistoryPageState extends State<HistoryPage> {
             final historyList = state.history;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 4,
+              itemCount: historyList.length,
               itemBuilder: (context, index) {
                 final history = historyList[index];
                 return GestureDetector(
                   onTap: () {
-                    print(history.idHistoryStory);
                     Navigator.of(context).pushNamed(
                         '/detail_touriestAttraction_history',
                         arguments: {
@@ -75,14 +74,23 @@ class HistoryPageState extends State<HistoryPage> {
                         Positioned(
                           bottom: 10,
                           left: 10,
-                          child: Text(
-                            history.titleStoryStory,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          right: 10,
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            color: Colors.transparent,
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              history.titleStoryStory,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ),
                       ],

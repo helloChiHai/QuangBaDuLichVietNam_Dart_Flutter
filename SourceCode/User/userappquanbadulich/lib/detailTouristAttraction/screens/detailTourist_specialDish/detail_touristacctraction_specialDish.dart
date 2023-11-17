@@ -9,7 +9,7 @@ import '../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_bloc.
 import '../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_event.dart';
 import '../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_state.dart';
 import '../../../model/touristAttractionModel.dart';
-import '../detailTourist_byIdTourist_about/widget/detail_touristAttraction_about_widget.dart';
+import '../../widgets/detail_touristAttraction_about_widget.dart';
 
 class DetailTouristAttraction_SpecialDish extends StatefulWidget {
   const DetailTouristAttraction_SpecialDish({super.key});
@@ -69,7 +69,7 @@ class _DetailTouristAttraction_SpecialDishState
                   if (state is CheckTouristInListSuccess) {
                     bool isCheckFavourite = state.result;
                     TouristAttractionModel touristData = tourist;
-                    return DetailTouristAttraction_AboutWidget(
+                    return DetailTouristAttractionWidget(
                       isCheckFavourite: isCheckFavourite,
                       tourist: touristData,
                       isCheckVisibility: isCheckVisibility,
