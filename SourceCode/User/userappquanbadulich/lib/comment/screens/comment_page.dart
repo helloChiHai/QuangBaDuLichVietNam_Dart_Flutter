@@ -326,7 +326,8 @@ class _CommentPageState extends State<CommentPage> {
                                                             touristId:
                                                                 idTourist,
                                                             idCus: idCus,
-                                                            idcmt: comment.idcmt,
+                                                            idcmt:
+                                                                comment.idcmt,
                                                           ),
                                                         ));
                                                   },
@@ -364,12 +365,12 @@ class _CommentPageState extends State<CommentPage> {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                     flex: 2,
                                     child: CircleAvatar(
                                       radius: 30,
                                       backgroundImage: AssetImage(
-                                        'assets/img/SP_CUL_3.jpg',
+                                        'assets/img/img_12.png',
                                       ),
                                     ),
                                   ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userappquanbadulich/culture/bloc/culture_bloc.dart';
 import 'package:userappquanbadulich/model/filterRegionModel.dart';
 import 'package:userappquanbadulich/model/provinceModel.dart';
 import 'package:userappquanbadulich/province/bloc/province_bloc.dart';
@@ -10,20 +11,26 @@ import 'package:userappquanbadulich/province/bloc/province_state.dart';
 import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_bloc.dart';
 import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_event.dart';
 
-import '../../touristAttraction/bloc/touristAttraction_bloc.dart';
-import '../../touristAttraction/bloc/touristAttraction_event.dart';
-import '../../touristAttraction/bloc/touristAttraction_state.dart';
-import '../bloc/filterTourist_state.dart';
+import '../../../culture/bloc/culture_event.dart';
+import '../../../culture/bloc/culture_state.dart';
+import '../../../touristAttraction/bloc/touristAttraction_bloc.dart';
+import '../../../touristAttraction/bloc/touristAttraction_event.dart';
+import '../../../touristAttraction/bloc/touristAttraction_state.dart';
+import '../../bloc/filterTourist_state.dart';
 
-class ShowAllTouristAttraction extends StatefulWidget {
-  const ShowAllTouristAttraction({super.key});
+class ShowAllTouristCulure extends StatefulWidget {
+  final String idCus;
+
+  const ShowAllTouristCulure({
+    Key? key,
+    required this.idCus,
+  }) : super(key: key);
 
   @override
-  State<ShowAllTouristAttraction> createState() =>
-      _ShowAllTouristAttractionState();
+  State<ShowAllTouristCulure> createState() => _ShowAllTourisCulure();
 }
 
-class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
+class _ShowAllTourisCulure extends State<ShowAllTouristCulure> {
   final List<FilterReionModel> listItemRegion = [
     FilterReionModel(idRegion: 'MB', nameRegion: 'Miền Bắc'),
     FilterReionModel(idRegion: 'MT', nameRegion: 'Miền Trung'),
@@ -43,9 +50,13 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
 
   bool isIconFilterVisibility = false;
 
+  late String idCus;
+
   @override
   void initState() {
     super.initState();
+    idCus = widget.idCus;
+
     final provinceBloc = context.read<ProvinceBloc>();
     provinceBloc.add(FetchProvinces());
 
@@ -60,7 +71,7 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
       }
     });
 
-    context.read<TouristAttractionBloc>().add(FetchTouristAttraction());
+    context.read<CultureBloc>().add(FetchCultures());
   }
 
   @override
@@ -77,7 +88,8 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: const Text(
-          'Khám phá Việt Nam cùng bạn',
+          'Văn hóa Việt: Huyền bí và sâu sắc',
+          // 'Đắm chìm trong hương vị Việt',
           style: TextStyle(
             fontSize: 20,
             color: Colors.black,
@@ -205,7 +217,14 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                           itemBuilder: (context, index) {
                             final touristAttraction = touristAttractions[index];
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                // Navigator.of(context).pushNamed(
+                                //     '/detail_touriestAttraction_about',
+                                //     arguments: {
+                                //       'aboutTouristData': touristAttraction,
+                                //       'idCus': idCus,
+                                //     });
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
@@ -268,15 +287,13 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                       }
                       return Container(
                         padding: const EdgeInsets.all(8.0),
-                        child: BlocBuilder<TouristAttractionBloc,
-                            TouristAttractionState>(
+                        child: BlocBuilder<CultureBloc, CultureState>(
                           builder: (context, state) {
-                            if (state is TouristAttractionLoading) {
+                            if (state is CultureLoading) {
                               return const Center(
                                   child: CircularProgressIndicator());
-                            } else if (state is TouristAttractionLoaded) {
-                              final touristAttractions =
-                                  state.touristAttraction;
+                            } else if (state is CultureLoaded) {
+                              final cultures = state.cultures;
                               return GridView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
@@ -286,12 +303,19 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                                   crossAxisSpacing: 8.0,
                                   mainAxisSpacing: 8.0,
                                 ),
-                                itemCount: touristAttractions.length,
+                                itemCount: cultures.length,
                                 itemBuilder: (context, index) {
-                                  final touristAttraction =
-                                      touristAttractions[index];
+                                  final culture = cultures[index];
                                   return GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      // Navigator.of(context).pushNamed(
+                                      //     '/detail_touriestAttraction_about',
+                                      //     arguments: {
+                                      //       'aboutTouristData':
+                                      //           culture,
+                                      //       'idCus': idCus,
+                                      //     });
+                                    },
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
@@ -301,21 +325,20 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                                           ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(10),
-                                            child:
-                                                touristAttraction.imgTourist !=
-                                                        null
-                                                    ? Image.asset(
-                                                        'assets/img/${touristAttraction.imgTourist!}',
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        fit: BoxFit.cover,
-                                                      )
-                                                    : Image.asset(
-                                                        'assets/img/img_12.png',
-                                                        width: double.infinity,
-                                                        height: 180,
-                                                        fit: BoxFit.cover,
-                                                      ),
+                                            child: culture.imgCulture != null
+                                                ? Image.asset(
+                                                    'assets/img/img_12.png',
+                                                    // 'assets/img/${culture.imgCulture!}',
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                : Image.asset(
+                                                    'assets/img/img_12.png',
+                                                    width: double.infinity,
+                                                    height: 180,
+                                                    fit: BoxFit.cover,
+                                                  ),
                                           ),
                                           Positioned(
                                             bottom: 10,
@@ -326,13 +349,12 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                                               width: double.infinity,
                                               color: Colors.transparent,
                                               alignment: Alignment.bottomLeft,
-                                              child: touristAttraction
-                                                      .nameTourist.isNotEmpty
+                                              child: culture
+                                                      .titleCulture.isNotEmpty
                                                   ? Text(
-                                                      touristAttraction
-                                                          .nameTourist,
+                                                      culture.titleCulture,
                                                       style: const TextStyle(
-                                                        color: Colors.white,
+                                                        color: Colors.black,
                                                         fontSize: 20,
                                                         fontWeight:
                                                             FontWeight.bold,

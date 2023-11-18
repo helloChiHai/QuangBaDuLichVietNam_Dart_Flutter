@@ -67,7 +67,6 @@ class _DetailTouristAttraction_AboutPageState
                   if (state is CheckTouristInListSuccess) {
                     bool isCheckFavourite = state.result;
                     TouristAttractionModel touristData = tourist;
-                    print(state.result);
                     return DetailTouristAttractionWidget(
                       isCheckFavourite: isCheckFavourite,
                       tourist: touristData,

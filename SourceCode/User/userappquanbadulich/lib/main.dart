@@ -29,7 +29,8 @@ import 'package:userappquanbadulich/region/screens/region_page.dart';
 import 'package:userappquanbadulich/repositories/repositories.dart';
 import 'package:userappquanbadulich/searchTouristAttraction/srceens/searchTouristAttraction_page.dart';
 import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_bloc.dart';
-import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/screens/showAllTouristAttraction_page.dart';
+import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/screens/fileCulture/showAllCulture_page.dart';
+import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/screens/fileTourist/showAllTouristAttraction_page.dart';
 import 'package:userappquanbadulich/specialDish/bloc/specialDish_bloc.dart';
 import 'package:userappquanbadulich/specialDish/screens/specialDish_page.dart';
 import 'package:userappquanbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
@@ -101,7 +102,8 @@ class MyApp extends StatelessWidget {
         '/intro_login': (context) => LoginIntro(),
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
         '/home': (context) => HomePage(),
-        '/showAllTouristAttraction': (context) => ShowAllTouristAttraction(),
+        '/showAllTouristAttraction': (context) => ShowAllTouristAttraction(idCus: ''),
+        '/showAllCulture': (context) => ShowAllTouristCulure(idCus: ''),
         '/detail_touriestAttraction_about': (context) =>
             DetailTouristAttraction_AboutPage(),
         '/detail_touriestAttraction_culture': (context) =>
@@ -119,7 +121,7 @@ class MyApp extends StatelessWidget {
         '/detail_specialtyDish': (context) =>
             DetailSpecialtyDish(dataSpecialtyDish: []),
       },
-      home: ShowAllTouristAttraction(),
+      home: ShowAllTouristCulure(idCus: '',),
     );
   }
 }

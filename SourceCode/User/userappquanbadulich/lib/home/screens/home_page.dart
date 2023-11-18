@@ -5,7 +5,8 @@ import '../../culture/screens/culture_page.dart';
 import '../../history/screens/history_page.dart';
 import '../../model/CustomerModel.dart';
 import '../../searchTouristAttraction/srceens/searchTouristAttraction_page.dart';
-import '../../showFilterAllTouristCultureHistoryFood/screens/showAllTouristAttraction_page.dart';
+import '../../showFilterAllTouristCultureHistoryFood/screens/fileCulture/showAllCulture_page.dart';
+import '../../showFilterAllTouristCultureHistoryFood/screens/fileTourist/showAllTouristAttraction_page.dart';
 import '../../specialDish/screens/specialDish_page.dart';
 import '../../touristAttraction/screens/touristAttraction_page.dart';
 
@@ -272,15 +273,11 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            // Navigator.of(context).pushNamed(
-                            //     '/showAllTouristAttraction',
-                            //     arguments: {'customerData': customer});
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    ShowAllTouristAttraction(),
+                                    ShowAllTouristAttraction(idCus: customer.idCus),
                               ),
                             );
                           },
@@ -318,16 +315,37 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Người Việt Nam dễ thương lắm',
-                          style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ShowAllTouristCulure(idCus: customer.idCus),
+                              ),
+                            );
+                          },
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                               'Người Việt Nam dễ thương lắm',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Icon(
+                                Icons.navigate_next,
+                                size: 35,
+                                color: Colors.black,
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 10),
-                        CulturePage(idCus: customer.idCus),
+                       CulturePage(idCus: customer.idCus),
                       ],
                     ),
                   ),

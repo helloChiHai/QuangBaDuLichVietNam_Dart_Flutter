@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ class AccountPage extends StatelessWidget {
   Future<Widget> _buildImage(CustomerModel cus) async {
     if (cus.imgCus != null && cus.imgCus!.isNotEmpty) {
       try {
-        // Thử giải mã dữ liệu base64
         List<int> imageBytes = Base64Decoder().convert(cus.imgCus!);
         return Image.memory(
           Uint8List.fromList(imageBytes),
@@ -22,7 +20,6 @@ class AccountPage extends StatelessWidget {
           fit: BoxFit.cover,
         );
       } catch (e) {
-        // Nếu có lỗi khi giải mã, sử dụng AssetImage
         String assetPath = cus.imgCus!.replaceAll("//", "/");
         return Image.asset(
           assetPath,
@@ -32,9 +29,8 @@ class AccountPage extends StatelessWidget {
         );
       }
     } else {
-      // Trả về hình ảnh mặc định nếu không có hình ảnh
       return Image.asset(
-        'assets/img/SP_CUL_3.jpg',
+        'assets/img/img_12.png',
         width: 75,
         height: 75,
         fit: BoxFit.cover,
