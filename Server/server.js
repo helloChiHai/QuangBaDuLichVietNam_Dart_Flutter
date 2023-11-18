@@ -16,8 +16,8 @@ const Customer = require("./models/customer");
 const Province = require("./models/province");
 
 // Middleware để tăng giới hạn kích thước payload
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 
 const checkMongoDBConnection = () => {
   mongoose.connection.on("open", () => {
@@ -344,10 +344,10 @@ app.get("/filter-tourist-attractions", async (req, res) => {
     const idRegion = req.query.idRegion;
     const idProvines = req.query.idProvines;
     let touristAttractions = [];
-    const result = await Region.find({});
+    const region = await Region.find({});
 
-    if (idRegion) {
-      result.forEach((region) => {
+    if (idRegion && !idProvines) {
+      region.forEach((region) => {
         region.provinces.forEach((province) => {
           province.touristAttraction.forEach((touristAttraction) => {
             if (region.idRegion === idRegion) {
@@ -356,26 +356,21 @@ app.get("/filter-tourist-attractions", async (req, res) => {
           });
         });
       });
-    } else if (idProvines) {
-      result.forEach((region) => {
+    } 
+    if (idProvines && idRegion) {
+      region.forEach((region) => {
         region.provinces.forEach((province) => {
           province.touristAttraction.forEach((touristAttraction) => {
-            if (province.idProvines === idProvines) {
+            if (
+              region.idRegion === idRegion &&
+              province.idProvines === idProvines
+            ) {
               touristAttractions.push(touristAttraction);
             }
           });
         });
       });
-    } else {
-      result.forEach((region) => {
-        region.provinces.forEach((province) => {
-          province.touristAttraction.forEach((touristAttraction) => {
-            touristAttractions.push(touristAttraction);
-          });
-        });
-      });
     }
-
     res.status(200).json({ success: true, data: touristAttractions });
   } catch (error) {
     res.status(500).json({ error: error.message });

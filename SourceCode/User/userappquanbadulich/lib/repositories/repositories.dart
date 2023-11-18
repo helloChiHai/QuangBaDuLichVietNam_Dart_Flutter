@@ -378,16 +378,8 @@ class UserRepository {
       filterTouristAttractionByIdRegionIdProvines(
           String? idRegion, String? idProvines) async {
     try {
-      final Map<String, String?> queryParams = {
-        'idRegion': idRegion,
-        'idProvines': idProvines,
-      };
-
-      final uri =
-          Uri.http('$urlMain', '/filter-tourist-attractions', queryParams);
-
       final response = await http.get(
-        uri,
+        Uri.parse('$urlMain/filter-tourist-attractions?idRegion=$idRegion&idProvines=$idProvines'),
         headers: {'Content-Type': 'application/json'},
       );
 
