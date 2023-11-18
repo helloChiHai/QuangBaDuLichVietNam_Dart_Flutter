@@ -214,7 +214,14 @@ class _ShowAllTourisCulure extends State<ShowAllHistory> {
                           itemBuilder: (context, index) {
                             final history = histories[index];
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                    '/detail_touriestAttraction_history',
+                                    arguments: {
+                                      'HistoryData': history,
+                                      'idCus': idCus,
+                                    });
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
@@ -297,7 +304,14 @@ class _ShowAllTourisCulure extends State<ShowAllHistory> {
                                 itemBuilder: (context, index) {
                                   final history = histories[index];
                                   return GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          '/detail_touriestAttraction_history',
+                                          arguments: {
+                                            'HistoryData': history,
+                                            'idCus': idCus,
+                                          });
+                                    },
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),

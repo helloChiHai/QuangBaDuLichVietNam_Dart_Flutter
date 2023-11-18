@@ -11,6 +11,7 @@ const regionSchema = new mongoose.Schema({
         {
           idTourist: String,
           nameTourist: String,
+          typeTourist: String,
           address: String,
           ticket: String,
           imgTourist: String,

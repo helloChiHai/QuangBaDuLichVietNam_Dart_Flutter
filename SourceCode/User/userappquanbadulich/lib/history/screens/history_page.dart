@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,7 +38,7 @@ class HistoryPageState extends State<HistoryPage> {
             final historyList = state.history;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: historyList.length,
+              itemCount: min(3, historyList.length),
               itemBuilder: (context, index) {
                 final history = historyList[index];
                 return GestureDetector(

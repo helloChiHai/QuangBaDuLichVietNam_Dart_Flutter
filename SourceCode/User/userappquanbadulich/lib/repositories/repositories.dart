@@ -414,8 +414,7 @@ class UserRepository {
         final data = jsonDecode(response.body);
         final historyList = data['data'] as List<dynamic>;
         final histories = historyList
-            .map((historyData) =>
-                HistoryModel.fromJson(historyData))
+            .map((historyData) => HistoryModel.fromJson(historyData))
             .toList();
         return histories;
       } else {
@@ -474,6 +473,31 @@ class UserRepository {
       } else {
         throw Exception(
             'Lỗi khi lấy thông tin Culture: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Lỗi: $e');
+    }
+  }
+
+  // LỌC ĐỊA ĐIỂM THEO TYPE TOURIST
+  Future<List<TouristAttractionModel>>
+      filterTypeTouristAttractionByIdTypeTourist(String typeTourist) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$urlMain/filterTypeTouist?typeTourist=$typeTourist'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final touristList = data['data'] as List<dynamic>;
+        final touristAttractions = touristList
+            .map((touristData) => TouristAttractionModel.fromJson(touristData))
+            .toList();
+        return touristAttractions;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy thông tin các địa điểm theo type tourist: ${response.reasonPhrase}');
       }
     } catch (e) {
       throw Exception('Lỗi: $e');

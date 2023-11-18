@@ -7,6 +7,7 @@ class TouristAttractionModel {
   final List<HistoryModel> history;
   final String idTourist;
   final String nameTourist;
+  final String typeTourist;
   final String address;
   final String ticket;
   final String? imgTourist;
@@ -20,6 +21,7 @@ class TouristAttractionModel {
       : history = [],
         idTourist = '',
         nameTourist = '',
+        typeTourist = '',
         address = '',
         ticket = '',
         imgTourist = '',
@@ -33,6 +35,7 @@ class TouristAttractionModel {
     required this.history,
     required this.idTourist,
     required this.nameTourist,
+    required this.typeTourist,
     required this.address,
     required this.ticket,
     this.imgTourist,
@@ -47,9 +50,8 @@ class TouristAttractionModel {
     // final rightTimeJson = json['rightTime'];
     // final List<String> rightTime = rightTimeJson.cast<String>();
     final rightTimeJson = json['rightTime'];
-    final List<String> rightTime = (rightTimeJson is List)
-        ? List<String>.from(rightTimeJson)
-        : <String>[];
+    final List<String> rightTime =
+        (rightTimeJson is List) ? List<String>.from(rightTimeJson) : <String>[];
 
     List<HistoryModel> history = [];
     if (json['history'] != null) {
@@ -82,6 +84,7 @@ class TouristAttractionModel {
       history: history,
       idTourist: json['idTourist'],
       nameTourist: json['nameTourist'],
+      typeTourist: json['typeTourist'],
       address: json['address'],
       ticket: json['ticket'],
       imgTourist: json['imgTourist'],

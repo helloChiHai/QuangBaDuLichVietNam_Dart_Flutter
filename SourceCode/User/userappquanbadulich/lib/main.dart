@@ -17,6 +17,9 @@ import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTouris
 import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_culture/detail_touristacctraction_culture.dart';
 import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_history/detail_touristacctraction_history.dart';
 import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_specialDish/detail_touristacctraction_specialDish.dart';
+import 'package:userappquanbadulich/filterTypeTourist/bloc/filterTypeTourist_bloc.dart';
+import 'package:userappquanbadulich/filterTypeTourist/screens/filterDetailTypeTourist_page.dart';
+import 'package:userappquanbadulich/filterTypeTourist/screens/filterTypeTourist_page.dart';
 import 'package:userappquanbadulich/history/bloc/history_bloc.dart';
 import 'package:userappquanbadulich/history/screens/history_page.dart';
 import 'package:userappquanbadulich/imformationCustomer/bloc/imformationCus_bloc.dart';
@@ -107,11 +110,13 @@ class MyApp extends StatelessWidget {
         '/intro_login': (context) => LoginIntro(),
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
         '/home': (context) => HomePage(),
+        '/detailFilterTypeTourist': (context) => DetailFilterTypeTourist(),
         '/showAllTouristAttraction': (context) =>
             ShowAllTouristAttraction(idCus: ''),
         '/showAllCulture': (context) => ShowAllCulure(idCus: ''),
         '/showAllSpecialDish': (context) => ShowAllSpecialDish(idCus: ''),
         '/showAllHistory': (context) => ShowAllHistory(idCus: ''),
+        '/filterTypeTourist': (context) => FilterTypeTouristPage(idCus: ''),
         '/detail_touriestAttraction_about': (context) =>
             DetailTouristAttraction_AboutPage(),
         '/detail_touriestAttraction_culture': (context) =>
@@ -138,6 +143,11 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<FilterTypeTouristBloc>(
+          create: (context) => FilterTypeTouristBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
         BlocProvider<FilterHistoryBloc>(
           create: (context) => FilterHistoryBloc(
             userRepository: UserRepository(),

@@ -31,6 +31,30 @@ const checkMongoDBConnection = () => {
 
 checkMongoDBConnection();
 
+// LỌC ĐỊA ĐIỂM THEO THÀNH PHỐ, NÔNG THÔN, BIỂN, NÚI
+app.get("/filterTypeTouist", async (req, res) => {
+  try {
+    const typeTourist = req.query.typeTourist;
+    let touristList = [];
+    const region = await Region.find({});
+
+    if (typeTourist) {
+      region.forEach((region) => {
+        region.provinces.forEach((province) => {
+          province.touristAttraction.forEach((touristAttraction) => {
+            if (touristAttraction.typeTourist === typeTourist) {
+              touristList.push(touristAttraction);
+            }
+          });
+        });
+      });
+    } 
+    res.status(200).json({ success: true, data: touristList });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // HIỂN THỊ ĐỊA ĐIỂM DU LỊCH TRONG DANH SÁCH YÊU THÍCH
 app.get("/getTouristInFavoriteList/:idCus", async (req, res) => {
   const { idCus } = req.params;

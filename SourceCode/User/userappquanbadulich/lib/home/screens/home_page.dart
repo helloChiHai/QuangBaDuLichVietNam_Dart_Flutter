@@ -4,6 +4,7 @@ import 'package:userappquanbadulich/imformationCustomer/bloc/imformationCus_bloc
 import 'package:userappquanbadulich/showAllFilterHistory/screens/showAllCulture_page.dart';
 import 'package:userappquanbadulich/showAllFilterSpecialDish/screens/showAllSpecial_page.dart';
 import '../../culture/screens/culture_page.dart';
+import '../../filterTypeTourist/screens/filterTypeTourist_page.dart';
 import '../../history/screens/history_page.dart';
 import '../../model/CustomerModel.dart';
 import '../../searchTouristAttraction/srceens/searchTouristAttraction_page.dart';
@@ -157,109 +158,8 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Container(
-                          height: 150,
-                          color: Colors.white,
-                          child: GridView.count(
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: Colors.black,
-                                    width: 1.5,
-                                  ),
-                                ),
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image(
-                                      image: AssetImage(
-                                        'assets/img/img_9.png',
-                                      ),
-                                      height: 85,
-                                      width: 85,
-                                    ),
-                                    Text(
-                                      'Núi',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: Colors.black,
-                                    width: 1.5,
-                                  ),
-                                ),
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Image(
-                                      image: AssetImage(
-                                        'assets/img/img_10.png',
-                                      ),
-                                      height: 70,
-                                      width: 70,
-                                    ),
-                                    Text(
-                                      'Biển',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: Colors.black,
-                                    width: 1.5,
-                                  ),
-                                ),
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Image(
-                                      image: AssetImage(
-                                        'assets/img/img_11.png',
-                                      ),
-                                      height: 70,
-                                      width: 70,
-                                    ),
-                                    Text(
-                                      'Rừng',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
+                        const SizedBox(height: 10),
+                        FilterTypeTouristPage(idCus: customer.idCus),
                       ],
                     ),
                   ),
