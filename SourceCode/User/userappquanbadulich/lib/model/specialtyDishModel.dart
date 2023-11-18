@@ -18,7 +18,7 @@ class SpecialtyDishModel {
       idDish: json['idDish'],
       nameDish: json['nameDish'],
       addressDish: json['addressDish'],
-      imgDish: json['imgDish'] ?? '',
+      imgDish: json['imgDish'],
       dishIntroduction: json['dishIntroduction'],
     );
   }

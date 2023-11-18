@@ -373,13 +373,94 @@ class UserRepository {
     }
   }
 
+  // LỌC MÓN ĂM THEO idRegion, idProvines
+  Future<List<SpecialtyDishModel>> filterSpecialDishByIdRegionIdProvines(
+      String? idRegion, String? idProvines) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '$urlMain/filter-specialDish?idRegion=$idRegion&idProvines=$idProvines'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final specialDishList = data['data'] as List<dynamic>;
+        final specials = specialDishList
+            .map((specialDishData) =>
+                SpecialtyDishModel.fromJson(specialDishData))
+            .toList();
+        return specials;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy thông tin Special dish: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Lỗi: $e');
+    }
+  }
+
+  // LỌC LỊCH SỬ THEO idRegion, idProvines
+  Future<List<HistoryModel>> filterHistoryByIdRegionIdProvines(
+      String? idRegion, String? idProvines) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '$urlMain/filter-history?idRegion=$idRegion&idProvines=$idProvines'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final historyList = data['data'] as List<dynamic>;
+        final histories = historyList
+            .map((historyData) =>
+                HistoryModel.fromJson(historyData))
+            .toList();
+        return histories;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy thông tin history: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Lỗi: $e');
+    }
+  }
+
+  // LỌC VĂN HÓA THEO idRegion, idProvines
+  Future<List<CultureModel>> filterCultureByIdRegionIdProvines(
+      String? idRegion, String? idProvines) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '$urlMain/filter-culture?idRegion=$idRegion&idProvines=$idProvines'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final cultureList = data['data'] as List<dynamic>;
+        final cultures = cultureList
+            .map((cultureData) => CultureModel.fromJson(cultureData))
+            .toList();
+        return cultures;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy thông tin Culture: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Lỗi: $e');
+    }
+  }
+
   // LỌC ĐỊA ĐIỂM THEO idRegion, idProvines
   Future<List<TouristAttractionModel>>
       filterTouristAttractionByIdRegionIdProvines(
           String? idRegion, String? idProvines) async {
     try {
       final response = await http.get(
-        Uri.parse('$urlMain/filter-tourist-attractions?idRegion=$idRegion&idProvines=$idProvines'),
+        Uri.parse(
+            '$urlMain/filter-tourist-attractions?idRegion=$idRegion&idProvines=$idProvines'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -387,12 +468,12 @@ class UserRepository {
         final data = jsonDecode(response.body);
         final touristList = data['data'] as List<dynamic>;
         final touristAttractions = touristList
-            .map((touristData) => TouristAttractionModel.fromJson(touristData))
+            .map((cultureData) => TouristAttractionModel.fromJson(cultureData))
             .toList();
         return touristAttractions;
       } else {
         throw Exception(
-            'Lỗi khi lấy thông tin Tourist Attraction: ${response.reasonPhrase}');
+            'Lỗi khi lấy thông tin Culture: ${response.reasonPhrase}');
       }
     } catch (e) {
       throw Exception('Lỗi: $e');

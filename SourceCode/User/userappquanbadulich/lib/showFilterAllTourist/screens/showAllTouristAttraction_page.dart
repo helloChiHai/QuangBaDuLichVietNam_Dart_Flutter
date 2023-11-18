@@ -2,35 +2,33 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:userappquanbadulich/culture/bloc/culture_bloc.dart';
 import 'package:userappquanbadulich/model/filterRegionModel.dart';
 import 'package:userappquanbadulich/model/provinceModel.dart';
 import 'package:userappquanbadulich/province/bloc/province_bloc.dart';
 import 'package:userappquanbadulich/province/bloc/province_event.dart';
 import 'package:userappquanbadulich/province/bloc/province_state.dart';
-import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_bloc.dart';
-import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_event.dart';
+import 'package:userappquanbadulich/showFilterAllTourist/bloc/filterTourist_bloc.dart';
+import 'package:userappquanbadulich/showFilterAllTourist/bloc/filterTourist_event.dart';
 
-import '../../../culture/bloc/culture_event.dart';
-import '../../../culture/bloc/culture_state.dart';
-import '../../../touristAttraction/bloc/touristAttraction_bloc.dart';
-import '../../../touristAttraction/bloc/touristAttraction_event.dart';
-import '../../../touristAttraction/bloc/touristAttraction_state.dart';
-import '../../bloc/filterTourist_state.dart';
+import '../../touristAttraction/bloc/touristAttraction_bloc.dart';
+import '../../touristAttraction/bloc/touristAttraction_event.dart';
+import '../../touristAttraction/bloc/touristAttraction_state.dart';
+import '../bloc/filterTourist_state.dart';
 
-class ShowAllTouristCulure extends StatefulWidget {
+class ShowAllTouristAttraction extends StatefulWidget {
   final String idCus;
 
-  const ShowAllTouristCulure({
+  const ShowAllTouristAttraction({
     Key? key,
     required this.idCus,
   }) : super(key: key);
 
   @override
-  State<ShowAllTouristCulure> createState() => _ShowAllTourisCulure();
+  State<ShowAllTouristAttraction> createState() =>
+      _ShowAllTouristAttractionState();
 }
 
-class _ShowAllTourisCulure extends State<ShowAllTouristCulure> {
+class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
   final List<FilterReionModel> listItemRegion = [
     FilterReionModel(idRegion: 'MB', nameRegion: 'Miền Bắc'),
     FilterReionModel(idRegion: 'MT', nameRegion: 'Miền Trung'),
@@ -71,7 +69,7 @@ class _ShowAllTourisCulure extends State<ShowAllTouristCulure> {
       }
     });
 
-    context.read<CultureBloc>().add(FetchCultures());
+    context.read<TouristAttractionBloc>().add(FetchTouristAttraction());
   }
 
   @override
@@ -88,8 +86,7 @@ class _ShowAllTourisCulure extends State<ShowAllTouristCulure> {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: const Text(
-          'Văn hóa Việt: Huyền bí và sâu sắc',
-          // 'Đắm chìm trong hương vị Việt',
+          'Khám phá Việt Nam cùng bạn',
           style: TextStyle(
             fontSize: 20,
             color: Colors.black,
@@ -218,12 +215,12 @@ class _ShowAllTourisCulure extends State<ShowAllTouristCulure> {
                             final touristAttraction = touristAttractions[index];
                             return GestureDetector(
                               onTap: () {
-                                // Navigator.of(context).pushNamed(
-                                //     '/detail_touriestAttraction_about',
-                                //     arguments: {
-                                //       'aboutTouristData': touristAttraction,
-                                //       'idCus': idCus,
-                                //     });
+                                Navigator.of(context).pushNamed(
+                                    '/detail_touriestAttraction_about',
+                                    arguments: {
+                                      'aboutTouristData': touristAttraction,
+                                      'idCus': idCus,
+                                    });
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -287,13 +284,15 @@ class _ShowAllTourisCulure extends State<ShowAllTouristCulure> {
                       }
                       return Container(
                         padding: const EdgeInsets.all(8.0),
-                        child: BlocBuilder<CultureBloc, CultureState>(
+                        child: BlocBuilder<TouristAttractionBloc,
+                            TouristAttractionState>(
                           builder: (context, state) {
-                            if (state is CultureLoading) {
+                            if (state is TouristAttractionLoading) {
                               return const Center(
                                   child: CircularProgressIndicator());
-                            } else if (state is CultureLoaded) {
-                              final cultures = state.cultures;
+                            } else if (state is TouristAttractionLoaded) {
+                              final touristAttractions =
+                                  state.touristAttraction;
                               return GridView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
@@ -303,18 +302,19 @@ class _ShowAllTourisCulure extends State<ShowAllTouristCulure> {
                                   crossAxisSpacing: 8.0,
                                   mainAxisSpacing: 8.0,
                                 ),
-                                itemCount: cultures.length,
+                                itemCount: touristAttractions.length,
                                 itemBuilder: (context, index) {
-                                  final culture = cultures[index];
+                                  final touristAttraction =
+                                      touristAttractions[index];
                                   return GestureDetector(
                                     onTap: () {
-                                      // Navigator.of(context).pushNamed(
-                                      //     '/detail_touriestAttraction_about',
-                                      //     arguments: {
-                                      //       'aboutTouristData':
-                                      //           culture,
-                                      //       'idCus': idCus,
-                                      //     });
+                                      Navigator.of(context).pushNamed(
+                                          '/detail_touriestAttraction_about',
+                                          arguments: {
+                                            'aboutTouristData':
+                                                touristAttraction,
+                                            'idCus': idCus,
+                                          });
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -325,20 +325,21 @@ class _ShowAllTourisCulure extends State<ShowAllTouristCulure> {
                                           ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(10),
-                                            child: culture.imgCulture != null
-                                                ? Image.asset(
-                                                    'assets/img/img_12.png',
-                                                    // 'assets/img/${culture.imgCulture!}',
-                                                    width: double.infinity,
-                                                    height: double.infinity,
-                                                    fit: BoxFit.cover,
-                                                  )
-                                                : Image.asset(
-                                                    'assets/img/img_12.png',
-                                                    width: double.infinity,
-                                                    height: 180,
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                            child:
+                                                touristAttraction.imgTourist !=
+                                                        null
+                                                    ? Image.asset(
+                                                        'assets/img/${touristAttraction.imgTourist!}',
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : Image.asset(
+                                                        'assets/img/img_12.png',
+                                                        width: double.infinity,
+                                                        height: 180,
+                                                        fit: BoxFit.cover,
+                                                      ),
                                           ),
                                           Positioned(
                                             bottom: 10,
@@ -349,12 +350,13 @@ class _ShowAllTourisCulure extends State<ShowAllTouristCulure> {
                                               width: double.infinity,
                                               color: Colors.transparent,
                                               alignment: Alignment.bottomLeft,
-                                              child: culture
-                                                      .titleCulture.isNotEmpty
+                                              child: touristAttraction
+                                                      .nameTourist.isNotEmpty
                                                   ? Text(
-                                                      culture.titleCulture,
+                                                      touristAttraction
+                                                          .nameTourist,
                                                       style: const TextStyle(
-                                                        color: Colors.black,
+                                                        color: Colors.white,
                                                         fontSize: 20,
                                                         fontWeight:
                                                             FontWeight.bold,

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userappquanbadulich/imformationCustomer/bloc/imformationCus_bloc.dart';
+import 'package:userappquanbadulich/showAllFilterHistory/screens/showAllCulture_page.dart';
+import 'package:userappquanbadulich/showAllFilterSpecialDish/screens/showAllSpecial_page.dart';
 import '../../culture/screens/culture_page.dart';
 import '../../history/screens/history_page.dart';
 import '../../model/CustomerModel.dart';
 import '../../searchTouristAttraction/srceens/searchTouristAttraction_page.dart';
-import '../../showFilterAllTouristCultureHistoryFood/screens/fileCulture/showAllCulture_page.dart';
-import '../../showFilterAllTouristCultureHistoryFood/screens/fileTourist/showAllTouristAttraction_page.dart';
+import '../../showAllFilterCulture/screens/showAllCulture_page.dart';
+import '../../showFilterAllTourist/screens/showAllTouristAttraction_page.dart';
 import '../../specialDish/screens/specialDish_page.dart';
 import '../../touristAttraction/screens/touristAttraction_page.dart';
 
@@ -276,26 +278,32 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    ShowAllTouristAttraction(idCus: customer.idCus),
+                                builder: (context) => ShowAllTouristAttraction(
+                                    idCus: customer.idCus),
                               ),
                             );
                           },
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Nhất định phải đến',
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                flex: 8,
+                                child: Text(
+                                  'Nhất định phải đến',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                              Icon(
-                                Icons.navigate_next,
-                                size: 35,
-                                color: Colors.black,
+                              Expanded(
+                                flex: 1,
+                                child: Icon(
+                                  Icons.navigate_next,
+                                  size: 35,
+                                  color: Colors.black,
+                                ),
                               ),
                             ],
                           ),
@@ -321,31 +329,37 @@ class _HomePageState extends State<HomePage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    ShowAllTouristCulure(idCus: customer.idCus),
+                                    ShowAllCulure(idCus: customer.idCus),
                               ),
                             );
                           },
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                               'Người Việt Nam dễ thương lắm',
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                flex: 8,
+                                child: Text(
+                                  'Người Việt Nam dễ thương lắm',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                              Icon(
-                                Icons.navigate_next,
-                                size: 35,
-                                color: Colors.black,
+                              Expanded(
+                                flex: 1,
+                                child: Icon(
+                                  Icons.navigate_next,
+                                  size: 35,
+                                  color: Colors.black,
+                                ),
                               ),
                             ],
                           ),
                         ),
                         const SizedBox(height: 10),
-                       CulturePage(idCus: customer.idCus),
+                        CulturePage(idCus: customer.idCus),
                       ],
                     ),
                   ),
@@ -359,12 +373,40 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Đặc sản Việt Nam: Món ngon đầy hương vị',
-                          style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ShowAllSpecialDish(idCus: customer.idCus),
+                              ),
+                            );
+                          },
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 8,
+                                child: Text(
+                                  'Đặc sản Việt Nam: Món ngon đầy hương vị',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Icon(
+                                  Icons.navigate_next,
+                                  size: 35,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -382,12 +424,40 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Cùng nhìn lại lịch sử hào hùng của dân tộc Việt Nam',
-                          style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ShowAllHistory(idCus: customer.idCus),
+                              ),
+                            );
+                          },
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 8,
+                                child: Text(
+                                  'Cùng nhìn lại lịch sử hào hùng của dân tộc Việt Nam',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Icon(
+                                  Icons.navigate_next,
+                                  size: 35,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 10),

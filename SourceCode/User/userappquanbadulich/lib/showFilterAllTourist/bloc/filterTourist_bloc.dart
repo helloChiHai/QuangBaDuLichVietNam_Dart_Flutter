@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:userappquanbadulich/repositories/repositories.dart';
-import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_event.dart';
-import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_state.dart';
+import 'package:userappquanbadulich/showFilterAllTourist/bloc/filterTourist_event.dart';
+import 'package:userappquanbadulich/showFilterAllTourist/bloc/filterTourist_state.dart';
 
 class FilterTouristBloc extends Bloc<FilterTouristEvent, FilterTouristState> {
   final UserRepository userRepository;

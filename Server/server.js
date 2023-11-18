@@ -377,6 +377,123 @@ app.get("/filter-tourist-attractions", async (req, res) => {
   }
 });
 
+// lọc địa điểm văn hóa theo idRegion và idProvines
+app.get("/filter-culture", async (req, res) => {
+  try {
+    const idRegion = req.query.idRegion;
+    const idProvines = req.query.idProvines;
+    let cultures = [];
+    const region = await Region.find({});
+
+    if (idRegion && !idProvines) {
+      region.forEach((region) => {
+        region.provinces.forEach((province) => {
+          province.touristAttraction.forEach((touristAttraction) => {
+            if (region.idRegion === idRegion) {
+              cultures.push(...touristAttraction.culture);
+            }
+          });
+        });
+      });
+    } 
+    if (idProvines && idRegion) {
+      region.forEach((region) => {
+        region.provinces.forEach((province) => {
+          province.touristAttraction.forEach((touristAttraction) => {
+            if (
+              region.idRegion === idRegion &&
+              province.idProvines === idProvines
+            ) {
+              cultures.push(...touristAttraction.culture);
+            }
+          });
+        });
+      });
+    }
+    res.status(200).json({ success: true, data: cultures });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// lọc món ăn theo idRegion và idProvines
+app.get("/filter-specialDish", async (req, res) => {
+  try {
+    const idRegion = req.query.idRegion;
+    const idProvines = req.query.idProvines;
+    let specialDish = [];
+    const region = await Region.find({});
+
+    if (idRegion && !idProvines) {
+      region.forEach((region) => {
+        region.provinces.forEach((province) => {
+          province.touristAttraction.forEach((touristAttraction) => {
+            if (region.idRegion === idRegion) {
+              specialDish.push(...touristAttraction.specialtyDish);
+            }
+          });
+        });
+      });
+    } 
+    if (idProvines && idRegion) {
+      region.forEach((region) => {
+        region.provinces.forEach((province) => {
+          province.touristAttraction.forEach((touristAttraction) => {
+            if (
+              region.idRegion === idRegion &&
+              province.idProvines === idProvines
+            ) {
+              specialDish.push(...touristAttraction.specialtyDish);
+            }
+          });
+        });
+      });
+    }
+    res.status(200).json({ success: true, data: specialDish });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// lọc lịch sử theo idRegion và idProvines
+app.get("/filter-history", async (req, res) => {
+  try {
+    const idRegion = req.query.idRegion;
+    const idProvines = req.query.idProvines;
+    let historyList = [];
+    const region = await Region.find({});
+
+    if (idRegion && !idProvines) {
+      region.forEach((region) => {
+        region.provinces.forEach((province) => {
+          province.touristAttraction.forEach((touristAttraction) => {
+            if (region.idRegion === idRegion) {
+              historyList.push(...touristAttraction.history);
+            }
+          });
+        });
+      });
+    } 
+    if (idProvines && idRegion) {
+      region.forEach((region) => {
+        region.provinces.forEach((province) => {
+          province.touristAttraction.forEach((touristAttraction) => {
+            if (
+              region.idRegion === idRegion &&
+              province.idProvines === idProvines
+            ) {
+              historyList.push(...touristAttraction.history);
+            }
+          });
+        });
+      });
+    }
+    res.status(200).json({ success: true, data: historyList });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // ----------------------------------------------------------------------------
 
 // kiểm tra bình luận có phải người đó đăng hay không

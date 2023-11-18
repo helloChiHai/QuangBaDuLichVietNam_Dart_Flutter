@@ -28,9 +28,14 @@ import 'package:userappquanbadulich/region/bloc/region_bloc.dart';
 import 'package:userappquanbadulich/region/screens/region_page.dart';
 import 'package:userappquanbadulich/repositories/repositories.dart';
 import 'package:userappquanbadulich/searchTouristAttraction/srceens/searchTouristAttraction_page.dart';
-import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/bloc/filterTourist_bloc.dart';
-import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/screens/fileCulture/showAllCulture_page.dart';
-import 'package:userappquanbadulich/showFilterAllTouristCultureHistoryFood/screens/fileTourist/showAllTouristAttraction_page.dart';
+import 'package:userappquanbadulich/showAllFilterCulture/bloc/filterCulture_bloc.dart';
+import 'package:userappquanbadulich/showAllFilterCulture/screens/showAllCulture_page.dart';
+import 'package:userappquanbadulich/showAllFilterHistory/bloc/filterHistory_bloc.dart';
+import 'package:userappquanbadulich/showAllFilterHistory/screens/showAllCulture_page.dart';
+import 'package:userappquanbadulich/showAllFilterSpecialDish/bloc/filterSpecialDish_bloc.dart';
+import 'package:userappquanbadulich/showAllFilterSpecialDish/screens/showAllSpecial_page.dart';
+import 'package:userappquanbadulich/showFilterAllTourist/bloc/filterTourist_bloc.dart';
+import 'package:userappquanbadulich/showFilterAllTourist/screens/showAllTouristAttraction_page.dart';
 import 'package:userappquanbadulich/specialDish/bloc/specialDish_bloc.dart';
 import 'package:userappquanbadulich/specialDish/screens/specialDish_page.dart';
 import 'package:userappquanbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
@@ -102,8 +107,11 @@ class MyApp extends StatelessWidget {
         '/intro_login': (context) => LoginIntro(),
         '/createAccountSuccesful': (context) => CreateAccountSuccessful(),
         '/home': (context) => HomePage(),
-        '/showAllTouristAttraction': (context) => ShowAllTouristAttraction(idCus: ''),
-        '/showAllCulture': (context) => ShowAllTouristCulure(idCus: ''),
+        '/showAllTouristAttraction': (context) =>
+            ShowAllTouristAttraction(idCus: ''),
+        '/showAllCulture': (context) => ShowAllCulure(idCus: ''),
+        '/showAllSpecialDish': (context) => ShowAllSpecialDish(idCus: ''),
+        '/showAllHistory': (context) => ShowAllHistory(idCus: ''),
         '/detail_touriestAttraction_about': (context) =>
             DetailTouristAttraction_AboutPage(),
         '/detail_touriestAttraction_culture': (context) =>
@@ -121,7 +129,7 @@ class MyApp extends StatelessWidget {
         '/detail_specialtyDish': (context) =>
             DetailSpecialtyDish(dataSpecialtyDish: []),
       },
-      home: ShowAllTouristCulure(idCus: '',),
+      home: LoginPage(),
     );
   }
 }
@@ -130,6 +138,21 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<FilterHistoryBloc>(
+          create: (context) => FilterHistoryBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<FilterSpecialDishBloc>(
+          create: (context) => FilterSpecialDishBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
+        BlocProvider<FilterCultureBloc>(
+          create: (context) => FilterCultureBloc(
+            userRepository: UserRepository(),
+          ),
+        ),
         BlocProvider<UpdateCommentBloc>(
           create: (context) => UpdateCommentBloc(
             userRepository: UserRepository(),

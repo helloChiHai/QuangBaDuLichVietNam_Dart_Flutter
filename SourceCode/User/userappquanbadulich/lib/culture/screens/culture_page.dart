@@ -59,7 +59,8 @@ class _CulturePageState extends State<CulturePage> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: culture.imgCulture != null
+                          child: culture.imgCulture != null &&
+                                  culture.imgCulture!.isNotEmpty
                               ? Image.asset(
                                   'assets/img/${culture.imgCulture!}',
                                   width: double.infinity,
