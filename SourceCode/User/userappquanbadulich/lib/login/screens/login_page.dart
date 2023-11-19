@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
               content: Text(
                 'Đăng nhập thành công!',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 20,
                 ),
               ),
               backgroundColor: Colors.green,
@@ -38,7 +38,7 @@ class LoginPage extends StatelessWidget {
                 content: Text(
                   'Sai Email hoặc mật khẩu!',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 20,
                   ),
                 ),
                 backgroundColor: Colors.red,

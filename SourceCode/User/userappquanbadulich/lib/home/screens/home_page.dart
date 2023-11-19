@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userappquanbadulich/imformationCustomer/bloc/imformationCus_bloc.dart';
-import 'package:userappquanbadulich/showAllFilterHistory/screens/showAllCulture_page.dart';
+import 'package:userappquanbadulich/showAllFilterHistory/screens/showAllHistory_page.dart';
 import 'package:userappquanbadulich/showAllFilterSpecialDish/screens/showAllSpecial_page.dart';
 import '../../culture/screens/culture_page.dart';
 import '../../filterTypeTourist/screens/filterTypeTourist_page.dart';
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: [
                             Container(
-                              height: 210,
+                              height: 230,
                               color: Colors.white,
                               width: double.infinity,
                               child: const Image(

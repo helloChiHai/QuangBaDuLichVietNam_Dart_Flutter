@@ -115,7 +115,7 @@ class _ShowAllTourisCulure extends State<ShowAllSpecialDish> {
             child: Column(
               children: [
                 const Image(
-                  image: AssetImage('assets/img/img_8.jpg'),
+                  image: AssetImage('assets/img/img_monAnNgayTet_1.png'),
                   width: double.infinity,
                   height: 190,
                   fit: BoxFit.cover,
@@ -138,7 +138,7 @@ class _ShowAllTourisCulure extends State<ShowAllSpecialDish> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: const Text(
-                    'Việt Nam, đất nước phía Đông Nam Á, nổi tiếng với cảnh quan thiên nhiên tuyệt đẹp, văn hóa đa dạng, lịch sử hào hùng và đặc sản ẩm thực hấp dẫn.',
+                    'Đậm đà và đa dạng, ẩm thực Việt Nam kết hợp hương vị truyền thống và sáng tạo, từ phở thơm ngon đến bánh mì ốp lựa',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,

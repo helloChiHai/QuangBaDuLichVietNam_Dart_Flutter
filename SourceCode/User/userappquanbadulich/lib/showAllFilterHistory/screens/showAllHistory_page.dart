@@ -85,7 +85,7 @@ class _ShowAllTourisCulure extends State<ShowAllHistory> {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: const Text(
-          'Văn hóa Việt: Huyền bí và sâu sắc',
+          'Lịch sử Việt Nam: Nghìn năm',
           // 'Đắm chìm trong hương vị Việt',
           style: TextStyle(
             fontSize: 20,
@@ -116,7 +116,7 @@ class _ShowAllTourisCulure extends State<ShowAllHistory> {
             child: Column(
               children: [
                 const Image(
-                  image: AssetImage('assets/img/img_8.jpg'),
+                  image: AssetImage('assets/img/img_lichSuVietNamThanhGiong.PNG'),
                   width: double.infinity,
                   height: 190,
                   fit: BoxFit.cover,
@@ -139,7 +139,7 @@ class _ShowAllTourisCulure extends State<ShowAllHistory> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: const Text(
-                    'Việt Nam, đất nước phía Đông Nam Á, nổi tiếng với cảnh quan thiên nhiên tuyệt đẹp, văn hóa đa dạng, lịch sử hào hùng và đặc sản ẩm thực hấp dẫn.',
+                    'Lịch sử Việt Nam: Dòng máu anh hùng, truyền thống bất khuất, kiến tạo nên hồn quê hào hùng bên sông nước Việt',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,

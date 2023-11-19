@@ -34,7 +34,7 @@ import 'package:userappquanbadulich/searchTouristAttraction/srceens/searchTouris
 import 'package:userappquanbadulich/showAllFilterCulture/bloc/filterCulture_bloc.dart';
 import 'package:userappquanbadulich/showAllFilterCulture/screens/showAllCulture_page.dart';
 import 'package:userappquanbadulich/showAllFilterHistory/bloc/filterHistory_bloc.dart';
-import 'package:userappquanbadulich/showAllFilterHistory/screens/showAllCulture_page.dart';
+import 'package:userappquanbadulich/showAllFilterHistory/screens/showAllHistory_page.dart';
 import 'package:userappquanbadulich/showAllFilterSpecialDish/bloc/filterSpecialDish_bloc.dart';
 import 'package:userappquanbadulich/showAllFilterSpecialDish/screens/showAllSpecial_page.dart';
 import 'package:userappquanbadulich/showFilterAllTourist/bloc/filterTourist_bloc.dart';

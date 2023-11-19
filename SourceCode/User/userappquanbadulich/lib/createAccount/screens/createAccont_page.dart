@@ -17,7 +17,12 @@ class CreateAccountPage extends StatelessWidget {
             print('Tạo tài khoản thành công');
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Tạo tài khoản thành công'),
+                content: Text(
+                  'Tạo tài khoản thành công',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
                 backgroundColor: Colors.green,
               ),
             );
@@ -27,7 +32,12 @@ class CreateAccountPage extends StatelessWidget {
             print(state.error);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.error),
+                content: Text(
+                  state.error,
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
                 backgroundColor: Colors.red,
               ),
             );

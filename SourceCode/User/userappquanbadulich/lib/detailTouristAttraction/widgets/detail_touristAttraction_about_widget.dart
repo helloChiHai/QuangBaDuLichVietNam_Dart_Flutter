@@ -124,7 +124,7 @@ class _DetailTouristAttractionWidgetState
                 margin: const EdgeInsets.only(top: 290),
                 padding: const EdgeInsets.symmetric(vertical: 25),
                 width: double.infinity,
-                height: 2500,
+                height: 3000,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(

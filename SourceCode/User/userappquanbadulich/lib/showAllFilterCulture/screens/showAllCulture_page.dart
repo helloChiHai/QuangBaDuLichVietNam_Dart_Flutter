@@ -85,7 +85,7 @@ class _ShowAllTourisCulure extends State<ShowAllCulure> {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: const Text(
-          'Văn hóa Việt: Huyền bí và sâu sắc',
+          'Việt Nam: Văn hóa độc đáo',
           // 'Đắm chìm trong hương vị Việt',
           style: TextStyle(
             fontSize: 20,
@@ -116,7 +116,7 @@ class _ShowAllTourisCulure extends State<ShowAllCulure> {
             child: Column(
               children: [
                 const Image(
-                  image: AssetImage('assets/img/img_8.jpg'),
+                  image: AssetImage('assets/img/img_vanHoa.jpg'),
                   width: double.infinity,
                   height: 190,
                   fit: BoxFit.cover,
@@ -139,7 +139,7 @@ class _ShowAllTourisCulure extends State<ShowAllCulure> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: const Text(
-                    'Việt Nam, đất nước phía Đông Nam Á, nổi tiếng với cảnh quan thiên nhiên tuyệt đẹp, văn hóa đa dạng, lịch sử hào hùng và đặc sản ẩm thực hấp dẫn.',
+                    'Văn hóa Việt Nam kết hợp truyền thống và đương đại, phản ánh sự đa dạng với nghệ thuật, ẩm thực và tâm linh độc đáo',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,

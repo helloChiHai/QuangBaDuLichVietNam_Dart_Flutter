@@ -44,7 +44,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
           width: double.infinity,
           height: 230,
           child: Image(
-            image: AssetImage('assets/img/img_5.png'),
+            image: AssetImage('assets/img/img_intro_2.png'),
           ),
         ),
         const SizedBox(height: 30),

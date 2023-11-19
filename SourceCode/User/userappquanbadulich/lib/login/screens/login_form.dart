@@ -40,7 +40,7 @@ class _LoginFormState extends State<LoginForm> {
           width: double.infinity,
           height: 230,
           child: Image(
-            image: AssetImage('assets/img/img_4.png'),
+            image: AssetImage('assets/img/img_intro_3.png'),
           ),
         ),
         const SizedBox(height: 30),
