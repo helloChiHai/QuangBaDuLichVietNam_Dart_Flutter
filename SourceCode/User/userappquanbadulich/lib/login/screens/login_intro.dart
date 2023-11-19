@@ -1,80 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:introduction_screen/introduction_screen.dart';
+import 'package:intro_slider/intro_slider.dart';
 
 class LoginIntro extends StatefulWidget {
-  const LoginIntro({super.key});
+  const LoginIntro({Key? key}) : super(key: key);
 
   @override
   State<LoginIntro> createState() => _LoginIntroState();
 }
 
 class _LoginIntroState extends State<LoginIntro> {
+  List<ContentConfig> listContentConfig = [];
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: IntroductionScreen(
-        pages: [
-          buildIntroPage("assets/img/img_4.png", "Page 1", "This is page 1"),
-          buildIntroPage("assets/img/img_5.png", "Page 2", "This is page 2"),
-          buildIntroPage("assets/img/img_6.png", "Page 3", "This is page 3"),
-        ],
-        onDone: () {
-          Navigator.of(context).pushNamed('/login');
-        },
-        showSkipButton: true,
-        skip: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 8,
-          ),
-          decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(10)),
-          child: const Text(
-            "Skip",
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white,
-            ),
-          ),
+  void initState() {
+    super.initState();
+
+    listContentConfig.add(
+      const ContentConfig(
+        title: "VietWander",
+        description:
+            "Trải nghiệm cảm xúc độc đáo với đêm Hội Ánh Sáng Đà Nẵng, nơi ánh đèn kết hợp nghệ thuật tạo nên phố đi bộ sống động nhất",
+        styleDescription: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
         ),
-        done: const Text(
-          "Done",
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.black,
-          ),
+        backgroundImage: "assets/img/img_1.jpg",
+        backgroundFilterOpacity: 0.4,
+      ),
+    );
+    listContentConfig.add(
+      const ContentConfig(
+        title: "VietWander",
+        description:
+            "Mê mải đắm chìm trong vẻ đẹp cổ kính của Lăng mộ Gia Long, hòa mình vào lịch sử huyền bí của đất nước Việt Nam",
+        backgroundImage: "assets/img/img_3.jpg",
+        styleDescription: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
         ),
-        showNextButton: false,
+        backgroundFilterOpacity: 0.4,
+      ),
+    );
+    listContentConfig.add(
+      const ContentConfig(
+        title: "VietWander",
+        description:
+            "Khám phá kỳ quan thiên nhiên hùng vĩ tại Hạ Long Bay, bức tranh tuyệt vời của Việt Nam",
+        backgroundImage: "assets/img/img_2.jpg",
+        styleDescription: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
+        ),
+        backgroundFilterOpacity: 0.4,
       ),
     );
   }
 
-  PageViewModel buildIntroPage(String imagePath, String title, String body) {
-    return PageViewModel(
-      title: title,
-      body: body,
-      image: Stack(
-        children: [
-          Image.asset(
-            imagePath,
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          Positioned(
-            bottom: 50,
-            left: 16,
-            right: 16,
-            child: Text(
-              body,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
+  void onDonePress() {
+    Navigator.of(context).pushNamed('/login');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IntroSlider(
+      key: UniqueKey(),
+      listContentConfig: listContentConfig,
+      onDonePress: onDonePress,
+      skipButtonStyle: ElevatedButton.styleFrom(
+        primary: Colors.transparent, // Màu nền cho nút Skip
+        textStyle: TextStyle(color: Colors.white), // Màu chữ cho nút Skip
+      ),
+      doneButtonStyle: ElevatedButton.styleFrom(
+        primary: Colors.transparent, // Màu nền cho nút Done
+        textStyle: TextStyle(color: Colors.white), // Màu chữ cho nút Done
+      ),
+      nextButtonStyle: ElevatedButton.styleFrom(
+        primary: Colors.transparent, // Màu nền cho nút Next
+        textStyle: TextStyle(color: Colors.white), // Màu chữ cho nút Next
       ),
     );
   }
