@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:userappquanbadulich/model/CustomerModel.dart';
@@ -47,7 +45,6 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
         );
       } catch (e) {
         // Nếu có lỗi khi giải mã, sử dụng AssetImage
-        String assetPath = cus.imgCus!.replaceAll("//", "/");
         return Container(
           width: imageSize,
           height: imageSize,
@@ -55,7 +52,7 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
             shape: BoxShape.circle,
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage(assetPath),
+              image: AssetImage('assets/img/${cus.imgCus}'),
             ),
           ),
         );
@@ -69,7 +66,7 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
           shape: BoxShape.circle,
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage('assets/img/SP_CUL_3.jpg'),
+            image: AssetImage('assets/img/img_12.png'),
           ),
         ),
       );

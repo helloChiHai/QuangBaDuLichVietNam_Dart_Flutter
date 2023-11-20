@@ -20,9 +20,8 @@ class AccountPage extends StatelessWidget {
           fit: BoxFit.cover,
         );
       } catch (e) {
-        String assetPath = cus.imgCus!.replaceAll("//", "/");
         return Image.asset(
-          assetPath,
+          'assets/img/${cus.imgCus}',
           width: 75,
           height: 75,
           fit: BoxFit.cover,

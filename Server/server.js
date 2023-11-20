@@ -631,6 +631,7 @@ app.post("/tourist/addComment", async (req, res) => {
               idcmt: `CMT_${uuidv4()}`,
               idCus: idCus,
               nameCus: customer.name,
+              imgCus: customer.imgCus,
               content: commentData,
               atTime: moment().format("YYYY-MM-DD HH:mm:ss"),
             };

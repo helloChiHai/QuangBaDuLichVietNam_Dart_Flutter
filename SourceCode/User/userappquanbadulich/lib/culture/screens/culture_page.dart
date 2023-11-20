@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +28,35 @@ class _CulturePageState extends State<CulturePage> {
     super.initState();
     idCus = widget.idCus;
     context.read<CultureBloc>().add(FetchCultures());
+  }
+
+  Future<Widget> _buildImage(String? img) async {
+    if (img != null && img.isNotEmpty) {
+      try {
+        List<int> imageBytes = Base64Decoder().convert(img);
+        return Image.memory(
+          Uint8List.fromList(imageBytes),
+          width: double.infinity,
+          height: double.infinity,
+          fit: BoxFit.cover,
+        );
+      } catch (e) {
+        String assetPath = img.replaceAll("//", "/");
+        return Image.asset(
+          assetPath,
+          width: double.infinity,
+          height: double.infinity,
+          fit: BoxFit.cover,
+        );
+      }
+    } else {
+      return Image.asset(
+        'assets/img/img_12.png',
+        width: double.infinity,
+        height: double.infinity,
+        fit: BoxFit.cover,
+      );
+    }
   }
 
   @override
@@ -59,20 +90,19 @@ class _CulturePageState extends State<CulturePage> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: culture.imgCulture != null &&
-                                  culture.imgCulture!.isNotEmpty
-                              ? Image.asset(
-                                  'assets/img/${culture.imgCulture!}',
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.asset(
-                                  'assets/img/img_12.png',
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
+                          child: FutureBuilder<Widget>(
+                            future:
+                                _buildImage('assets/img/${culture.imgCulture}'),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<Widget> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return snapshot.data ?? Container();
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            },
+                          ),
                         ),
                         Positioned(
                           bottom: 10,

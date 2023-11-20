@@ -2,6 +2,7 @@ class CommentModel {
   final String idcmt;
   final String idCus;
   final String nameCus;
+  final String imgCus;
   final String content;
   final String atTime;
 
@@ -9,6 +10,7 @@ class CommentModel {
     required this.idcmt,
     required this.idCus,
     required this.nameCus,
+    required this.imgCus,
     required this.content,
     required this.atTime,
   });
@@ -18,8 +20,9 @@ class CommentModel {
       idcmt: json['idcmt'],
       idCus: json['idCus'],
       nameCus: json['nameCus'],
+      imgCus: json['imgCus'],
       content: json['content'],
-      atTime: json['atTime'], 
+      atTime: json['atTime'],
     );
   }
 }

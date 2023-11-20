@@ -19,6 +19,27 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
 
   bool _obscureText_mk = true;
   bool _obscureText_nlmk = true;
+
+  bool validateEmail(String input) {
+    String emailPattern = r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$';
+    RegExp regex = RegExp(emailPattern);
+    return regex.hasMatch(input);
+  }
+
+  bool isValidPassword(String password) {
+    if (password.length < 6) {
+      return false;
+    }
+    // Kiểm tra có chữ cái in hoa
+    bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
+    // Kiểm tra có chữ cái thường
+    bool hasLowercase = password.contains(RegExp(r'[a-z]'));
+    // Kiểm tra có số
+    bool hasDigit = password.contains(RegExp(r'[0-9]'));
+    // Trả về kết quả tổng cộng các điều kiện
+    return hasUppercase && hasLowercase && hasDigit;
+  }
+
   @override
   Widget build(BuildContext context) {
     final createAccountBloc = BlocProvider.of<CreateAccountBloc>(context);
@@ -193,11 +214,37 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                       backgroundColor: Colors.red,
                     ),
                   );
+                } else if (!validateEmail(email)) {
+                  {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Email không đúng định dạng',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 } else if (password.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text(
                         'Vui lòng nhập Mật Khẩu!',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else if (!isValidPassword(password)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Mật khẩu không hợp lệ. Yêu cầu ít nhất một chữ cái in hoa, một chữ cái thường, một số, và độ dài ít nhất 6 ký tự.',
                         style: TextStyle(
                           fontSize: 18,
                         ),
@@ -217,11 +264,11 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                       backgroundColor: Colors.red,
                     ),
                   );
-                } else if (name.isEmpty) {
+                } else if (password != confirmPassword) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text(
-                        'Vui lòng nhập lại Họ Tên!',
+                        'Mật khẩu trong trùng khớp!',
                         style: TextStyle(
                           fontSize: 18,
                         ),
@@ -229,11 +276,11 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                       backgroundColor: Colors.red,
                     ),
                   );
-                } else if (password != confirmPassword) {
+                } else if (name.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text(
-                        'Mật khẩu trong trùng khớp!',
+                        'Vui lòng nhập lại Họ Tên!',
                         style: TextStyle(
                           fontSize: 18,
                         ),

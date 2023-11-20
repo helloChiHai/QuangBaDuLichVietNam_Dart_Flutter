@@ -19,7 +19,7 @@ class _UpdateEmailFormState extends State<UpdateEmailForm> {
 
   bool validateEmail(String input) {
     String emailPattern =
-        r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$'; // Biểu thức chính quy kiểm tra địa chỉ email
+        r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$';
     RegExp regex = RegExp(emailPattern);
     return regex.hasMatch(input);
   }

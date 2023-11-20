@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userappquanbadulich/addComment/bloc/addComment_bloc.dart';
@@ -36,6 +39,52 @@ class _CommentPageState extends State<CommentPage> {
 
   Future<void> _refreshComments() async {
     context.read<CommentBloc>().add(LoadComment(idTourist: idTourist));
+  }
+
+  Future<Widget> _buildImage(String? imgCus) async {
+    if (imgCus != null && imgCus.isNotEmpty) {
+      try {
+        List<int> imageBytes = Base64Decoder().convert(imgCus);
+        return Container(
+          width: 70,
+          height: 70,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: Image.memory(
+                Uint8List.fromList(imageBytes),
+                fit: BoxFit.cover,
+              ).image,
+            ),
+          ),
+        );
+      } catch (e) {
+        return Container(
+          width: 70,
+          height: 70,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/img/$imgCus'),
+            ),
+          ),
+        );
+      }
+    } else {
+      return Container(
+        width: 70,
+        height: 70,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('assets/img/img_12.png'),
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -365,13 +414,25 @@ class _CommentPageState extends State<CommentPage> {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Expanded(
+                                  Expanded(
                                     flex: 2,
-                                    child: CircleAvatar(
-                                      radius: 30,
-                                      backgroundImage: AssetImage(
-                                        'assets/img/img_12.png',
-                                      ),
+                                    // child: CircleAvatar(
+                                    //   radius: 30,
+                                    //   backgroundImage: AssetImage(
+                                    //     'assets/img/img_12.png',
+                                    //   ),
+                                    // ),
+                                    child: FutureBuilder<Widget>(
+                                      future: _buildImage(comment.imgCus),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<Widget> snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.done) {
+                                          return snapshot.data ?? Container();
+                                        } else {
+                                          return const CircularProgressIndicator();
+                                        }
+                                      },
                                     ),
                                   ),
                                   Expanded(
