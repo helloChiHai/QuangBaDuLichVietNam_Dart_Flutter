@@ -14,6 +14,7 @@ mongoose.connect("mongodb://127.0.0.1/DACN_APP_DuLich", {
 const Region = require("./models/region");
 const Customer = require("./models/customer");
 const Province = require("./models/province");
+const Admin = require("./models/Admin");
 
 // Middleware để tăng giới hạn kích thước payload
 app.use(bodyParser.json({ limit: "10mb" }));
@@ -30,6 +31,49 @@ const checkMongoDBConnection = () => {
 };
 
 checkMongoDBConnection();
+
+// ========================== ADMIN =================================================
+// đăng nhập
+app.post("/loginAdmin", async (req, res) => {
+  try {
+    const admin = await Admin.findOne({
+      account: req.body.account,
+      password: req.body.password,
+    });
+    console.log(req.body);
+    if (!admin) {
+      res.status(401).json({
+        success: false,
+        message: "Tên tài khoản hoặc mật khẩu không đúng",
+      });
+      console.log("\n------------ sai email hoặc pass ------------\n");
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      data: admin,
+    });
+    console.log(
+      "\n ------------>>>>> trả về admin: " + admin + "\n------------\n"
+    );
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+
+
+
+
+
+
+
+//=====================================================================================================
+
+
+//=============================== USER =========================================================
 
 // LỌC ĐỊA ĐIỂM THEO THÀNH PHỐ, NÔNG THÔN, BIỂN, NÚI
 app.get("/filterTypeTouist", async (req, res) => {
