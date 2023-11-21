@@ -837,6 +837,31 @@ app.get("/regions", async (req, res) => {
   }
 });
 
+// tổng địa điểm du lịch
+app.get("/totalTouristAttraction", async (req, res) => {
+  try {
+    const regions = await Region.find({});
+    const tatCaDiaDiemDuLich = [];
+
+    regions.forEach((region) => {
+      region.provinces.forEach((province) => {
+        province.touristAttraction.forEach((touristAttraction) => {
+          tatCaDiaDiemDuLich.push(touristAttraction);
+        });
+      });
+    });
+    const totalAttractions = parseInt(tatCaDiaDiemDuLich.length);
+    console.log(typeof(totalAttractions));
+    res.status(200).json({ success: true, data: totalAttractions});
+  } catch (error) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      error: "Lỗi khi lấy danh sách các địa điểm du lịch",
+    });
+  }
+});
+
 // hiển thị các địa điểm du lịch
 app.get("/getAllTouristAttraction", async (req, res) => {
   try {

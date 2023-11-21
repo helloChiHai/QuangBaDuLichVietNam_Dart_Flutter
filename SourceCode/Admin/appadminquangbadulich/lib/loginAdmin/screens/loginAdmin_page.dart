@@ -4,7 +4,6 @@ import 'package:appadminquangbadulich/loginAdmin/screens/loginAdmin_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class LoginAdminPage extends StatelessWidget {
   const LoginAdminPage({super.key});
 
@@ -23,12 +22,7 @@ class LoginAdminPage extends StatelessWidget {
               ),
               backgroundColor: Colors.green,
             ));
-            // Future.delayed(
-            //   const Duration(seconds: 3),
-            //   () {
-            //     Navigator.of(context).pushNamed('/home');
-            //   },
-            // );
+            Navigator.of(context).pushNamed('/homeAdmin');
           } else if (state is LoginAdminFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(

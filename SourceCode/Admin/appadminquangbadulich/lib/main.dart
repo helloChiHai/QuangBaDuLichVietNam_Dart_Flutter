@@ -1,6 +1,15 @@
+import 'package:appadminquangbadulich/comment/bloc/comment_bloc.dart';
+import 'package:appadminquangbadulich/detailTouristAttraction/bloc/bloc_culture/detailTourist_culture_bloc.dart';
+import 'package:appadminquangbadulich/detailTouristAttraction/bloc/bloc_history/detailTourist_history_bloc.dart';
+import 'package:appadminquangbadulich/detailTouristAttraction/bloc/bloc_specialDish/detailTourist_specialDish_bloc.dart';
+import 'package:appadminquangbadulich/detailTouristAttraction/bloc/bloc_tourist/detailTourist_about_bloc.dart';
+import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
+import 'package:appadminquangbadulich/homeAdmin/screens/homeAdmin_page.dart';
 import 'package:appadminquangbadulich/loginAdmin/bloc/loginAdmin_bloc.dart';
 import 'package:appadminquangbadulich/loginAdmin/screens/loginAdmin_page.dart';
 import 'package:appadminquangbadulich/repositories/adminRepository.dart';
+import 'package:appadminquangbadulich/totalTouristAttraction/bloc/totalTouristAttraction_bloc.dart';
+import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,9 +22,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/login': (context) => LoginAdminPage(),
+        '/detail_touriestAttraction_about': (context) => DetailTouristAttraction_AboutPage(),
+        '/homeAdmin': (context) => HomeAdminPage(),
+        '/loginAdmin': (context) => LoginAdminPage(),
       },
-      home: LoginAdminPage(),
+      home: HomeAdminPage(),
     );
   }
 }
@@ -23,6 +34,41 @@ class MyApp extends StatelessWidget {
 void main() {
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider<TotalTouristAttractionBloc>(
+        create: (context) => TotalTouristAttractionBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
+      BlocProvider<TouristAttractionBloc>(
+        create: (context) => TouristAttractionBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
+      BlocProvider<DetailTourist_AboutBloc>(
+        create: (context) => DetailTourist_AboutBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
+      BlocProvider<DetailTourist_SpecialDishBloc>(
+        create: (context) => DetailTourist_SpecialDishBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
+      BlocProvider<DetailTourist_HistoryBloc>(
+        create: (context) => DetailTourist_HistoryBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
+      BlocProvider<DetailTourist_CultureBloc>(
+        create: (context) => DetailTourist_CultureBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
+      BlocProvider<CommentBloc>(
+        create: (context) => CommentBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
       BlocProvider<LoginAdminBloc>(
         create: (context) => LoginAdminBloc(
           adminRepository: AdminRepository(),

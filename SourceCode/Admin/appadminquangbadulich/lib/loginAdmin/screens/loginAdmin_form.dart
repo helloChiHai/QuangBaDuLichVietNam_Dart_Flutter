@@ -54,7 +54,7 @@ class _LoginAdminFormState extends State<LoginAdminForm> {
               color: Colors.black,
             ),
             decoration: const InputDecoration(
-              labelText: 'Account',
+              labelText: 'Tài khoản',
               labelStyle: TextStyle(fontSize: 20, color: Colors.black),
               border: InputBorder.none,
             ),
