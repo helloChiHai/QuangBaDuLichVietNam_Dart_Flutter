@@ -21,17 +21,17 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
   String? imagePath;
   final ImagePicker _imagePicker = ImagePicker();
 
-  // Future<void> _pickImage() async {
-  //   final PickedFile? pickedFile =
-  //       await _imagePicker.getImage(source: ImageSource.gallery);
+  Future<void> _pickImage() async {
+    final PickedFile? pickedFile =
+        await _imagePicker.getImage(source: ImageSource.gallery);
 
-  //   if (pickedFile != null) {
-  //     setState(() {
-  //       isCheckUploadImg = true;
-  //       imagePath = pickedFile.path;
-  //     });
-  //   }
-  // }
+    if (pickedFile != null) {
+      setState(() {
+        isCheckUploadImg = true;
+        imagePath = pickedFile.path;
+      });
+    }
+  }
 
   Future<String> convertImageToBase64(File imageFile) async {
     List<int> imageBytes = await imageFile.readAsBytes();
@@ -201,7 +201,7 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
                     )
                   : GestureDetector(
                       onTap: () {
-                        // _pickImage();
+                        _pickImage();
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
