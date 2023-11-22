@@ -33,6 +33,111 @@ const checkMongoDBConnection = () => {
 checkMongoDBConnection();
 
 // ========================== ADMIN =================================================
+
+// thêm địa điểm du lịch
+app.post("/addTouristAttraction", async (req, res) => {
+  try {
+    const {
+      idRegion,
+      idProvines,
+      nameTourist,
+      typeTourist,
+      address,
+      ticket,
+      imgTourist,
+      touristIntroduction,
+      rightTime,
+      titleStoryStory,
+      contentStoryStory,
+      avatarHistory,
+      imgHistory,
+      videoHistory,
+      titleCulture,
+      contentCulture,
+      imgCulture,
+      videoCulture,
+      nameDish,
+      addressDish,
+      imgDish,
+      dishIntroduction,
+      comment,
+    } = req.body;
+
+    const region = await Region.findOne({ idRegion: idRegion });
+
+    if (!region) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Không tìm thấy khu vực" });
+    }
+
+    let province = region.provinces.find((prov) => prov.idProvines === idProvines);
+
+    if (!province) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Không tìm thấy địa điểm" });
+    }
+
+    const idHistoryStory = `HIS_${uuidv4()}`;
+    const history = [
+      {
+        idHistoryStory,
+        titleStoryStory,
+        contentStoryStory,
+        avatarHistory,
+        imgHistory,
+        videoHistory,
+      },
+    ];
+
+    const idCulture = `CUL_${uuidv4()}`;
+    const culture = [
+      {
+        idCulture,
+        titleCulture,
+        contentCulture,
+        imgCulture,
+        videoCulture,
+      },
+    ];
+
+    const idDish = `SPD_${uuidv4()}`;
+    const specialtyDish = [
+      {
+        idDish,
+        nameDish,
+        addressDish,
+        imgDish,
+        dishIntroduction,
+      },
+    ];
+
+    const idTourist = `TA_${uuidv4()}`;
+    const newTouristAttraction = {
+      idTourist,
+      nameTourist,
+      typeTourist,
+      address,
+      ticket,
+      imgTourist,
+      touristIntroduction,
+      rightTime,
+      history,
+      culture,
+      specialtyDish,
+      comment,
+    };
+    province.touristAttraction.push(newTouristAttraction);
+
+    await region.save();
+    res.status(201).json({ success: true, message: "Thêm thành công" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // đăng nhập
 app.post("/loginAdmin", async (req, res) => {
   try {
@@ -63,15 +168,7 @@ app.post("/loginAdmin", async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
 //=====================================================================================================
-
 
 //=============================== USER =========================================================
 
@@ -92,7 +189,7 @@ app.get("/filterTypeTouist", async (req, res) => {
           });
         });
       });
-    } 
+    }
     res.status(200).json({ success: true, data: touristList });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -424,7 +521,7 @@ app.get("/filter-tourist-attractions", async (req, res) => {
           });
         });
       });
-    } 
+    }
     if (idProvines && idRegion) {
       region.forEach((region) => {
         region.provinces.forEach((province) => {
@@ -463,7 +560,7 @@ app.get("/filter-culture", async (req, res) => {
           });
         });
       });
-    } 
+    }
     if (idProvines && idRegion) {
       region.forEach((region) => {
         region.provinces.forEach((province) => {
@@ -502,7 +599,7 @@ app.get("/filter-specialDish", async (req, res) => {
           });
         });
       });
-    } 
+    }
     if (idProvines && idRegion) {
       region.forEach((region) => {
         region.provinces.forEach((province) => {
@@ -541,7 +638,7 @@ app.get("/filter-history", async (req, res) => {
           });
         });
       });
-    } 
+    }
     if (idProvines && idRegion) {
       region.forEach((region) => {
         region.provinces.forEach((province) => {
@@ -851,8 +948,8 @@ app.get("/totalTouristAttraction", async (req, res) => {
       });
     });
     const totalAttractions = parseInt(tatCaDiaDiemDuLich.length);
-    console.log(typeof(totalAttractions));
-    res.status(200).json({ success: true, data: totalAttractions});
+    console.log(typeof totalAttractions);
+    res.status(200).json({ success: true, data: totalAttractions });
   } catch (error) {
     console.log(e);
     res.status(500).json({
@@ -1156,7 +1253,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// tạo tài khoảng
+// tạo tài khoản
 app.post("/createAccount", async (req, res) => {
   try {
     const { email, password, name, imgCus, address, birthday, role } = req.body;

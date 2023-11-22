@@ -91,7 +91,7 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text(
-              'Danh Sách địa điểm du lịch',
+              'Quản lý địa điểm du lịch',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
@@ -103,7 +103,19 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text(
-              'Danh sách người dùng',
+              'Quản lý người dùng',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+              ),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text(
+              'Cài đặt',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,

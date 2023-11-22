@@ -7,7 +7,11 @@ import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTour
 import 'package:appadminquangbadulich/homeAdmin/screens/homeAdmin_page.dart';
 import 'package:appadminquangbadulich/loginAdmin/bloc/loginAdmin_bloc.dart';
 import 'package:appadminquangbadulich/loginAdmin/screens/loginAdmin_page.dart';
+import 'package:appadminquangbadulich/province/bloc/province_bloc.dart';
 import 'package:appadminquangbadulich/repositories/adminRepository.dart';
+import 'package:appadminquangbadulich/searchTouristAttraction/srceens/searchTouristAttraction_page.dart';
+import 'package:appadminquangbadulich/showFilterAllTourist/bloc/filterTourist_bloc.dart';
+import 'package:appadminquangbadulich/showFilterAllTourist/screens/showAllTouristAttraction_page.dart';
 import 'package:appadminquangbadulich/totalTouristAttraction/bloc/totalTouristAttraction_bloc.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +26,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/detail_touriestAttraction_about': (context) => DetailTouristAttraction_AboutPage(),
+        '/searchTouristAttraction': (context) => SearchTouristAttractionPage(),
+        '/showAllTouristAttraction': (context) => ShowAllTouristAttraction(),
+        '/detail_touriestAttraction_about': (context) =>
+            DetailTouristAttraction_AboutPage(),
         '/homeAdmin': (context) => HomeAdminPage(),
         '/loginAdmin': (context) => LoginAdminPage(),
       },
@@ -34,6 +41,16 @@ class MyApp extends StatelessWidget {
 void main() {
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider<ProvinceBloc>(
+        create: (context) => ProvinceBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
+      BlocProvider<FilterTouristBloc>(
+        create: (context) => FilterTouristBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
       BlocProvider<TotalTouristAttractionBloc>(
         create: (context) => TotalTouristAttractionBloc(
           adminRepository: AdminRepository(),

@@ -13,13 +13,17 @@ class PlayVideoWidget extends StatefulWidget {
 class _PlayVideoWidgetState extends State<PlayVideoWidget> {
   late VideoPlayerController _controller;
 
+  late String videoPath;
+
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset(widget.videoPath);
-      // ..initialize().then((_) {
-      //   setState(() {});
-      // });
+    videoPath = widget.videoPath;
+    print(videoPath);
+    _controller = VideoPlayerController.asset(videoPath)
+      ..initialize().then((_) {
+        setState(() {});
+      });
   }
 
   void _playVideo() {
@@ -35,12 +39,14 @@ class _PlayVideoWidgetState extends State<PlayVideoWidget> {
   }
 
   void _seekBackward() {
-    final newPosition = _controller.value.position - const Duration(seconds: 10);
+    final newPosition =
+        _controller.value.position - const Duration(seconds: 10);
     _controller.seekTo(newPosition);
   }
 
   void _seekForward() {
-    final newPosition = _controller.value.position + const Duration(seconds: 10);
+    final newPosition =
+        _controller.value.position + const Duration(seconds: 10);
     _controller.seekTo(newPosition);
   }
 

@@ -2,11 +2,62 @@ import 'dart:convert';
 
 import 'package:appadminquangbadulich/model/adminModel.dart';
 import 'package:appadminquangbadulich/model/commentModel.dart';
+import 'package:appadminquangbadulich/model/provinceModel.dart';
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:http/http.dart' as http;
 
 class AdminRepository {
   String urlMain = 'http://192.168.243.214:3090';
+
+    // LẤY TẤT CẢ CÁC TỈNH THÀNH PHỐ
+  Future<List<ProvinceModel>> getAllProvinces() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$urlMain/getAllProvinces'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final provinceList = data['data'] as List<dynamic>;
+        final province = provinceList
+            .map((provinceData) => ProvinceModel.fromJson(provinceData))
+            .toList();
+        return province;
+      } else {
+        throw Exception('Failed to fetch province: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error while fetching province: $e');
+      throw Exception('Error while fetching province: $e');
+    }
+  }
+
+    // LỌC ĐỊA ĐIỂM THEO idRegion, idProvines
+  Future<List<TouristAttractionModel>>
+      filterTouristAttractionByIdRegionIdProvines(
+          String? idRegion, String? idProvines) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '$urlMain/filter-tourist-attractions?idRegion=$idRegion&idProvines=$idProvines'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final touristList = data['data'] as List<dynamic>;
+        final touristAttractions = touristList
+            .map((cultureData) => TouristAttractionModel.fromJson(cultureData))
+            .toList();
+        return touristAttractions;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy thông tin Culture: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Lỗi: $e');
+    }
+  }
 
   // HIỂN THỊ TẤT CẢ BÌNH LUẬN
   Future<List<CommentModel>> getAllCommentByIdTourist(String idTourist) async {
