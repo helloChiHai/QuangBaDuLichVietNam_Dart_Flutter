@@ -180,28 +180,34 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                           ),
                         ),
                         const SizedBox(width: 15),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 152, 203, 244),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Row(
-                            children: [
-                              Text(
-                                'Thêm địa điểm',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed('/addTouristAttraction');
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 152, 203, 244),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Row(
+                              children: [
+                                Text(
+                                  'Thêm địa điểm',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  ),
                                 ),
-                              ),
-                              Icon(
-                                Icons.add,
-                                color: Colors.black,
-                                size: 30,
-                              ),
-                            ],
+                                Icon(
+                                  Icons.add,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

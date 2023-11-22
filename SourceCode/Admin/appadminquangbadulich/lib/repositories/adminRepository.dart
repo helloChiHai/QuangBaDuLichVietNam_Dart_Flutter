@@ -9,7 +9,74 @@ import 'package:http/http.dart' as http;
 class AdminRepository {
   String urlMain = 'http://192.168.243.214:3090';
 
-    // LẤY TẤT CẢ CÁC TỈNH THÀNH PHỐ
+  // THÊM ĐỊA ĐIỂM DU LỊCH
+  Future<int> addTouristAttraction(
+    String idRegion,
+    String idProvines,
+    String nameTourist,
+    String typeTourist,
+    String address,
+    String ticket,
+    String imgTourist,
+    String touristIntroduction,
+    String rightTime,
+    String titleStoryStory,
+    String contentStoryStory,
+    String avatarHistory,
+    String imgHistory,
+    String videoHistory,
+    String titleCulture,
+    String contentCulture,
+    String imgCulture,
+    String videoCulture,
+    String nameDish,
+    String addressDish,
+    String imgDish,
+    String dishIntroduction,
+    String comment,
+  ) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$urlMain/addTouristAttraction'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "idRegion": idRegion,
+          "idProvines": idProvines,
+          "nameTourist": nameTourist,
+          "typeTourist": typeTourist,
+          "address": address,
+          "ticket": ticket,
+          "imgTourist": imgTourist,
+          "touristIntroduction": touristIntroduction,
+          "rightTime": rightTime,
+          "titleStoryStory": titleStoryStory,
+          "contentStoryStory": contentStoryStory,
+          "avatarHistory": avatarHistory,
+          "imgHistory": imgHistory,
+          "videoHistory": videoHistory,
+          "titleCulture": titleCulture,
+          "contentCulture": contentCulture,
+          "imgCulture": imgCulture,
+          "videoCulture": videoCulture,
+          "nameDish": nameDish,
+          "addressDish": addressDish,
+          "imgDish": imgDish,
+          "dishIntroduction": dishIntroduction,
+          "comment": comment,
+        }),
+      );
+      if (response.statusCode == 201) {
+        return 1; // thêm đại điểm du lịch thành công
+      } else {
+        return 0; // thêm đại điểm du lịch thất bại
+      }
+    } catch (e) {
+      print('lỗi trong quá trình thêm đại điểm du lịch: $e');
+      return 2; // lỗi trong quá trình thêm đại điểm du lịch
+    }
+  }
+
+  // LẤY TẤT CẢ CÁC TỈNH THÀNH PHỐ
   Future<List<ProvinceModel>> getAllProvinces() async {
     try {
       final response = await http.get(
@@ -32,7 +99,7 @@ class AdminRepository {
     }
   }
 
-    // LỌC ĐỊA ĐIỂM THEO idRegion, idProvines
+  // LỌC ĐỊA ĐIỂM THEO idRegion, idProvines
   Future<List<TouristAttractionModel>>
       filterTouristAttractionByIdRegionIdProvines(
           String? idRegion, String? idProvines) async {
@@ -208,9 +275,8 @@ class AdminRepository {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-       final totalTourist = data['data'];
-return totalTourist;
-
+        final totalTourist = data['data'];
+        return totalTourist;
       } else {
         throw Exception(
             'Failed to fetch tourist attraction: ${response.reasonPhrase}');
