@@ -33,7 +33,7 @@ class AdminRepository {
     String addressDish,
     String imgDish,
     String dishIntroduction,
-    String comment,
+    List comment,
   ) async {
     try {
       final response = await http.post(
