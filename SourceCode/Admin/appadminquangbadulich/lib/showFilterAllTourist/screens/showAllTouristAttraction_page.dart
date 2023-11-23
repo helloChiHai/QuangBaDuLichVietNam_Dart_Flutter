@@ -182,8 +182,8 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                         const SizedBox(width: 15),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context)
-                                .pushNamed('/addTouristAttraction');
+                            // Navigator.of(context)
+                            //     .pushNamed('/addTouristAttraction');
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(

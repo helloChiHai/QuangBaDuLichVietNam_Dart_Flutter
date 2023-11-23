@@ -1,3 +1,4 @@
+import 'package:appadminquangbadulich/homeAdmin/screens/homeAdmin_page.dart';
 import 'package:appadminquangbadulich/loginAdmin/bloc/loginAdmin_bloc.dart';
 import 'package:appadminquangbadulich/loginAdmin/bloc/loginAdmin_state.dart';
 import 'package:appadminquangbadulich/loginAdmin/screens/loginAdmin_form.dart';
@@ -22,7 +23,7 @@ class LoginAdminPage extends StatelessWidget {
               ),
               backgroundColor: Colors.green,
             ));
-            Navigator.of(context).pushNamed('/homeAdmin');
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeAdminPage(),));
           } else if (state is LoginAdminFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(

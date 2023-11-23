@@ -1,8 +1,5 @@
 import 'dart:math';
 
-import 'package:appadminquangbadulich/totalTouristAttraction/bloc/totalTouristAttraction_bloc.dart';
-import 'package:appadminquangbadulich/totalTouristAttraction/bloc/totalTouristAttraction_event.dart';
-import 'package:appadminquangbadulich/totalTouristAttraction/bloc/totalTouristAttraction_state.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_event.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_state.dart';
@@ -22,7 +19,7 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
     super.initState();
 
     context.read<TouristAttractionBloc>().add(FetchTouristAttraction());
-    context.read<TotalTouristAttractionBloc>().add(ToTalTouristAttraction());
+    // context.read<TotalTouristAttractionBloc>().add(ToTalTouristAttraction());
   }
 
   @override
@@ -55,33 +52,33 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                BlocBuilder<TotalTouristAttractionBloc,
-                    TotalTouristAttractionState>(
-                  builder: (context, state) {
-                    if (state is TotalTouristAttractionLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is TotalTouristAttractionLoaded) {
-                      final touristAttractions = state.totaltouristAttraction;
-                      return Text(
-                        'Tổng số địa điểm: $touristAttractions',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      );
-                    } else if (state is TotalTouristAttractionFailure) {
-                      return Text(
-                        'Tổng số địa điểm: ${state.error}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      );
-                    }
-                    return Container();
-                  },
-                ),
-                const SizedBox(height: 15),
+                // BlocBuilder<TotalTouristAttractionBloc,
+                //     TotalTouristAttractionState>(
+                //   builder: (context, state) {
+                //     if (state is TotalTouristAttractionLoading) {
+                //       return const Center(child: CircularProgressIndicator());
+                //     } else if (state is TotalTouristAttractionLoaded) {
+                //       final touristAttractions = state.totaltouristAttraction;
+                //       return Text(
+                //         'Tổng số địa điểm: $touristAttractions',
+                //         style: const TextStyle(
+                //           fontSize: 20,
+                //           color: Colors.black,
+                //         ),
+                //       );
+                //     } else if (state is TotalTouristAttractionFailure) {
+                //       return Text(
+                //         'Tổng số địa điểm: ${state.error}',
+                //         style: const TextStyle(
+                //           fontSize: 20,
+                //           color: Colors.black,
+                //         ),
+                //       );
+                //     }
+                //     return Container();
+                //   },
+                // ),
+                // const SizedBox(height: 15),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed('/showAllTouristAttraction');
@@ -215,33 +212,33 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                BlocBuilder<TotalTouristAttractionBloc,
-                    TotalTouristAttractionState>(
-                  builder: (context, state) {
-                    if (state is TotalTouristAttractionLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is TotalTouristAttractionLoaded) {
-                      final touristAttractions = state.totaltouristAttraction;
-                      return Text(
-                        'Tổng số địa điểm: $touristAttractions',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      );
-                    } else if (state is TotalTouristAttractionFailure) {
-                      return Text(
-                        'Tổng số địa điểm: ${state.error}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      );
-                    }
-                    return Container();
-                  },
-                ),
-                const SizedBox(height: 15),
+                // BlocBuilder<TotalTouristAttractionBloc,
+                //     TotalTouristAttractionState>(
+                //   builder: (context, state) {
+                //     if (state is TotalTouristAttractionLoading) {
+                //       return const Center(child: CircularProgressIndicator());
+                //     } else if (state is TotalTouristAttractionLoaded) {
+                //       final touristAttractions = state.totaltouristAttraction;
+                //       return Text(
+                //         'Tổng số địa điểm: $touristAttractions',
+                //         style: const TextStyle(
+                //           fontSize: 20,
+                //           color: Colors.black,
+                //         ),
+                //       );
+                //     } else if (state is TotalTouristAttractionFailure) {
+                //       return Text(
+                //         'Tổng số địa điểm: ${state.error}',
+                //         style: const TextStyle(
+                //           fontSize: 20,
+                //           color: Colors.black,
+                //         ),
+                //       );
+                //     }
+                //     return Container();
+                //   },
+                // ),
+                // const SizedBox(height: 15),
                 const Text(
                   'Danh sách các địa điểm',
                   style: TextStyle(
