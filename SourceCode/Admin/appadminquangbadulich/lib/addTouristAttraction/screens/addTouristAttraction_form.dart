@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:appadminquangbadulich/addTouristAttraction/bloc/addTouristAttraction_bloc.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,24 +17,18 @@ class AddTouristAttractionForm extends StatefulWidget {
 }
 
 class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
-  FilePicker? filePickerVideoCulture;
-  FilePicker? filePickerVideoHistory;
   final ImagePicker _imagePickerTouristAttraction = ImagePicker();
   final ImagePicker _imagePickerAvatarHistory = ImagePicker();
   final ImagePicker _imagePickerimgHistory = ImagePicker();
   final ImagePicker _imagePickerimgCulture = ImagePicker();
   final ImagePicker _imagePickerimgDish = ImagePicker();
 
-  bool isCheckUploadfileVideoPickerResultCulture = false;
-  bool isCheckUploadfileVideoPickerResultHistory = false;
   bool isCheckUploadImgTouristAttraction = false;
   bool isCheckUploadImgAvatarHistory = false;
   bool isCheckUploadImgimgHistory = false;
   bool isCheckUploadImgimgCulture = false;
   bool isCheckUploadImgimgDish = false;
 
-  String? videoPathfilePickerResultCulture;
-  String? videoPathfilePickerResultHistory;
   String? imagePathTouristAttraction;
   String? imagePathAvatarHistory;
   String? imagePathimgHistory;
@@ -58,38 +51,14 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
   String nameDish = '';
   String addressDish = '';
   String dishIntroduction = '';
+  // link đường dẫn
+  String linkVideoHistory = '';
+  String linkVideoCulture = '';
   List? comment;
 
   @override
   void initState() {
     super.initState();
-
-    // Initialize your file pickers here
-    filePickerVideoCulture = FilePicker.platform;
-    filePickerVideoHistory = FilePicker.platform;
-  }
-
-  Future<void> _pickVideo(FilePicker filePicker, String type) async {
-    try {
-      FilePickerResult? pickedFile =
-          await filePicker.pickFiles(type: FileType.video);
-
-      if (pickedFile != null) {
-        if (type == 'videoHistory') {
-          setState(() {
-            isCheckUploadfileVideoPickerResultHistory = true;
-            videoPathfilePickerResultHistory = pickedFile.files.single.path;
-          });
-        } else if (type == 'videoCulture') {
-          setState(() {
-            isCheckUploadfileVideoPickerResultCulture = true;
-            videoPathfilePickerResultCulture = pickedFile.files.single.path;
-          });
-        }
-      }
-    } catch (e) {
-      print('Error picking video: $e');
-    }
   }
 
   Future<void> _pickImage(ImagePicker imagePicker, String type) async {
@@ -142,10 +111,6 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
       return '';
     }
 
-    final base64DataVideoCulture =
-        await getBase64Data(videoPathfilePickerResultCulture);
-    final base64DataHistory =
-        await getBase64Data(videoPathfilePickerResultHistory);
     final base64DataTouristAttraction =
         await getBase64Data(imagePathTouristAttraction);
     final base64DataAvatarHistory = await getBase64Data(imagePathAvatarHistory);
@@ -168,11 +133,11 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
         contentStoryStory: contentStoryStory,
         avatarHistory: base64DataAvatarHistory,
         imgHistory: base64DataimgHistory,
-        videoHistory: base64DataHistory,
+        videoHistory: linkVideoHistory,
         titleCulture: titleCulture,
         contentCulture: contentCulture,
         imgCulture: base64DataimgCulture,
-        videoCulture: base64DataVideoCulture,
+        videoCulture: linkVideoCulture,
         nameDish: nameDish,
         addressDish: addressDish,
         imgDish: base64DataimgDish,
@@ -662,7 +627,7 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Video của sự kiện(nếu có)',
+              'Link video của sự kiện(nếu có)',
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.black,
@@ -670,54 +635,65 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
               textAlign: TextAlign.left,
             ),
             const SizedBox(height: 10),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isCheckUploadfileVideoPickerResultHistory =
-                      !isCheckUploadfileVideoPickerResultHistory;
-                });
-              },
-              child: isCheckUploadfileVideoPickerResultHistory
-                  ? Center(
-                      child: Container(
-                        height: 250,
-                        width: 250,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(15),
-                          image: isCheckUploadfileVideoPickerResultHistory &&
-                                  imagePathimgHistory != null
-                              ? DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: FileImage(File(imagePathimgHistory!)),
-                                )
-                              : null,
-                        ),
-                      ),
-                    )
-                  : GestureDetector(
-                      onTap: () async {
-                        print('object');
-                        await _pickVideo(
-                            filePickerVideoHistory!, 'videoHistory');
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 20,
-                        ),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color.fromRGBO(169, 169, 169, 0.5),
-                        ),
-                        child: const Icon(
-                          Icons.video_camera_back_outlined,
-                          size: 30,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
+            Container(
+              height: 150,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: TextField(
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+                maxLines: null, // Cho phép nhiều dòng
+                expands: true,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                ),
+                onChanged: (value) {
+                  setState(
+                    () {
+                      linkVideoHistory = value;
+                    },
+                  );
+                },
+              ),
             ),
+            // GestureDetector(
+            //   onTap: () {
+            //     setState(() {
+            //       isCheckUploadfileVideoPickerResultHistory =
+            //           !isCheckUploadfileVideoPickerResultHistory;
+            //     });
+            //   },
+            //   child: isCheckUploadfileVideoPickerResultHistory
+            //       ? Base64VideoPlayer(
+            //           base64VideoData: videoPathfilePickerResultCulture!,
+            //         )
+            //       : GestureDetector(
+            //           onTap: () async {
+            //             print('object');
+            //             await _pickVideo(
+            //                 filePickerVideoHistory!, 'videoHistory');
+            //           },
+            //           child: Container(
+            //             padding: const EdgeInsets.symmetric(
+            //               horizontal: 20,
+            //               vertical: 20,
+            //             ),
+            //             decoration: const BoxDecoration(
+            //               shape: BoxShape.circle,
+            //               color: Color.fromRGBO(169, 169, 169, 0.5),
+            //             ),
+            //             child: const Icon(
+            //               Icons.video_camera_back_outlined,
+            //               size: 30,
+            //               color: Colors.black,
+            //             ),
+            //           ),
+            //         ),
+            // ),
             // VĂN HÓA
             const SizedBox(height: 20),
             const Text(
@@ -858,7 +834,7 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Video của văn hóa(nếu có)',
+              'Link video của văn hóa(nếu có)',
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.black,
@@ -882,6 +858,13 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                 ),
+                onChanged: (value) {
+                  setState(
+                    () {
+                      linkVideoCulture = value;
+                    },
+                  );
+                },
               ),
             ),
 

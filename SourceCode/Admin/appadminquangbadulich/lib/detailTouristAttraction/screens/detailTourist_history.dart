@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:appadminquangbadulich/detailTouristAttraction/widgets/displayVideoWidget.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/historyModel.dart';
@@ -24,7 +25,13 @@ class _DetailHistoryState extends State<DetailHistory> {
     hitories = widget.dataHistory;
   }
 
-    Future<Widget> _buildImage(String? img) async {
+  bool isAsset(String url) {
+    // Kiểm tra xem đường dẫn có bắt đầu bằng "assets/" hay không
+    RegExp regExp = RegExp(r'^assets/');
+    return regExp.hasMatch(url);
+  }
+
+  Future<Widget> _buildImage(String? img) async {
     if (img != null && img.isNotEmpty) {
       try {
         List<int> imageBytes = Base64Decoder().convert(img);
@@ -98,7 +105,7 @@ class _DetailHistoryState extends State<DetailHistory> {
               //           fit: BoxFit.cover,
               //         ),
               //       ),
-               FutureBuilder<Widget>(
+              FutureBuilder<Widget>(
                 future: _buildImage(history.imgHistory),
                 builder:
                     (BuildContext context, AsyncSnapshot<Widget> snapshot) {
@@ -112,7 +119,9 @@ class _DetailHistoryState extends State<DetailHistory> {
               const SizedBox(height: 15),
               if (history.videoHistory != null &&
                   history.videoHistory!.isNotEmpty)
-                PlayVideoWidget(videoPath: 'assets/img/${history.videoHistory}')
+                YouTubePlayerWidget(
+                  youtubeVideoUrl: history.videoHistory!,
+                )
               else
                 Container(),
             ],

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:appadminquangbadulich/detailTouristAttraction/widgets/displayVideoWidget.dart';
 import 'package:appadminquangbadulich/model/cultureModel.dart';
 import 'package:flutter/material.dart';
 import '../widgets/playVideo_widget.dart';
@@ -21,6 +22,12 @@ class _DetailCultureState extends State<DetailCulture> {
   void initState() {
     super.initState();
     cultures = widget.dataCulture;
+  }
+
+  bool isAsset(String url) {
+    // Kiểm tra xem đường dẫn có bắt đầu bằng "assets/" hay không
+    RegExp regExp = RegExp(r'^assets/');
+    return regExp.hasMatch(url);
   }
 
   Future<Widget> _buildImage(String? img) async {
@@ -107,7 +114,12 @@ class _DetailCultureState extends State<DetailCulture> {
               //       ),
               if (culture.videoCulture != null &&
                   culture.videoCulture!.isNotEmpty)
-                PlayVideoWidget(videoPath: 'assets/img/${culture.videoCulture}')
+                isAsset(culture.videoCulture!)
+                    ? PlayVideoWidget(
+                        videoPath: 'assets/img/${culture.videoCulture}')
+                    : YouTubePlayerWidget(
+                        youtubeVideoUrl: culture.videoCulture!,
+                      )
               else
                 Container(),
             ],
