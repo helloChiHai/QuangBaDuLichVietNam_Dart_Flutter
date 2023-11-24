@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../bloc/addTouristAttraction_event.dart';
-import 'package:file_picker/file_picker.dart';
 
 class AddTouristAttractionForm extends StatefulWidget {
   AddTouristAttractionForm({super.key});
@@ -18,8 +17,6 @@ class AddTouristAttractionForm extends StatefulWidget {
 }
 
 class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
-  FilePickerResult? fileVideoPickerResultHistory;
-  FilePickerResult? fileVideoPickerResultCutlure;
   final ImagePicker _imagePickerTouristAttraction = ImagePicker();
   final ImagePicker _imagePickerAvatarHistory = ImagePicker();
   final ImagePicker _imagePickerimgHistory = ImagePicker();
@@ -60,29 +57,6 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
   String dishIntroduction = '';
   List? comment;
 
-  Future<void> _pickVideo(String type) async {
-    try {
-      FilePickerResult? pickedFile =
-          await FilePicker.platform.pickFiles(type: FileType.video);
-
-      if (pickedFile != null) {
-        if (type == 'videoHistory') {
-          setState(() {
-            isCheckUploadfileVideoPickerResultHistory = true;
-            videoPathfilePickerResultHistory = pickedFile.files.single.path;
-          });
-        } else if (type == 'videoCulture') {
-          setState(() {
-            isCheckUploadfileVideoPickerResultCulture = true;
-            videoPathfilePickerResultCulture = pickedFile.files.single.path;
-          });
-        }
-      }
-    } catch (e) {
-      print('Error picking video: $e');
-    }
-  }
-
   Future<void> _pickImage(ImagePicker imagePicker, String type) async {
     final PickedFile? pickedFile =
         await imagePicker.getImage(source: ImageSource.gallery);
@@ -117,95 +91,79 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
     }
   }
 
+  // Future<void> _pickVideo(String type) async {
+  //   try {
+  //     FilePickerResult? pickedFile =
+  //         await FilePicker.platform.pickFiles(type: FileType.video);
+
+  //     if (pickedFile != null) {
+  //       if (type == 'videoHistory') {
+  //         setState(() {
+  //           isCheckUploadfileVideoPickerResultHistory = true;
+  //           videoPathfilePickerResultHistory = pickedFile.files.single.path;
+  //         });
+  //       } else if (type == 'videoCulture') {
+  //         setState(() {
+  //           isCheckUploadfileVideoPickerResultCulture = true;
+  //           videoPathfilePickerResultCulture = pickedFile.files.single.path;
+  //         });
+  //       }
+  //     }
+  //   } catch (e) {
+  //     print('Error picking video: $e');
+  //   }
+  // }
+
   Future<String> convertImageToBase64(File imageFile) async {
     List<int> imageBytes = await imageFile.readAsBytes();
     String base64Image = base64Encode(imageBytes);
     return base64Image;
   }
 
-  Future<void> _updateImage() async {
-    if (imagePathTouristAttraction != null &&
-        imagePathAvatarHistory != null &&
-        imagePathimgHistory != null &&
-        imagePathimgCulture != null &&
-        imagePathimgDish != null) {
-      // Chuyển đổi video thành dữ liệu base64
-      // String base64VideoCulture =
-      //     await convertImageToBase64(File(videoPathfilePickerResultCulture!));
-      // String base64VideoHistory =
-      //     await convertImageToBase64(File(videoPathfilePickerResultHistory!));
-      // Chuyển đổi ảnh thành dữ liệu base64
-      String base64DataTouristAttraction =
-          await convertImageToBase64(File(imagePathTouristAttraction!));
-      String base64DataAvatarHistory =
-          await convertImageToBase64(File(imagePathAvatarHistory!));
-      String base64DataimgHistory =
-          await convertImageToBase64(File(imagePathimgHistory!));
-      String base64DataimgCulture =
-          await convertImageToBase64(File(imagePathimgCulture!));
-      String base64DataimgDish =
-          await convertImageToBase64(File(imagePathimgDish!));
-      // Truyền dữ liệu base64 cho sự kiện UpdateImageButtonPressed
-      final updateImageBloc =
-          BlocProvider.of<AddTouristAttractionBloc>(context);
-      updateImageBloc.add(
-        AddTouristAttractionButtonPressed(
-          idRegion: 'MN',
-          idProvines: '53',
-          nameTourist: nameTourist,
-          typeTourist: typeTourist,
-          address: address,
-          ticket: ticket,
-          imgTourist: base64DataTouristAttraction,
-          touristIntroduction: touristIntroduction,
-          rightTime: rightTime,
-          titleStoryStory: titleStoryStory,
-          contentStoryStory: contentStoryStory,
-          avatarHistory: base64DataAvatarHistory,
-          imgHistory: base64DataimgHistory,
-          videoHistory: '',
-          titleCulture: titleCulture,
-          contentCulture: contentCulture,
-          imgCulture: base64DataimgCulture,
-          videoCulture: '',
-          nameDish: nameDish,
-          addressDish: addressDish,
-          imgDish: base64DataimgDish,
-          dishIntroduction: dishIntroduction,
-          comment: [],
-        ),
-      );
-    } else {
-      final updateImageBloc =
-          BlocProvider.of<AddTouristAttractionBloc>(context);
-      updateImageBloc.add(
-        AddTouristAttractionButtonPressed(
-          idRegion: 'MN',
-          idProvines: '53',
-          nameTourist: nameTourist,
-          typeTourist: typeTourist,
-          address: address,
-          ticket: ticket,
-          imgTourist: '',
-          touristIntroduction: touristIntroduction,
-          rightTime: rightTime,
-          titleStoryStory: titleStoryStory,
-          contentStoryStory: contentStoryStory,
-          avatarHistory: '',
-          imgHistory: '',
-          videoHistory: '',
-          titleCulture: titleCulture,
-          contentCulture: contentCulture,
-          imgCulture: '',
-          videoCulture: '',
-          nameDish: nameDish,
-          addressDish: addressDish,
-          imgDish: '',
-          dishIntroduction: dishIntroduction,
-          comment: [],
-        ),
-      );
+  Future<void> createTouristAttraction() async {
+    final updateImageBloc = BlocProvider.of<AddTouristAttractionBloc>(context);
+
+    Future<String> getBase64Data(String? imagePath) async {
+      if (imagePath != null) {
+        return await convertImageToBase64(File(imagePath));
+      }
+      return '';
     }
+
+    final base64DataTouristAttraction =
+        await getBase64Data(imagePathTouristAttraction);
+    final base64DataAvatarHistory = await getBase64Data(imagePathAvatarHistory);
+    final base64DataimgHistory = await getBase64Data(imagePathimgHistory);
+    final base64DataimgCulture = await getBase64Data(imagePathimgCulture);
+    final base64DataimgDish = await getBase64Data(imagePathimgDish);
+
+    updateImageBloc.add(
+      AddTouristAttractionButtonPressed(
+        idRegion: 'MN',
+        idProvines: '53',
+        nameTourist: nameTourist,
+        typeTourist: typeTourist,
+        address: address,
+        ticket: ticket,
+        imgTourist: base64DataTouristAttraction,
+        touristIntroduction: touristIntroduction,
+        rightTime: rightTime,
+        titleStoryStory: titleStoryStory,
+        contentStoryStory: contentStoryStory,
+        avatarHistory: base64DataAvatarHistory,
+        imgHistory: base64DataimgHistory,
+        videoHistory: '',
+        titleCulture: titleCulture,
+        contentCulture: contentCulture,
+        imgCulture: base64DataimgCulture,
+        videoCulture: '',
+        nameDish: nameDish,
+        addressDish: addressDish,
+        imgDish: base64DataimgDish,
+        dishIntroduction: dishIntroduction,
+        comment: [],
+      ),
+    );
   }
 
   @override
@@ -1063,7 +1021,7 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
               margin: const EdgeInsets.only(bottom: 30),
               child: ElevatedButton(
                 onPressed: () {
-                  _updateImage();
+                  createTouristAttraction();
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
