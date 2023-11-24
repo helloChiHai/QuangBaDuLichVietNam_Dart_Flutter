@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:appadminquangbadulich/comment/screens/comment_page.dart';
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +44,34 @@ class _DetailTouristAttractionWidgetState
     super.dispose();
   }
 
+    Future<Widget> _buildImage(String? img) async {
+    if (img != null && img.isNotEmpty) {
+      try {
+        List<int> imageBytes = Base64Decoder().convert(img);
+        return Image.memory(
+          Uint8List.fromList(imageBytes),
+          width: double.infinity,
+          height: double.infinity,
+          fit: BoxFit.cover,
+        );
+      } catch (e) {
+        return Image.asset(
+          'assets/img/${img}',
+          width: double.infinity,
+          height: double.infinity,
+          fit: BoxFit.cover,
+        );
+      }
+    } else {
+      return Image.asset(
+        'assets/img/img_12.png',
+        width: double.infinity,
+        height: double.infinity,
+        fit: BoxFit.cover,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -54,12 +85,23 @@ class _DetailTouristAttractionWidgetState
                 color: Colors.red,
                 child: Stack(
                   children: [
-                    Image.asset(
-                      'assets/img/${tourist.imgTourist}',
-                      width: double.infinity,
-                      height: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
+                    // Image.asset(
+                    //   'assets/img/${tourist.imgTourist}',
+                    //   width: double.infinity,
+                    //   height: double.infinity,
+                    //   fit: BoxFit.cover,
+                    // ),
+                     FutureBuilder<Widget>(
+                future: _buildImage(tourist.imgTourist),
+                builder:
+                    (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return snapshot.data ?? Container();
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 31),

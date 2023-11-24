@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import '../../model/specialtyDishModel.dart';
@@ -18,6 +21,35 @@ class _DetailSpecialtyDishState extends State<DetailSpecialtyDish> {
   void initState() {
     super.initState();
     ListSpecialtyDish = widget.dataSpecialtyDish;
+  }
+
+  Future<Widget> _buildImage(String? img) async {
+    if (img != null && img.isNotEmpty) {
+      try {
+        List<int> imageBytes = Base64Decoder().convert(img);
+        return SizedBox(
+          height: 250,
+          child: Image.memory(
+            Uint8List.fromList(imageBytes),
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      } catch (e) {
+        return SizedBox(
+          height: 250,
+          child: Image.asset(
+            'assets/img/${img}',
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    } else {
+      return const SizedBox();
+    }
   }
 
   @override
@@ -65,18 +97,29 @@ class _DetailSpecialtyDishState extends State<DetailSpecialtyDish> {
                 ),
               ),
               const SizedBox(height: 15),
-              specialtyDish.imgDish!.isEmpty
-                  ? const SizedBox()
-                  : SizedBox(
-                      width: double.infinity,
-                      height: 250,
-                      child: Image.asset(
-                        'assets/img/${specialtyDish.imgDish}',
-                        width: double.infinity,
-                        height: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+              // specialtyDish.imgDish!.isEmpty
+              //     ? const SizedBox()
+              //     : SizedBox(
+              //         width: double.infinity,
+              //         height: 250,
+              //         child: Image.asset(
+              //           'assets/img/${specialtyDish.imgDish}',
+              //           width: double.infinity,
+              //           height: double.infinity,
+              //           fit: BoxFit.cover,
+              //         ),
+              //       ),
+              FutureBuilder<Widget>(
+                future: _buildImage(specialtyDish.imgDish),
+                builder:
+                    (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return snapshot.data ?? Container();
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
               const SizedBox(height: 30),
             ],
           );

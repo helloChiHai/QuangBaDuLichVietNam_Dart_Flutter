@@ -71,7 +71,7 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
   Future<Widget> _buildImage(String? img) async {
     if (img != null && img.isNotEmpty) {
       try {
-        List<int> imageBytes = Base64Decoder().convert(img!);
+        List<int> imageBytes = Base64Decoder().convert(img);
         return Image.memory(
           Uint8List.fromList(imageBytes),
           width: 200,
@@ -212,8 +212,8 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                         const SizedBox(width: 15),
                         GestureDetector(
                           onTap: () {
-                            // Navigator.of(context)
-                            //     .pushNamed('/addTouristAttraction');
+                            Navigator.of(context)
+                                .pushNamed('/addTouristAttraction');
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(

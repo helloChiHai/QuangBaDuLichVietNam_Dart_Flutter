@@ -24,10 +24,10 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
     // context.read<TotalTouristAttractionBloc>().add(ToTalTouristAttraction());
   }
 
-    Future<Widget> _buildImage(String? img) async {
+  Future<Widget> _buildImage(String? img) async {
     if (img != null && img.isNotEmpty) {
       try {
-        List<int> imageBytes = Base64Decoder().convert(img!);
+        List<int> imageBytes = Base64Decoder().convert(img);
         return Image.memory(
           Uint8List.fromList(imageBytes),
           width: double.infinity,
@@ -106,7 +106,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                 // const SizedBox(height: 15),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/showAllTouristAttraction');
+                    Navigator.of(context)
+                        .pushNamed('/showAllTouristAttraction');
                   },
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,18 +166,18 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: FutureBuilder<Widget>(
-                                          future: _buildImage(touristAttraction.imgTourist),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<Widget> snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.done) {
-                                              return snapshot.data ??
-                                                  Container();
-                                            } else {
-                                              return CircularProgressIndicator();
-                                            }
-                                          },
-                                        ),
+                                        future: _buildImage(
+                                            touristAttraction.imgTourist),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<Widget> snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            return snapshot.data ?? Container();
+                                          } else {
+                                            return const CircularProgressIndicator();
+                                          }
+                                        },
+                                      ),
                                     ),
                                     Positioned(
                                       bottom: 10,
@@ -366,10 +367,8 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
     );
   }
 
-  
   @override
   void dispose() {
     super.dispose();
   }
-
 }

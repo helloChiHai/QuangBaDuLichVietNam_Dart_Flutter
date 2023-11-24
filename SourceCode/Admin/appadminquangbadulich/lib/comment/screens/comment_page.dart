@@ -84,35 +84,6 @@ class _CommentPageState extends State<CommentPage> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          Container(
-            color: Colors.white,
-            height: 55,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  flex: 9,
-                  child: TextField(
-                    controller: contentCommentController,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      hintStyle: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
-                      hintText: 'Bạn đang nghĩ gì á?',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
           BlocBuilder<CommentBloc, CommentState>(
             builder: (context, state) {
               if (state is CommentLoading) {

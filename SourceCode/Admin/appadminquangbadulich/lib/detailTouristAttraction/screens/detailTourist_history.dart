@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import '../../model/historyModel.dart';
@@ -19,6 +22,35 @@ class _DetailHistoryState extends State<DetailHistory> {
   void initState() {
     super.initState();
     hitories = widget.dataHistory;
+  }
+
+    Future<Widget> _buildImage(String? img) async {
+    if (img != null && img.isNotEmpty) {
+      try {
+        List<int> imageBytes = Base64Decoder().convert(img);
+        return SizedBox(
+          height: 250,
+          child: Image.memory(
+            Uint8List.fromList(imageBytes),
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      } catch (e) {
+        return SizedBox(
+          height: 250,
+          child: Image.asset(
+            'assets/img/${img}',
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    } else {
+      return const SizedBox();
+    }
   }
 
   @override
@@ -54,18 +86,29 @@ class _DetailHistoryState extends State<DetailHistory> {
                 ),
               ),
               const SizedBox(height: 15),
-              history.imgHistory!.isEmpty
-                  ? const SizedBox()
-                  : Container(
-                      width: double.infinity,
-                      height: 250,
-                      child: Image.asset(
-                        'assets/img/${history.imgHistory}',
-                        width: double.infinity,
-                        height: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+              // history.imgHistory!.isEmpty
+              //     ? const SizedBox()
+              //     : Container(
+              //         width: double.infinity,
+              //         height: 250,
+              //         child: Image.asset(
+              //           'assets/img/${history.imgHistory}',
+              //           width: double.infinity,
+              //           height: double.infinity,
+              //           fit: BoxFit.cover,
+              //         ),
+              //       ),
+               FutureBuilder<Widget>(
+                future: _buildImage(history.imgHistory),
+                builder:
+                    (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return snapshot.data ?? Container();
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
               const SizedBox(height: 15),
               if (history.videoHistory != null &&
                   history.videoHistory!.isNotEmpty)

@@ -1,3 +1,5 @@
+import 'package:appadminquangbadulich/addTouristAttraction/bloc/addTouristAttraction_bloc.dart';
+import 'package:appadminquangbadulich/addTouristAttraction/screens/addTouristAttraction_page.dart';
 import 'package:appadminquangbadulich/comment/bloc/comment_bloc.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/bloc/bloc_tourist/detailTourist_about_bloc.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
@@ -21,8 +23,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/showAllTouristAttraction': (context) =>
-            ShowAllTouristAttraction(),
+        '/addTouristAttraction': (context) => AddTouristAttractionPage(),
+        '/showAllTouristAttraction': (context) => ShowAllTouristAttraction(),
         '/detail_touriestAttraction_about': (context) =>
             DetailTouristAttraction_AboutPage(),
         '/homeAdmin': (context) => HomeAdminPage(),
@@ -35,6 +37,11 @@ class MyApp extends StatelessWidget {
 void main() {
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider<AddTouristAttractionBloc>(
+        create: (context) => AddTouristAttractionBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
       BlocProvider<FilterTouristBloc>(
         create: (context) => FilterTouristBloc(
           adminRepository: AdminRepository(),
