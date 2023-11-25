@@ -5,7 +5,6 @@ import 'package:appadminquangbadulich/detailTouristAttraction/widgets/displayVid
 import 'package:flutter/material.dart';
 
 import '../../model/historyModel.dart';
-import '../widgets/playVideo_widget.dart';
 
 class DetailHistory extends StatefulWidget {
   final List<HistoryModel> dataHistory;
@@ -23,12 +22,6 @@ class _DetailHistoryState extends State<DetailHistory> {
   void initState() {
     super.initState();
     hitories = widget.dataHistory;
-  }
-
-  bool isAsset(String url) {
-    // Kiểm tra xem đường dẫn có bắt đầu bằng "assets/" hay không
-    RegExp regExp = RegExp(r'^assets/');
-    return regExp.hasMatch(url);
   }
 
   Future<Widget> _buildImage(String? img) async {
@@ -85,6 +78,7 @@ class _DetailHistoryState extends State<DetailHistory> {
                         fontSize: 20,
                       ),
                     ),
+              const SizedBox(height: 10),
               Text(
                 history.contentStoryStory,
                 style: const TextStyle(
@@ -93,18 +87,6 @@ class _DetailHistoryState extends State<DetailHistory> {
                 ),
               ),
               const SizedBox(height: 15),
-              // history.imgHistory!.isEmpty
-              //     ? const SizedBox()
-              //     : Container(
-              //         width: double.infinity,
-              //         height: 250,
-              //         child: Image.asset(
-              //           'assets/img/${history.imgHistory}',
-              //           width: double.infinity,
-              //           height: double.infinity,
-              //           fit: BoxFit.cover,
-              //         ),
-              //       ),
               FutureBuilder<Widget>(
                 future: _buildImage(history.imgHistory),
                 builder:

@@ -1,7 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:appadminquangbadulich/addTouristAttraction/bloc/addTouristAttraction_bloc.dart';
+import 'package:appadminquangbadulich/model/filterRegionModel.dart';
+import 'package:appadminquangbadulich/model/provinceModel.dart';
+import 'package:appadminquangbadulich/province/bloc/province_bloc.dart';
+import 'package:appadminquangbadulich/province/bloc/province_event.dart';
+import 'package:appadminquangbadulich/province/bloc/province_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -56,9 +62,38 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
   String linkVideoCulture = '';
   List? comment;
 
+  final List<FilterReionModel> listItemRegion = [
+    FilterReionModel(idRegion: 'MB', nameRegion: 'Miền Bắc'),
+    FilterReionModel(idRegion: 'MT', nameRegion: 'Miền Trung'),
+    FilterReionModel(idRegion: 'MN', nameRegion: 'Miền Nam'),
+  ];
+
+  StreamSubscription? _subscription;
+  int checkSelectedRegion = 0;
+  String checkSelectedIdRegion = '';
+  String selectedNameRegion = '';
+  String checkSelectedIdProvince = '';
+
+  List<ProvinceModel> itemProvince = [];
+  ProvinceModel? selectedDropDownProvinceItem;
+
   @override
   void initState() {
     super.initState();
+
+    final provinceBloc = context.read<ProvinceBloc>();
+    provinceBloc.add(FetchProvinces());
+
+    _subscription = provinceBloc.stream.listen((state) {
+      if (mounted) {
+        if (state is ProvinceLoaded) {
+          setState(() {
+            itemProvince.clear();
+            itemProvince.addAll(state.provinces);
+          });
+        }
+      }
+    });
   }
 
   Future<void> _pickImage(ImagePicker imagePicker, String type) async {
@@ -118,10 +153,13 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
     final base64DataimgCulture = await getBase64Data(imagePathimgCulture);
     final base64DataimgDish = await getBase64Data(imagePathimgDish);
 
+    print(checkSelectedIdRegion);
+    print(checkSelectedIdProvince);
+
     updateImageBloc.add(
       AddTouristAttractionButtonPressed(
-        idRegion: 'MN',
-        idProvines: '53',
+        idRegion: checkSelectedIdRegion,
+        idProvines: checkSelectedIdProvince,
         nameTourist: nameTourist,
         typeTourist: typeTourist,
         address: address,
@@ -159,6 +197,105 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 20),
+            const Text(
+              'Miền',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 45,
+              width: double.infinity,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: listItemRegion.length,
+                itemBuilder: (context, index) {
+                  final region = listItemRegion[index];
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        checkSelectedRegion = index;
+                        checkSelectedIdRegion = region.idRegion;
+                        selectedNameRegion = region.nameRegion;
+                      });
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                        right: 10,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: checkSelectedRegion == index
+                            ? Colors.amber
+                            : Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        region.nameRegion,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const Text(
+              'Tỉnh/ thành phố',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Container(
+              width: 150,
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.amber,
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 5,
+              ),
+              child: DropdownButton<ProvinceModel>(
+                isExpanded: true,
+                menuMaxHeight: 150,
+                value: selectedDropDownProvinceItem,
+                items: itemProvince.map((ProvinceModel item) {
+                  return DropdownMenuItem(
+                    value: item,
+                    child: Text(
+                      item.nameprovince,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  );
+                }).toList(),
+                onChanged: (ProvinceModel? newValue) {
+                  setState(() {
+                    selectedDropDownProvinceItem = newValue!;
+                    checkSelectedIdProvince =
+                        selectedDropDownProvinceItem!.idprovince;
+                  });
+                },
+              ),
+            ),
             const SizedBox(height: 20),
             const Text(
               'Tên địa điểm',
@@ -1066,5 +1203,11 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 }

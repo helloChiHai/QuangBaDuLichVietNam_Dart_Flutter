@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:appadminquangbadulich/detailTouristAttraction/widgets/displayVideoWidget.dart';
 import 'package:appadminquangbadulich/model/cultureModel.dart';
 import 'package:flutter/material.dart';
-import '../widgets/playVideo_widget.dart';
 
 class DetailCulture extends StatefulWidget {
   final List<CultureModel> dataCulture;
@@ -22,12 +21,6 @@ class _DetailCultureState extends State<DetailCulture> {
   void initState() {
     super.initState();
     cultures = widget.dataCulture;
-  }
-
-  bool isAsset(String url) {
-    // Kiểm tra xem đường dẫn có bắt đầu bằng "assets/" hay không
-    RegExp regExp = RegExp(r'^assets/');
-    return regExp.hasMatch(url);
   }
 
   Future<Widget> _buildImage(String? img) async {
@@ -82,6 +75,7 @@ class _DetailCultureState extends State<DetailCulture> {
                   fontSize: 20,
                 ),
               ),
+             const SizedBox(height: 10),
               Text(
                 culture.contentCulture,
                 style: const TextStyle(
@@ -89,6 +83,7 @@ class _DetailCultureState extends State<DetailCulture> {
                   fontSize: 20,
                 ),
               ),
+             const SizedBox(height: 15),
               FutureBuilder<Widget>(
                 future: _buildImage(culture.imgCulture),
                 builder:
@@ -100,26 +95,12 @@ class _DetailCultureState extends State<DetailCulture> {
                   }
                 },
               ),
-              // culture.imgCulture!.isEmpty
-              //     ? const SizedBox()
-              //     : Container(
-              //         width: double.infinity,
-              //         height: 250,
-              //         child: Image.asset(
-              //           'assets/img/${culture.imgCulture}',
-              //           width: double.infinity,
-              //           height: double.infinity,
-              //           fit: BoxFit.cover,
-              //         ),
-              //       ),
+             const SizedBox(height: 15),
               if (culture.videoCulture != null &&
                   culture.videoCulture!.isNotEmpty)
-                isAsset(culture.videoCulture!)
-                    ? PlayVideoWidget(
-                        videoPath: 'assets/img/${culture.videoCulture}')
-                    : YouTubePlayerWidget(
-                        youtubeVideoUrl: culture.videoCulture!,
-                      )
+                YouTubePlayerWidget(
+                  youtubeVideoUrl: culture.videoCulture!,
+                )
               else
                 Container(),
             ],
