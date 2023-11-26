@@ -2,8 +2,12 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:appadminquangbadulich/comment/screens/comment_page.dart';
+import 'package:appadminquangbadulich/deleteTouristAttraction/bloc/deleteTouristAttraction_bloc.dart';
+import 'package:appadminquangbadulich/deleteTouristAttraction/bloc/deleteTouristAttraction_event.dart';
+import 'package:appadminquangbadulich/deleteTouristAttraction/bloc/deleteTouristAttraction_state.dart';
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../screens/detailTourist_content.dart';
 import '../screens/detailTourist_culture.dart';
@@ -114,22 +118,56 @@ class _DetailTouristAttractionWidgetState
                               icon: const Icon(Icons.arrow_back, size: 30),
                             ),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: IconButton(
-                              onPressed: () {
-                                setState(() {});
+                          BlocListener<DeleteTouristAttractionBloc,
+                                  DeleteTouristAttractionState>(
+                              listener: (context, state) {
+                                if (state is DeleteTouristAttractionSuccess) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        'Xóa địa điểm thành công',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.green,
+                                    ),
+                                  );
+                                  Future.delayed(const Duration(seconds: 1), () {
+                                    Navigator.of(context).pushNamed('/homeAdmin');
+                                  });
+                                } else if (state
+                                    is DeleteTouristAttractionFailure) {
+                                  print(state.error);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Xóa địa điểm thất bại: ${state.error}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
                               },
-                              icon: const Icon(
-                                Icons.favorite,
-                                size: 30,
-                                color: Colors.red,
-                              ),
-                            ),
-                          )
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: IconButton(
+                                  onPressed: () {
+                                    showPopupMenu(context);
+                                  },
+                                  icon: const Icon(
+                                    Icons.menu,
+                                    size: 30,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              )),
                         ],
                       ),
                     ),
@@ -381,6 +419,76 @@ class _DetailTouristAttractionWidgetState
           ),
         ],
       ),
+    );
+  }
+
+  void showPopupMenu(BuildContext context) {
+    final RenderBox overlay =
+        Overlay.of(context).context.findRenderObject() as RenderBox;
+
+    // Lấy kích thước màn hình
+    final screenSize = MediaQuery.of(context).size;
+
+    // Tính toán vị trí để hiển thị PopupMenuButton bên phải
+    final menuPosition = RelativeRect.fromLTRB(
+      screenSize.width - 230,
+      // top
+      overlay.localToGlobal(Offset.zero).dy,
+      // left
+      screenSize.width,
+      // bottom
+      overlay.localToGlobal(overlay.size.bottomLeft(Offset.zero)).dy,
+    );
+
+    showMenu(
+      context: context,
+      position: menuPosition,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      items: [
+        PopupMenuItem(
+          child: const ListTile(
+            leading: Icon(
+              Icons.edit,
+              size: 30,
+            ),
+            title: Text(
+              'Sửa',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          onTap: () {
+            print('Đã chọn Sửa');
+            Navigator.pop(context); // Đóng menu
+          },
+        ),
+        PopupMenuItem(
+          child: const ListTile(
+            leading: Icon(
+              Icons.delete,
+              size: 30,
+            ),
+            title: Text(
+              'Xóa',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          onTap: () {
+            context.read<DeleteTouristAttractionBloc>().add(
+                  DeleteTouristAttractionButtonPress(
+                    touristId: tourist.idTourist,
+                  ),
+                );
+          },
+        ),
+      ],
     );
   }
 }

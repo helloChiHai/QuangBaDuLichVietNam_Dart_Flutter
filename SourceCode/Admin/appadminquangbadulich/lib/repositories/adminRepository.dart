@@ -9,6 +9,27 @@ import 'package:http/http.dart' as http;
 class AdminRepository {
   String urlMain = 'http://192.168.243.214:3090';
 
+  Future<int> deleteTouristAttraction(String touristId) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('$urlMain/deleteTouristAttraction?touristId=$touristId'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        print('Xóa touristAttraction thành công.');
+        return 1;
+      } else if (response.statusCode == 404) {
+        print('Không tìm thấy touristAttraction với touristId này.');
+        return 0;
+      } else {
+        print('Lỗi server: ${response.statusCode}');
+        return -1;
+      }
+    } catch (e) {
+      throw Exception('Lỗi khi xóa bình luận: $e');
+    }
+  }
+
   // THÊM ĐỊA ĐIỂM DU LỊCH
   Future<int> addTouristAttraction(
     String idRegion,

@@ -34,6 +34,35 @@ checkMongoDBConnection();
 
 // ========================== ADMIN =================================================
 
+// xóa địa điểm du lịch
+app.delete("/deleteTouristAttraction", async (req, res) => {
+  const idTourist = req.query.touristId;
+
+  try {
+    // Tìm region có provinces chứa touristAttraction có idTourist cần xóa
+    const region = await Region.findOne({ "provinces.touristAttraction.idTourist": idTourist });
+
+    if (!region) {
+      return res.status(404).json({ message: "Không tìm thấy touristAttraction với idTourist này." });
+    }
+
+    // Lọc và cập nhật provinces chỉ giữ lại các touristAttraction không có idTourist cần xóa
+    region.provinces.forEach(province => {
+      province.touristAttraction = province.touristAttraction.filter(
+        tourist => tourist.idTourist !== idTourist
+      );
+    });
+
+    // Lưu region đã được cập nhật
+    await region.save();
+
+    res.json({ message: "Xóa touristAttraction thành công." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Lỗi server." });
+  }
+});
+
 // thêm địa điểm du lịch
 app.post("/addTouristAttraction", async (req, res) => {
   try {
@@ -71,7 +100,9 @@ app.post("/addTouristAttraction", async (req, res) => {
         .json({ success: false, message: "Không tìm thấy khu vực" });
     }
 
-    let province = region.provinces.find((prov) => prov.idProvines === idProvines);
+    let province = region.provinces.find(
+      (prov) => prov.idProvines === idProvines
+    );
 
     if (!province) {
       return res

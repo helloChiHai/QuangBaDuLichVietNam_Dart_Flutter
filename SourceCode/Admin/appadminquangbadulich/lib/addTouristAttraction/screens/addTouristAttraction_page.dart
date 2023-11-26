@@ -42,6 +42,9 @@ class AddTouristAttractionPage extends StatelessWidget {
                 backgroundColor: Colors.green,
               ),
             );
+            Future.delayed(const Duration(seconds: 1), () {
+              Navigator.of(context).pushNamed('/homeAdmin');
+            });
           }
           if (state is AddTouristAttractionFailure) {
             print(state.error);
