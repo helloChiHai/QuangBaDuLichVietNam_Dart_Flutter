@@ -176,6 +176,7 @@ class _DetailFilterTypeTouristState extends State<DetailFilterTypeTourist> {
                                   'aboutTouristData': touristAttraction,
                                   'idCus': idCus,
                                 });
+                            print(idCus);
                           },
                           child: Container(
                             decoration: BoxDecoration(
