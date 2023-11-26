@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +29,35 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
     super.initState();
     idCus = widget.idCus;
     context.read<SpecialDishBloc>().add(FetchSpecialDish());
+  }
+
+  Future<Widget> _buildImage(String? img) async {
+    if (img != null && img.isNotEmpty) {
+      try {
+        List<int> imageBytes = Base64Decoder().convert(img);
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.memory(
+            Uint8List.fromList(imageBytes),
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      } catch (e) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.asset(
+            'assets/img/${img}',
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    } else {
+      return const SizedBox();
+    }
   }
 
   @override
@@ -58,21 +89,17 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
                     margin: const EdgeInsets.only(right: 10),
                     child: Stack(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: specialDish.imgDish != null
-                              ? Image.asset(
-                                  'assets/img/${specialDish.imgDish!}',
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.asset(
-                                  'assets/img/img_12.png',
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
+                        FutureBuilder<Widget>(
+                          future: _buildImage(specialDish.imgDish),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<Widget> snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return snapshot.data ?? Container();
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          },
                         ),
                         Positioned(
                           bottom: 10,

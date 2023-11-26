@@ -48,6 +48,7 @@ dependencies:
   path: ^1.8.3
   path_provider: ^2.1.1
   animated_text_kit: ^4.2.2
+  youtube_player_flutter: ^8.1.2
 
 dev_dependencies:
   flutter_test:

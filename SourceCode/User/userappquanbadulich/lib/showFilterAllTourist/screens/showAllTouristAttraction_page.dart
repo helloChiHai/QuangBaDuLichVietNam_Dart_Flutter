@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,6 +72,35 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
     });
 
     context.read<TouristAttractionBloc>().add(FetchTouristAttraction());
+  }
+
+  Future<Widget> _buildImage(String? img) async {
+    if (img != null && img.isNotEmpty) {
+      try {
+        List<int> imageBytes = Base64Decoder().convert(img);
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.memory(
+            Uint8List.fromList(imageBytes),
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      } catch (e) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.asset(
+            'assets/img/${img}',
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    } else {
+      return const SizedBox();
+    }
   }
 
   @override
@@ -228,22 +259,18 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                                 ),
                                 child: Stack(
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child:
-                                          touristAttraction.imgTourist != null
-                                              ? Image.asset(
-                                                  'assets/img/${touristAttraction.imgTourist!}',
-                                                  width: double.infinity,
-                                                  height: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                )
-                                              : Image.asset(
-                                                  'assets/img/img_12.png',
-                                                  width: double.infinity,
-                                                  height: 180,
-                                                  fit: BoxFit.cover,
-                                                ),
+                                    FutureBuilder<Widget>(
+                                      future: _buildImage(
+                                          touristAttraction.imgTourist),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<Widget> snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.done) {
+                                          return snapshot.data ?? Container();
+                                        } else {
+                                          return const CircularProgressIndicator();
+                                        }
+                                      },
                                     ),
                                     Positioned(
                                       bottom: 10,
@@ -322,24 +349,20 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                                       ),
                                       child: Stack(
                                         children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child:
-                                                touristAttraction.imgTourist !=
-                                                        null
-                                                    ? Image.asset(
-                                                        'assets/img/${touristAttraction.imgTourist!}',
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        fit: BoxFit.cover,
-                                                      )
-                                                    : Image.asset(
-                                                        'assets/img/img_12.png',
-                                                        width: double.infinity,
-                                                        height: 180,
-                                                        fit: BoxFit.cover,
-                                                      ),
+                                          FutureBuilder<Widget>(
+                                            future: _buildImage(
+                                                touristAttraction.imgTourist),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot<Widget>
+                                                    snapshot) {
+                                              if (snapshot.connectionState ==
+                                                  ConnectionState.done) {
+                                                return snapshot.data ??
+                                                    Container();
+                                              } else {
+                                                return const CircularProgressIndicator();
+                                              }
+                                            },
                                           ),
                                           Positioned(
                                             bottom: 10,

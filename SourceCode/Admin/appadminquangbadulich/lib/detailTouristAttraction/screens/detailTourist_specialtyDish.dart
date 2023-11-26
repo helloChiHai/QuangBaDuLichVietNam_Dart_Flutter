@@ -97,18 +97,6 @@ class _DetailSpecialtyDishState extends State<DetailSpecialtyDish> {
                 ),
               ),
               const SizedBox(height: 15),
-              // specialtyDish.imgDish!.isEmpty
-              //     ? const SizedBox()
-              //     : SizedBox(
-              //         width: double.infinity,
-              //         height: 250,
-              //         child: Image.asset(
-              //           'assets/img/${specialtyDish.imgDish}',
-              //           width: double.infinity,
-              //           height: double.infinity,
-              //           fit: BoxFit.cover,
-              //         ),
-              //       ),
               FutureBuilder<Widget>(
                 future: _buildImage(specialtyDish.imgDish),
                 builder:

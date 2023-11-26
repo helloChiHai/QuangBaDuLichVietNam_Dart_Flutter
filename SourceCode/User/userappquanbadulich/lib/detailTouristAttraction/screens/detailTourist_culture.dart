@@ -1,6 +1,9 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:userappquanbadulich/detailTouristAttraction/widgets/displayVideoWidget.dart';
 import 'package:userappquanbadulich/model/cultureModel.dart';
-import '../widgets/playVideo_widget.dart';
 
 class DetailCulture extends StatefulWidget {
   final List<CultureModel> dataCulture;
@@ -18,6 +21,35 @@ class _DetailCultureState extends State<DetailCulture> {
   void initState() {
     super.initState();
     cultures = widget.dataCulture;
+  }
+
+  Future<Widget> _buildImage(String? img) async {
+    if (img != null && img.isNotEmpty) {
+      try {
+        List<int> imageBytes = Base64Decoder().convert(img);
+        return SizedBox(
+          height: 250,
+          child: Image.memory(
+            Uint8List.fromList(imageBytes),
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      } catch (e) {
+        return SizedBox(
+          height: 250,
+          child: Image.asset(
+            'assets/img/${img}',
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    } else {
+      return const SizedBox();
+    }
   }
 
   @override
@@ -43,6 +75,7 @@ class _DetailCultureState extends State<DetailCulture> {
                   fontSize: 20,
                 ),
               ),
+             const SizedBox(height: 10),
               Text(
                 culture.contentCulture,
                 style: const TextStyle(
@@ -50,21 +83,24 @@ class _DetailCultureState extends State<DetailCulture> {
                   fontSize: 20,
                 ),
               ),
-              culture.imgCulture!.isEmpty
-                  ? const SizedBox()
-                  : Container(
-                      width: double.infinity,
-                      height: 250,
-                      child: Image.asset(
-                        'assets/img/${culture.imgCulture}',
-                        width: double.infinity,
-                        height: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+             const SizedBox(height: 15),
+              FutureBuilder<Widget>(
+                future: _buildImage(culture.imgCulture),
+                builder:
+                    (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return snapshot.data ?? Container();
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
+             const SizedBox(height: 15),
               if (culture.videoCulture != null &&
                   culture.videoCulture!.isNotEmpty)
-                PlayVideoWidget(videoPath: 'assets/img/${culture.videoCulture}')
+                YouTubePlayerWidget(
+                  youtubeVideoUrl: culture.videoCulture!,
+                )
               else
                 Container(),
             ],

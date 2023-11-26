@@ -44,7 +44,7 @@ class _DetailTouristAttractionWidgetState
     super.dispose();
   }
 
-    Future<Widget> _buildImage(String? img) async {
+  Future<Widget> _buildImage(String? img) async {
     if (img != null && img.isNotEmpty) {
       try {
         List<int> imageBytes = Base64Decoder().convert(img);
@@ -82,26 +82,20 @@ class _DetailTouristAttractionWidgetState
               Container(
                 width: double.infinity,
                 height: 310,
-                color: Colors.red,
+                color: const Color.fromARGB(255, 173, 207, 235),
                 child: Stack(
                   children: [
-                    // Image.asset(
-                    //   'assets/img/${tourist.imgTourist}',
-                    //   width: double.infinity,
-                    //   height: double.infinity,
-                    //   fit: BoxFit.cover,
-                    // ),
-                     FutureBuilder<Widget>(
-                future: _buildImage(tourist.imgTourist),
-                builder:
-                    (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return snapshot.data ?? Container();
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                },
-              ),
+                    FutureBuilder<Widget>(
+                      future: _buildImage(tourist.imgTourist),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<Widget> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return snapshot.data ?? Container();
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      },
+                    ),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 31),
@@ -376,8 +370,7 @@ class _DetailTouristAttractionWidgetState
                           DetailHistory(dataHistory: tourist.history),
                           DetailSpecialtyDish(
                               dataSpecialtyDish: tourist.specialtyDish),
-                          CommentPage(
-                              idTourist: tourist.idTourist),
+                          CommentPage(idTourist: tourist.idTourist),
                         ],
                       ),
                     ),

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_event.dart';
@@ -94,6 +97,35 @@ class _SearchTouristAttractionPageState
         }
       });
     }).toList();
+  }
+
+  Future<Widget> _buildImage(String? img) async {
+    if (img != null && img.isNotEmpty) {
+      try {
+        List<int> imageBytes = Base64Decoder().convert(img);
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Image.memory(
+            Uint8List.fromList(imageBytes),
+            width: 90,
+            height: 90,
+            fit: BoxFit.cover,
+          ),
+        );
+      } catch (e) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Image.asset(
+            'assets/img/${img}',
+            width: 90,
+            height: 90,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    } else {
+      return const SizedBox();
+    }
   }
 
   @override
@@ -194,15 +226,18 @@ class _SearchTouristAttractionPageState
                               children: [
                                 Expanded(
                                   flex: 3,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image(
-                                      image: AssetImage(
-                                        'assets/img/${touristAttraction.imgTourist}',
-                                      ),
-                                      width: 90,
-                                      height: 90,
-                                    ),
+                                  child: FutureBuilder<Widget>(
+                                    future: _buildImage(
+                                        touristAttraction.imgTourist),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<Widget> snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        return snapshot.data ?? Container();
+                                      } else {
+                                        return const CircularProgressIndicator();
+                                      }
+                                    },
                                   ),
                                 ),
                                 const SizedBox(width: 10),

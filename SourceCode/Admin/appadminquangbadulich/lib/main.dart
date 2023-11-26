@@ -8,6 +8,7 @@ import 'package:appadminquangbadulich/loginAdmin/bloc/loginAdmin_bloc.dart';
 import 'package:appadminquangbadulich/loginAdmin/screens/loginAdmin_page.dart';
 import 'package:appadminquangbadulich/province/bloc/province_bloc.dart';
 import 'package:appadminquangbadulich/repositories/adminRepository.dart';
+import 'package:appadminquangbadulich/searchTouristAttraction/srceens/searchTouristAttraction_page.dart';
 import 'package:appadminquangbadulich/showFilterAllTourist/bloc/filterTourist_bloc.dart';
 import 'package:appadminquangbadulich/showFilterAllTourist/screens/showAllTouristAttraction_page.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
+        '/searchTouristAttraction': (context) => SearchTouristAttractionPage(),
         '/addTouristAttraction': (context) => AddTouristAttractionPage(),
         '/showAllTouristAttraction': (context) => ShowAllTouristAttraction(),
         '/detail_touriestAttraction_about': (context) =>

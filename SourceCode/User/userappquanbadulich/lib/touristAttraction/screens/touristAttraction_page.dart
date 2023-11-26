@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -43,39 +44,28 @@ class TouristAttractionPageState extends State<TouristAttractionPage> {
     if (img != null && img.isNotEmpty) {
       try {
         List<int> imageBytes = Base64Decoder().convert(img);
-        return Image.memory(
-          Uint8List.fromList(imageBytes),
-          width: double.infinity,
-          height: double.infinity,
-          fit: BoxFit.cover,
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.memory(
+            Uint8List.fromList(imageBytes),
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
         );
       } catch (e) {
-        String assetPath = img.replaceAll("//", "/");
-        bool imageExists = await doesImageExist(assetPath);
-
-        if (imageExists) {
-          return Image.asset(
-            assetPath,
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.asset(
+            'assets/img/${img}',
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.cover,
-          );
-        } else {
-          return Image.asset(
-            'assets/img/img_12.png',
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          );
-        }
+          ),
+        );
       }
     } else {
-      return Image.asset(
-        'assets/img/img_12.png',
-        width: double.infinity,
-        height: double.infinity,
-        fit: BoxFit.cover,
-      );
+      return const SizedBox();
     }
   }
 
@@ -91,7 +81,7 @@ class TouristAttractionPageState extends State<TouristAttractionPage> {
             final touristAttractions = state.touristAttraction;
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: touristAttractions.length,
+              itemCount: min(3, touristAttractions.length),
               itemBuilder: (context, index) {
                 final touristAttraction = touristAttractions[index];
                 return GestureDetector(
@@ -108,21 +98,17 @@ class TouristAttractionPageState extends State<TouristAttractionPage> {
                     margin: const EdgeInsets.only(right: 10),
                     child: Stack(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: FutureBuilder<Widget>(
-                            future: _buildImage(
-                                'assets/img/${touristAttraction.imgTourist}'),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<Widget> snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                return snapshot.data ?? Container();
-                              } else {
-                                return const CircularProgressIndicator();
-                              }
-                            },
-                          ),
+                        FutureBuilder<Widget>(
+                          future: _buildImage(touristAttraction.imgTourist),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<Widget> snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return snapshot.data ?? Container();
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          },
                         ),
                         Positioned(
                           bottom: 10,
