@@ -1,13 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:appadminquangbadulich/comment/screens/comment_page.dart';
-import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_content.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_culture.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_history.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_specialtyDish.dart';
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
+import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateDetailContent_page.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UpdateTouristAttractionWidget extends StatefulWidget {
   final TouristAttractionModel tourist;
@@ -28,19 +30,88 @@ class _UpdateTouristAttractionWidgetState
   PageController pageController = PageController();
   int pageViewInit = 0;
   TextEditingController nameTouristController = TextEditingController();
+  TextEditingController addressTouristController = TextEditingController();
+  TextEditingController ticketController = TextEditingController();
+  TextEditingController rightTimeController = TextEditingController();
+  TextEditingController typeTouristController = TextEditingController();
+  TextEditingController touristIntroductionController = TextEditingController();
   bool hasChangednameTouristController = false;
+  bool isCheckUploadImgTouristAttraction = false;
+  String? imagePathTouristAttraction;
+  final ImagePicker _imagePickerAvatarHistory = ImagePicker();
 
   @override
   void initState() {
     super.initState();
     tourist = widget.tourist;
     pageController = PageController(initialPage: pageViewInit);
+    nameTouristController.text = tourist.nameTourist;
+    addressTouristController.text = tourist.address;
+    ticketController.text = tourist.ticket;
+    rightTimeController.text = tourist.rightTime.join(', ');
+    typeTouristController.text = tourist.typeTourist;
+    touristIntroductionController.text = tourist.touristIntroduction;
   }
 
   @override
   void dispose() {
     pageController.dispose();
     super.dispose();
+  }
+
+  void handleTextChange(
+      String newText, TextEditingController controller, String initialValue) {
+    setState(() {
+      if (newText.isEmpty) {
+        controller.text = initialValue;
+      }
+    });
+  }
+
+  void updateTextFieldValue(TextEditingController controller, String newValue) {
+    setState(() {
+      controller.text = newValue;
+    });
+  }
+
+  Future<void> _pickImage(ImagePicker imagePicker, String type) async {
+    final PickedFile? pickedFile =
+        await imagePicker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      if (type == 'imgTourist') {
+        setState(() {
+          isCheckUploadImgTouristAttraction = true;
+          imagePathTouristAttraction = pickedFile.path;
+        });
+      } else if (type == 'avatarHistory') {
+        setState(() {
+          isCheckUploadImgTouristAttraction = true;
+          imagePathTouristAttraction = pickedFile.path;
+        });
+      } else if (type == 'imgHistory') {
+        setState(() {
+          // isCheckUploadImgimgHistory = true;
+          // imagePathimgHistory = pickedFile.path;
+        });
+      } else if (type == 'imgCulture') {
+        setState(() {
+          // isCheckUploadImgimgCulture = true;
+          // imagePathimgCulture = pickedFile.path;
+        });
+      } else if (type == 'imgDish') {
+        setState(() {
+          // isCheckUploadImgimgDish = true;
+          // imagePathimgDish = pickedFile.path;
+        });
+      }
+    }
+  }
+
+  Future<String> convertImageToBase64(File imageFile) async {
+    List<int> imageBytes = await imageFile.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+    return base64Image;
   }
 
   Future<Widget> _buildImage(String? img) async {
@@ -73,7 +144,6 @@ class _UpdateTouristAttractionWidgetState
 
   @override
   Widget build(BuildContext context) {
-    String currentTouristName = tourist.nameTourist;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -85,64 +155,112 @@ class _UpdateTouristAttractionWidgetState
                 color: const Color.fromARGB(255, 173, 207, 235),
                 child: Stack(
                   children: [
-                    FutureBuilder<Widget>(
-                      future: _buildImage(tourist.imgTourist),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<Widget> snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return snapshot.data ?? Container();
-                        } else {
-                          return const CircularProgressIndicator();
-                        }
-                      },
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 31),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pushNamed('/homeAdmin');
-                              },
-                              icon: const Icon(Icons.arrow_back, size: 30),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              print(currentTouristName);
-                              print(nameTouristController.text);
+                    imagePathTouristAttraction == null
+                        ? FutureBuilder<Widget>(
+                            future: _buildImage(tourist.imgTourist),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<Widget> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return snapshot.data ?? Container();
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
                             },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: const Row(
-                                children: [
-                                  Text(
-                                    'Cập nhật',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Icon(Icons.check_circle_outline, size: 30),
-                                ],
-                              ),
+                          )
+                        : Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(15),
+                              image: isCheckUploadImgTouristAttraction &&
+                                      imagePathTouristAttraction != null
+                                  ? DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(
+                                          File(imagePathTouristAttraction!)),
+                                    )
+                                  : null,
                             ),
                           ),
-                        ],
+                    GestureDetector(
+                      onTap: () async {
+                        Future<String> getBase64Data(
+                            String? imagePath, String imgDefault) async {
+                          if (imagePath != null) {
+                            return await convertImageToBase64(File(imagePath));
+                          }
+                          return imgDefault;
+                        }
+
+                        print(nameTouristController.text);
+                        print(addressTouristController.text);
+                        print(ticketController.text);
+                        print(rightTimeController.text);
+                        print(touristIntroductionController.text);
+                        print(await getBase64Data(
+                            imagePathTouristAttraction, tourist.imgTourist!));
+                      },
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 10,
+                          ),
+                          margin: const EdgeInsets.only(
+                            top: 10,
+                            right: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.blue[200],
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Cập nhật',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Icon(Icons.check_circle_outline, size: 30),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: MediaQuery.of(context).size.width * 0.05,
+                      left: MediaQuery.of(context).size.width * 0.75,
+                      top: 150,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isCheckUploadImgTouristAttraction =
+                                !isCheckUploadImgTouristAttraction;
+                          });
+                          _pickImage(_imagePickerAvatarHistory, 'imgTourist');
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 20,
+                          ),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color.fromRGBO(169, 169, 169, 0.5),
+                          ),
+                          child: const Icon(
+                            Icons.camera_alt,
+                            size: 30,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -169,8 +287,10 @@ class _UpdateTouristAttractionWidgetState
                         children: [
                           TextField(
                             controller: nameTouristController,
+                            onChanged: (text) => handleTextChange(text,
+                                nameTouristController, tourist.nameTourist),
                             decoration: InputDecoration(
-                              hintText: currentTouristName,
+                              hintText: tourist.nameTourist,
                               hintStyle: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
@@ -183,13 +303,6 @@ class _UpdateTouristAttractionWidgetState
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                             ),
-                            onChanged: (newValue) {
-                              if (newValue != currentTouristName) {
-                                nameTouristController.text = newValue;
-                              } else if(newValue == nameTouristController.text){
-                                nameTouristController.text = currentTouristName;
-                              }
-                            },
                           ),
                           const SizedBox(height: 15),
                           SizedBox(
@@ -200,20 +313,31 @@ class _UpdateTouristAttractionWidgetState
                                 const Icon(Icons.place_outlined, size: 25),
                                 Expanded(
                                   flex: 8,
-                                  child: Text(
-                                    tourist.address,
+                                  child: TextField(
+                                    controller: addressTouristController,
+                                    onChanged: (text) => handleTextChange(
+                                        text,
+                                        addressTouristController,
+                                        tourist.address),
+                                    decoration: InputDecoration(
+                                      hintText: tourist.address,
+                                      hintStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 20,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     maxLines: 5,
-                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(height: 5),
                           SizedBox(
                             width: double.infinity,
                             child: Row(
@@ -223,8 +347,18 @@ class _UpdateTouristAttractionWidgetState
                                     size: 25),
                                 Expanded(
                                   flex: 8,
-                                  child: Text(
-                                    'Giá vé: ${tourist.ticket}',
+                                  child: TextField(
+                                    controller: ticketController,
+                                    onChanged: (text) => handleTextChange(
+                                        text, ticketController, tourist.ticket),
+                                    decoration: InputDecoration(
+                                      hintText: tourist.ticket,
+                                      hintStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 20,
@@ -234,7 +368,6 @@ class _UpdateTouristAttractionWidgetState
                               ],
                             ),
                           ),
-                          const SizedBox(height: 5),
                           SizedBox(
                             width: double.infinity,
                             child: Row(
@@ -242,16 +375,75 @@ class _UpdateTouristAttractionWidgetState
                               children: [
                                 const Icon(Icons.calendar_month_outlined,
                                     size: 25),
+                                const Text(
+                                  'Loại hình du lịch: ',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                                 Expanded(
                                   flex: 8,
-                                  child: Text(
-                                    'Thời điểm thích hợp: ${tourist.rightTime.join(', ')}',
+                                  child: TextField(
+                                    controller: rightTimeController,
+                                    onChanged: (text) => handleTextChange(
+                                        text,
+                                        rightTimeController,
+                                        tourist.rightTime.join(', ')),
+                                    decoration: InputDecoration(
+                                      hintText: tourist.rightTime.join(', '),
+                                      hintStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 20,
                                     ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Icon(Icons.satellite, size: 25),
+                                const Text(
+                                  'Thời điểm thích hợp: ',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Expanded(
+                                  flex: 8,
+                                  child: TextField(
+                                    controller: typeTouristController,
+                                    onChanged: (text) => handleTextChange(
+                                        text,
+                                        typeTouristController,
+                                        tourist.typeTourist),
+                                    decoration: InputDecoration(
+                                      hintText: tourist.typeTourist,
+                                      hintStyle: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -260,7 +452,6 @@ class _UpdateTouristAttractionWidgetState
                         ],
                       ),
                     ),
-                    const SizedBox(height: 15),
                     Container(
                       color: Colors.white,
                       height: 50,
@@ -389,8 +580,12 @@ class _UpdateTouristAttractionWidgetState
                           });
                         },
                         children: [
-                          DetailContent(
-                            dataIntroTourist: tourist.touristIntroduction,
+                          UpdateDetailContentPage(
+                            touristIntroductionController:
+                                touristIntroductionController,
+                            onUpdate: (text) => updateTextFieldValue(
+                                touristIntroductionController, text),
+                            touristIntroduction: tourist.touristIntroduction,
                           ),
                           DetailCulture(dataCulture: tourist.culture),
                           DetailHistory(dataHistory: tourist.history),
