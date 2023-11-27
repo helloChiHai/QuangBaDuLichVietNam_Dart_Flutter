@@ -2,43 +2,38 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:appadminquangbadulich/comment/screens/comment_page.dart';
-import 'package:appadminquangbadulich/deleteTouristAttraction/bloc/deleteTouristAttraction_bloc.dart';
-import 'package:appadminquangbadulich/deleteTouristAttraction/bloc/deleteTouristAttraction_event.dart';
-import 'package:appadminquangbadulich/deleteTouristAttraction/bloc/deleteTouristAttraction_state.dart';
+import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_content.dart';
+import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_culture.dart';
+import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_history.dart';
+import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_specialtyDish.dart';
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../screens/detailTourist_content.dart';
-import '../screens/detailTourist_culture.dart';
-import '../screens/detailTourist_history.dart';
-import '../screens/detailTourist_specialtyDish.dart';
-
-class DetailTouristAttractionWidget extends StatefulWidget {
+class UpdateTouristAttractionWidget extends StatefulWidget {
   final TouristAttractionModel tourist;
-  final int pageViewInit;
-  const DetailTouristAttractionWidget({
+
+  const UpdateTouristAttractionWidget({
     Key? key,
     required this.tourist,
-    required this.pageViewInit,
   }) : super(key: key);
 
   @override
-  State<DetailTouristAttractionWidget> createState() =>
-      _DetailTouristAttractionWidgetState();
+  State<UpdateTouristAttractionWidget> createState() =>
+      _UpdateTouristAttractionWidgetState();
 }
 
-class _DetailTouristAttractionWidgetState
-    extends State<DetailTouristAttractionWidget> {
+class _UpdateTouristAttractionWidgetState
+    extends State<UpdateTouristAttractionWidget> {
   late TouristAttractionModel tourist;
   PageController pageController = PageController();
-  late int pageViewInit = 0;
+  int pageViewInit = 0;
+  TextEditingController nameTouristController = TextEditingController();
+  bool hasChangednameTouristController = false;
 
   @override
   void initState() {
     super.initState();
     tourist = widget.tourist;
-    pageViewInit = widget.pageViewInit;
     pageController = PageController(initialPage: pageViewInit);
   }
 
@@ -78,6 +73,7 @@ class _DetailTouristAttractionWidgetState
 
   @override
   Widget build(BuildContext context) {
+    String currentTouristName = tourist.nameTourist;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -118,26 +114,34 @@ class _DetailTouristAttractionWidgetState
                               icon: const Icon(Icons.arrow_back, size: 30),
                             ),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: IconButton(
-                              onPressed: () {
-                                print('onTap called');
-            Navigator.of(context, rootNavigator: true).pushNamed(
-              '/updateTouristAttractionPage',
-              arguments: {'aboutTouristData': tourist},
-            );
-                              },
-                              icon: const Icon(
-                                Icons.menu,
-                                size: 30,
-                                color: Colors.black,
+                          GestureDetector(
+                            onTap: () {
+                              print(currentTouristName);
+                              print(nameTouristController.text);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: const Row(
+                                children: [
+                                  Text(
+                                    'Cập nhật',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Icon(Icons.check_circle_outline, size: 30),
+                                ],
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -163,15 +167,29 @@ class _DetailTouristAttractionWidgetState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            tourist.nameTourist,
+                          TextField(
+                            controller: nameTouristController,
+                            decoration: InputDecoration(
+                              hintText: currentTouristName,
+                              hintStyle: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              border: InputBorder.none,
+                            ),
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                             ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                            onChanged: (newValue) {
+                              if (newValue != currentTouristName) {
+                                nameTouristController.text = newValue;
+                              } else if(newValue == nameTouristController.text){
+                                nameTouristController.text = currentTouristName;
+                              }
+                            },
                           ),
                           const SizedBox(height: 15),
                           SizedBox(
@@ -389,115 +407,6 @@ class _DetailTouristAttractionWidgetState
           ),
         ],
       ),
-    );
-  }
-
-  void showPopupMenu(BuildContext context) {
-    final RenderBox overlay =
-        Overlay.of(context).context.findRenderObject() as RenderBox;
-
-    // Lấy kích thước màn hình
-    final screenSize = MediaQuery.of(context).size;
-
-    // Tính toán vị trí để hiển thị PopupMenuButton bên phải
-    final menuPosition = RelativeRect.fromLTRB(
-      screenSize.width - 230,
-      // top
-      overlay.localToGlobal(Offset.zero).dy,
-      // left
-      screenSize.width,
-      // bottom
-      overlay.localToGlobal(overlay.size.bottomLeft(Offset.zero)).dy,
-    );
-
-    showMenu(
-      context: context,
-      position: menuPosition,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      items: [
-        PopupMenuItem(
-          child: const ListTile(
-            leading: Icon(
-              Icons.edit,
-              size: 30,
-            ),
-            title: Text(
-              'Cập nhật',
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          onTap: () {
-            print('onTap called');
-            Navigator.of(context, rootNavigator: true).pushNamed(
-              '/updateTouristAttractionPage',
-              arguments: {'aboutTouristData': tourist},
-            );
-          },
-        ),
-        PopupMenuItem(
-          child: BlocListener<DeleteTouristAttractionBloc,
-              DeleteTouristAttractionState>(
-            listener: (context, state) {
-              if (state is DeleteTouristAttractionSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'Xóa địa điểm thành công',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-                Future.delayed(const Duration(seconds: 1), () {
-                  Navigator.of(context).pushNamed('/homeAdmin');
-                });
-              } else if (state is DeleteTouristAttractionFailure) {
-                print(state.error);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Xóa địa điểm thất bại: ${state.error}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    backgroundColor: Colors.red,
-                  ),
-                );
-              }
-            },
-            child: GestureDetector(
-              onTap: () {
-                context.read<DeleteTouristAttractionBloc>().add(
-                      DeleteTouristAttractionButtonPress(
-                        touristId: tourist.idTourist,
-                      ),
-                    );
-              },
-              child: const ListTile(
-                leading: Icon(
-                  Icons.delete,
-                  size: 30,
-                ),
-                title: Text(
-                  'Xóa',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

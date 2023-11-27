@@ -14,6 +14,7 @@ import 'package:appadminquangbadulich/showFilterAllTourist/bloc/filterTourist_bl
 import 'package:appadminquangbadulich/showFilterAllTourist/screens/showAllTouristAttraction_page.dart';
 import 'package:appadminquangbadulich/totalTouristAttraction/bloc/totalTouristAttraction_bloc.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
+import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateTouristAttraction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
+        '/updateTouristAttractionPage': (context) => UpdateTouristAttrractionpage(),
         '/searchTouristAttraction': (context) => SearchTouristAttractionPage(),
         '/addTouristAttraction': (context) => AddTouristAttractionPage(),
         '/showAllTouristAttraction': (context) => ShowAllTouristAttraction(),
