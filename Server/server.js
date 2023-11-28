@@ -33,6 +33,16 @@ const checkMongoDBConnection = () => {
 checkMongoDBConnection();
 
 // ========================== ADMIN =================================================
+// tổng số người dùng
+app.get('/totalUser', async (req, res) => {
+  try {
+    const userCount = await Customer.countDocuments();
+    res.json({ success: true, data: { userCount } });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 
 // xóa địa điểm du lịch
 app.delete("/deleteTouristAttraction", async (req, res) => {

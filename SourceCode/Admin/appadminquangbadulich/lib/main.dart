@@ -7,12 +7,14 @@ import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTour
 import 'package:appadminquangbadulich/homeAdmin/screens/homeAdmin_page.dart';
 import 'package:appadminquangbadulich/loginAdmin/bloc/loginAdmin_bloc.dart';
 import 'package:appadminquangbadulich/loginAdmin/screens/loginAdmin_page.dart';
+import 'package:appadminquangbadulich/managerUser/screen/managerUser_page.dart';
 import 'package:appadminquangbadulich/province/bloc/province_bloc.dart';
 import 'package:appadminquangbadulich/repositories/adminRepository.dart';
 import 'package:appadminquangbadulich/searchTouristAttraction/srceens/searchTouristAttraction_page.dart';
 import 'package:appadminquangbadulich/showFilterAllTourist/bloc/filterTourist_bloc.dart';
 import 'package:appadminquangbadulich/showFilterAllTourist/screens/showAllTouristAttraction_page.dart';
 import 'package:appadminquangbadulich/totalTouristAttraction/bloc/totalTouristAttraction_bloc.dart';
+import 'package:appadminquangbadulich/totalUser/bloc/totalUser_bloc.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
 import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateTouristAttraction_page.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/updateTouristAttractionPage': (context) => UpdateTouristAttrractionpage(),
+        '/managerUserPage': (context) => ManagerUserPage(),
+        '/updateTouristAttractionPage': (context) =>
+            UpdateTouristAttrractionpage(),
         '/searchTouristAttraction': (context) => SearchTouristAttractionPage(),
         '/addTouristAttraction': (context) => AddTouristAttractionPage(),
         '/showAllTouristAttraction': (context) => ShowAllTouristAttraction(),
@@ -44,6 +48,11 @@ class MyApp extends StatelessWidget {
 void main() {
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider<TotalUserBloc>(
+        create: (context) => TotalUserBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
       BlocProvider<TotalTouristAttractionBloc>(
         create: (context) => TotalTouristAttractionBloc(
           adminRepository: AdminRepository(),

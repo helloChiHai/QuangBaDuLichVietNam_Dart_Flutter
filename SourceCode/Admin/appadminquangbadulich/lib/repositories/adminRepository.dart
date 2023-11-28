@@ -7,7 +7,29 @@ import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:http/http.dart' as http;
 
 class AdminRepository {
-  String urlMain = 'http://192.168.243.214:3090';
+  String urlMain = 'http://172.16.132.95:3090';
+
+
+    // TỔNG NGƯỜI DÙNG
+  Future<int> totalUser() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$urlMain/totalUser'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final totalTourist = data['data']['userCount'];
+        return totalTourist;
+      } else {
+        throw Exception(
+            'Failed to fetch user: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error while fetching user: $e');
+      throw Exception('Error while fetching user: $e');
+    }
+  }
 
   Future<int> deleteTouristAttraction(String touristId) async {
     try {

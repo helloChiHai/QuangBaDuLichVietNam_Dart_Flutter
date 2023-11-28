@@ -5,9 +5,9 @@ import 'dart:typed_data';
 import 'package:appadminquangbadulich/comment/screens/comment_page.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_culture.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_history.dart';
-import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_specialtyDish.dart';
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateDetailContent_page.dart';
+import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateSpecialDish_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -35,7 +35,10 @@ class _UpdateTouristAttractionWidgetState
   TextEditingController rightTimeController = TextEditingController();
   TextEditingController typeTouristController = TextEditingController();
   TextEditingController touristIntroductionController = TextEditingController();
-  bool hasChangednameTouristController = false;
+  // đặc sản
+  TextEditingController nameDishController = TextEditingController();
+
+  // upload hình ảnh tourist
   bool isCheckUploadImgTouristAttraction = false;
   String? imagePathTouristAttraction;
   final ImagePicker _imagePickerAvatarHistory = ImagePicker();
@@ -376,7 +379,7 @@ class _UpdateTouristAttractionWidgetState
                                 const Icon(Icons.calendar_month_outlined,
                                     size: 25),
                                 const Text(
-                                  'Loại hình du lịch: ',
+                                  'Thời điểm thích hợp: ',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
@@ -416,7 +419,7 @@ class _UpdateTouristAttractionWidgetState
                               children: [
                                 const Icon(Icons.satellite, size: 25),
                                 const Text(
-                                  'Thời điểm thích hợp: ',
+                                  'Loại hình du lịch: ',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
@@ -589,7 +592,7 @@ class _UpdateTouristAttractionWidgetState
                           ),
                           DetailCulture(dataCulture: tourist.culture),
                           DetailHistory(dataHistory: tourist.history),
-                          DetailSpecialtyDish(
+                          UpdateSpecialtyDishPage(
                               dataSpecialtyDish: tourist.specialtyDish),
                           CommentPage(idTourist: tourist.idTourist),
                         ],

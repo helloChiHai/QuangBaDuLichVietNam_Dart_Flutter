@@ -110,7 +110,7 @@ class MyDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.of(context).pushNamed('/managerUserPage');
             },
           ),
           ListTile(
