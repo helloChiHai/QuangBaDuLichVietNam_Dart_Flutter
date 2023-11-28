@@ -83,6 +83,35 @@ class _DetailCustomerPageState extends State<DetailCustomerPage> {
     }
   }
 
+  Future<Widget> _buildImageTourist(String? img) async {
+    if (img != null && img.isNotEmpty) {
+      try {
+        List<int> imageBytes = Base64Decoder().convert(img);
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.memory(
+            Uint8List.fromList(imageBytes),
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      } catch (e) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.asset(
+            'assets/img/$img',
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    } else {
+      return const SizedBox();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +142,7 @@ class _DetailCustomerPageState extends State<DetailCustomerPage> {
                   Container(
                     width: double.infinity,
                     height: 309,
-                    color: Colors.blue,
+                    color: const Color.fromARGB(255, 172, 212, 245),
                   ),
                   Positioned(
                     top: 190,
@@ -405,206 +434,175 @@ class _DetailCustomerPageState extends State<DetailCustomerPage> {
                 child: BlocBuilder<GetTouristInFavoriteListBloc,
                     GetTouristInFavoriteListState>(
                   builder: (context, state) {
-                    // if (state is GetTouristInFavoriteListInitial) {
-                    //   if (idCus != null) {
-                    //     context.read<GetTouristInFavoriteListBloc>().add(
-                    //           FetchTouristAttractionInFavoriteList(
-                    //             idCus: idCus!,
-                    //           ),
-                    //         );
-                    //   }
-                    // }
-
                     if (state is GetTouristInFavoriteListLoaded) {
                       final touristList = state.touristAttractions;
 
                       return touristList.isNotEmpty
-                          ? SizedBox(
-                              width: double.infinity,
-                              height: 500,
-                              child: ListView.builder(
-                                // Sử dụng key
-                                key: _listKey,
-                                scrollDirection: Axis.vertical,
-                                itemCount: touristList.length,
-                                itemBuilder: (context, index) {
-                                  final touristAttraction = touristList[index];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                          '/detail_touriestAttraction_about',
-                                          arguments: {
-                                            'aboutTouristData':
-                                                touristAttraction,
-                                          });
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: double.infinity,
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 15,
-                                              vertical: 10,
-                                            ),
-                                            decoration: const BoxDecoration(
-                                              border: Border(
-                                                bottom: BorderSide(
-                                                  color: Color.fromARGB(
-                                                      255, 98, 98, 98),
-                                                  width: 0.7,
+                          ? Column(
+                              children: [
+                                ListView.builder(
+                                  // Sử dụng key
+                                  key: _listKey,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: touristList.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    final touristAttraction =
+                                        touristList[index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).pushNamed(
+                                            '/detail_touriestAttraction_about',
+                                            arguments: {
+                                              'aboutTouristData':
+                                                  touristAttraction,
+                                            });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: double.infinity,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 15,
+                                                vertical: 10,
+                                              ),
+                                              decoration: const BoxDecoration(
+                                                border: Border(
+                                                  bottom: BorderSide(
+                                                    color: Color.fromARGB(
+                                                        255, 98, 98, 98),
+                                                    width: 0.7,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                SizedBox(
-                                                  width: 110,
-                                                  height: 110,
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    child: Image(
-                                                      image: AssetImage(
-                                                          'assets/img/${touristAttraction.imgTourist}'),
-                                                      width: 110,
-                                                      height: 110,
-                                                      fit: BoxFit.fill,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 110,
+                                                    height: 110,
+                                                    child:
+                                                        FutureBuilder<Widget>(
+                                                      future:
+                                                          _buildImageTourist(
+                                                              touristAttraction
+                                                                  .imgTourist),
+                                                      builder: (BuildContext
+                                                              context,
+                                                          AsyncSnapshot<Widget>
+                                                              snapshot) {
+                                                        if (snapshot
+                                                                .connectionState ==
+                                                            ConnectionState
+                                                                .done) {
+                                                          return snapshot
+                                                                  .data ??
+                                                              Container();
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      },
                                                     ),
                                                   ),
-                                                ),
-                                                Container(
-                                                  width: 240,
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                    horizontal: 5,
-                                                  ),
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    border: Border(
-                                                      bottom: BorderSide(
-                                                        color: Color.fromARGB(
-                                                            255, 98, 98, 98),
-                                                        width: 1,
+                                                  Container(
+                                                    width: 240,
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                      horizontal: 5,
+                                                    ),
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      border: Border(
+                                                        bottom: BorderSide(
+                                                          color: Color.fromARGB(
+                                                              255, 98, 98, 98),
+                                                          width: 1,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        touristAttraction
-                                                            .nameTourist,
-                                                        style: const TextStyle(
-                                                          fontSize: 20,
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.w500,
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          touristAttraction
+                                                              .nameTourist,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 20,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                          maxLines: 3,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                         ),
-                                                        maxLines: 3,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Text(
-                                                        'Địa chỉ: ${touristAttraction.address}',
-                                                        style: const TextStyle(
-                                                          fontSize: 18,
-                                                          color: Colors.black,
-                                                          fontStyle:
-                                                              FontStyle.italic,
+                                                        const SizedBox(
+                                                          height: 10,
                                                         ),
-                                                        maxLines: 3,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                    ],
+                                                        Text(
+                                                          'Địa chỉ: ${touristAttraction.address}',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 18,
+                                                            color: Colors.black,
+                                                            fontStyle: FontStyle
+                                                                .italic,
+                                                          ),
+                                                          maxLines: 3,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
+                                    );
+                                  },
+                                )
+                              ],
                             )
                           : Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 50,
                                 vertical: 50,
                               ),
-                              child: Column(
+                              child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Image(
+                                  Image(
                                     image: AssetImage(
                                       'assets/img/img_22.png',
                                     ),
                                     height: 150,
                                     width: 150,
                                   ),
-                                  const SizedBox(height: 10),
-                                  const Text(
-                                    'Địa điểm thích yêu',
+                                  SizedBox(height: 10),
+                                  Text(
+                                    'Không có địa điểm được lưu',
                                     style: TextStyle(
                                       fontSize: 22,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  const SizedBox(height: 10),
-                                  const Text(
-                                    'Chỉ cần nhấn vào biểu tượng trái tim ở trên cùng mỗi trang địa điểm du lịch, địa điểm du lịch bạn lưu sẽ xuất hiện tại đây.',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 20),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed('/home');
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 25,
-                                        vertical: 15,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                          color: Colors.blue,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const Text(
-                                        'Lưu địa điểm',
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  SizedBox(height: 10),
                                 ],
                               ),
                             );

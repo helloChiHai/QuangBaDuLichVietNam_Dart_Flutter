@@ -221,6 +221,7 @@ class _SearchTouristAttractionPageState
                           },
                           child: Container(
                             color: Colors.white,
+                            margin: const EdgeInsets.only(bottom: 10),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Row(
                               children: [

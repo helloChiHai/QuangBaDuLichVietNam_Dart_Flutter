@@ -33,6 +33,59 @@ const checkMongoDBConnection = () => {
 checkMongoDBConnection();
 
 // ========================== ADMIN =================================================
+
+// cập nhật địa điểm - giới thiệu
+app.put("/update-tourist/:idTourist", async (req, res) => {
+  const { idTourist } = req.params; // Lấy idTourist từ URL
+  const {
+    nameTourist,
+    typeTourist,
+    address,
+    ticket,
+    imgTourist,
+    touristIntroduction,
+    rightTime,
+  } = req.body;
+
+  try {
+    const region = await Region.findOne({
+      "provinces.touristAttraction.idTourist": idTourist,
+    });
+
+    if (!region) {
+      return res
+        .status(404)
+        .json({
+          error: "Không tìm thấy touristAttraction với idTourist đã cho",
+        });
+    }
+
+    region.provinces.forEach((province) => {
+      const tourist = province.touristAttraction.find(
+        (tourist) => tourist.idTourist === idTourist
+      );
+
+      if (tourist) {
+        tourist.nameTourist = nameTourist || tourist.nameTourist;
+        tourist.typeTourist = typeTourist || tourist.typeTourist;
+        tourist.address = address || tourist.address;
+        tourist.ticket = ticket || tourist.ticket;
+        tourist.imgTourist = imgTourist || tourist.imgTourist;
+        tourist.touristIntroduction =
+          touristIntroduction || tourist.touristIntroduction;
+        tourist.rightTime = rightTime || tourist.rightTime;
+      }
+    });
+
+    await region.save();
+
+    res.json({ message: "Cập nhật thông tin touristAttraction thành công" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
 // hiển thị tất cả người dùng
 app.get("/getAllCustomer", async (req, res) => {
   try {

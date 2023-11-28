@@ -10,6 +10,40 @@ import 'package:http/http.dart' as http;
 class AdminRepository {
   String urlMain = 'http://192.168.243.214:3090';
 
+  // CẬP NHẬT INTRO TOURIST
+  Future<int> updateTouristIntro(
+    String idTourist,
+    String nameTourist,
+    String typeTourist,
+    String address,
+    String ticket,
+    String? imgTourist,
+    String touristIntroduction,
+    String rightTime,
+  ) async {
+    final urlUpdate = '$urlMain/update-tourist/$idTourist';
+    try {
+      final response = await http.put(Uri.parse(urlUpdate),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'nameTourist': nameTourist,
+            'typeTourist': typeTourist,
+            'idTourist': idTourist,
+            'address': address,
+            'ticket': ticket,
+            'touristIntroduction': touristIntroduction,
+            'rightTime': rightTime,
+          }));
+      if (response.statusCode == 200) {
+        return 1;
+      } else {
+        throw Exception('Lỗi cập nhật img: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   // HIỂN THỊ TẤT CẢ CÁC ĐỊA ĐIỂM DU LỊCH TRONG DANH SÁCH ĐỊA ĐIỂM YÊU THÍCH
   Future<List<TouristAttractionModel>> getTouristInFavoritelistByIdCus(
       String idCus) async {

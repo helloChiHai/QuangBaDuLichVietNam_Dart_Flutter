@@ -8,7 +8,11 @@ import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTour
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateDetailContent_page.dart';
 import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateSpecialDish_page.dart';
+import 'package:appadminquangbadulich/update_tourist_intro/bloc/update_tourist_intro_bloc.dart';
+import 'package:appadminquangbadulich/update_tourist_intro/bloc/update_tourist_intro_event.dart';
+import 'package:appadminquangbadulich/update_tourist_intro/bloc/update_tourist_intro_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UpdateTouristAttractionWidget extends StatefulWidget {
@@ -186,53 +190,100 @@ class _UpdateTouristAttractionWidgetState
                                   : null,
                             ),
                           ),
-                    GestureDetector(
-                      onTap: () async {
-                        Future<String> getBase64Data(
-                            String? imagePath, String imgDefault) async {
-                          if (imagePath != null) {
-                            return await convertImageToBase64(File(imagePath));
-                          }
-                          return imgDefault;
-                        }
-
-                        print(nameTouristController.text);
-                        print(addressTouristController.text);
-                        print(ticketController.text);
-                        print(rightTimeController.text);
-                        print(touristIntroductionController.text);
-                        print(await getBase64Data(
-                            imagePathTouristAttraction, tourist.imgTourist!));
-                      },
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.35,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 10,
-                          ),
-                          margin: const EdgeInsets.only(
-                            top: 10,
-                            right: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.blue[200],
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Cập nhật',
+                    BlocListener<UpdateTouristIntroBloc,
+                        UpdateTouristIntroState>(
+                      listener: (context, state) {
+                        if (state is UpdateTouristIntroSuccess) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Cập nhật thành công!',
                                 style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
                                 ),
                               ),
-                              Icon(Icons.check_circle_outline, size: 30),
-                            ],
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        } else if (state is UpdateTouristIntroFailure) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Cập nhật không thành công!',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 13,
+                          vertical: 25,
+                        ),
+                        child: GestureDetector(
+                          onTap: () async {
+                            Future<String> getBase64Data(
+                                String? imagePath, String imgDefault) async {
+                              if (imagePath != null) {
+                                return await convertImageToBase64(
+                                    File(imagePath));
+                              }
+                              return imgDefault;
+                            }
+
+                            String img = await getBase64Data(
+                                imagePathTouristAttraction,
+                                tourist.imgTourist!);
+                            // ignore: use_build_context_synchronously
+                            BlocProvider.of<UpdateTouristIntroBloc>(context)
+                                .add(UpdateTouristIntroButtonPressed(
+                              idTourist: tourist.idTourist,
+                              nameTourist: nameTouristController.text,
+                              typeTourist: typeTouristController.text,
+                              address: addressTouristController.text,
+                              ticket: ticketController.text,
+                              imgTourist: img,
+                              touristIntroduction:
+                                  touristIntroductionController.text,
+                              rightTime: rightTimeController.text,
+                            ));
+                          },
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
+                              margin: const EdgeInsets.only(
+                                top: 10,
+                                right: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.blue[200],
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Cập nhật',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Icon(Icons.check_circle_outline, size: 30),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ),
