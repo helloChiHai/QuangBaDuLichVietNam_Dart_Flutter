@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:appadminquangbadulich/model/CustomerModel.dart';
 import 'package:appadminquangbadulich/model/adminModel.dart';
 import 'package:appadminquangbadulich/model/commentModel.dart';
 import 'package:appadminquangbadulich/model/provinceModel.dart';
@@ -7,10 +8,77 @@ import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:http/http.dart' as http;
 
 class AdminRepository {
-  String urlMain = 'http://172.16.132.95:3090';
+  String urlMain = 'http://192.168.243.214:3090';
 
+  // HIỂN THỊ TẤT CẢ CÁC ĐỊA ĐIỂM DU LỊCH TRONG DANH SÁCH ĐỊA ĐIỂM YÊU THÍCH
+  Future<List<TouristAttractionModel>> getTouristInFavoritelistByIdCus(
+      String idCus) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$urlMain/getTouristInFavoriteList/$idCus'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final touristList = data['data'] as List<dynamic>;
+        final touristAttractions = touristList
+            .map((touristData) => TouristAttractionModel.fromJson(touristData))
+            .toList();
+        return touristAttractions;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy địa điểm du lịch trong danh sách yêu thích ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(
+          'Lỗi khi lấy địa điểm du lịch trong danh sách yêu thích theo idCus: $e');
+    }
+  }
 
-    // TỔNG NGƯỜI DÙNG
+  // CHI TIẾT ĐỊA ĐIỂM THEO IdTourist
+  Future<CustomerModel?> detailCustomerByIdCus(String idCus) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$urlMain/detailCustomer/$idCus'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final customerModel = CustomerModel.fromJson(data['data']);
+        return customerModel;
+      } else {
+        throw Exception(
+            'Lỗi khi lấy thông tin người dùng ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Lỗi khi lấy thông tin người dùng theo idCus: $e');
+    }
+  }
+
+  // HIỂN THỊ TẤT CẢ NGƯỜI DÙNG
+  Future<List<CustomerModel>> getAllCustomer() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$urlMain/getAllCustomer'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final customerList = data['data'] as List<dynamic>;
+        final customers = customerList
+            .map((cusData) => CustomerModel.fromJson(cusData))
+            .toList();
+        return customers;
+      } else {
+        throw Exception('Failed to fetch customer: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error while fetching customer: $e');
+      throw Exception('Error while fetching customer: $e');
+    }
+  }
+
+  // TỔNG NGƯỜI DÙNG
   Future<int> totalUser() async {
     try {
       final response = await http.get(
@@ -22,8 +90,7 @@ class AdminRepository {
         final totalTourist = data['data']['userCount'];
         return totalTourist;
       } else {
-        throw Exception(
-            'Failed to fetch user: ${response.reasonPhrase}');
+        throw Exception('Failed to fetch user: ${response.reasonPhrase}');
       }
     } catch (e) {
       print('Error while fetching user: $e');
@@ -31,6 +98,7 @@ class AdminRepository {
     }
   }
 
+// XÓA ĐỊA ĐIỂM DU LỊCH
   Future<int> deleteTouristAttraction(String touristId) async {
     try {
       final response = await http.delete(
@@ -192,7 +260,7 @@ class AdminRepository {
     }
   }
 
-  // CHI TIẾT ĐỊA ĐIỂM THEO idCulture
+  // CHI TIẾT ĐỊA ĐIỂM THEO IdTourist
   Future<TouristAttractionModel?> getDetailTouristWithIdTourist(
       String idTourist) async {
     try {

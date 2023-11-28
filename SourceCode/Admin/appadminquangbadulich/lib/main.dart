@@ -2,11 +2,14 @@ import 'package:appadminquangbadulich/addTouristAttraction/bloc/addTouristAttrac
 import 'package:appadminquangbadulich/addTouristAttraction/screens/addTouristAttraction_page.dart';
 import 'package:appadminquangbadulich/comment/bloc/comment_bloc.dart';
 import 'package:appadminquangbadulich/deleteTouristAttraction/bloc/deleteTouristAttraction_bloc.dart';
+import 'package:appadminquangbadulich/detailCustomer/screens/detailCustomer_page.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/bloc/bloc_tourist/detailTourist_about_bloc.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
 import 'package:appadminquangbadulich/homeAdmin/screens/homeAdmin_page.dart';
+import 'package:appadminquangbadulich/listFavoriteTouristAttraction/bloc/getTouristInFavoriteList_bloc.dart';
 import 'package:appadminquangbadulich/loginAdmin/bloc/loginAdmin_bloc.dart';
 import 'package:appadminquangbadulich/loginAdmin/screens/loginAdmin_page.dart';
+import 'package:appadminquangbadulich/managerUser/bloc/userManagement_bloc.dart';
 import 'package:appadminquangbadulich/managerUser/screen/managerUser_page.dart';
 import 'package:appadminquangbadulich/province/bloc/province_bloc.dart';
 import 'package:appadminquangbadulich/repositories/adminRepository.dart';
@@ -29,6 +32,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
+        '/detailCustomer': (context) => DetailCustomerPage(),
         '/managerUserPage': (context) => ManagerUserPage(),
         '/updateTouristAttractionPage': (context) =>
             UpdateTouristAttrractionpage(),
@@ -48,6 +52,16 @@ class MyApp extends StatelessWidget {
 void main() {
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider<GetTouristInFavoriteListBloc>(
+        create: (context) => GetTouristInFavoriteListBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
+      BlocProvider<UserManagementBloc>(
+        create: (context) => UserManagementBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
       BlocProvider<TotalUserBloc>(
         create: (context) => TotalUserBloc(
           adminRepository: AdminRepository(),

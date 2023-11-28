@@ -33,8 +33,27 @@ const checkMongoDBConnection = () => {
 checkMongoDBConnection();
 
 // ========================== ADMIN =================================================
+// hiển thị tất cả người dùng
+app.get("/getAllCustomer", async (req, res) => {
+  try {
+    const customer = await Customer.find({});
+    const tatCaNguoiDung = [];
+
+    customer.forEach((cus) => {
+      tatCaNguoiDung.push(cus);
+    });
+    res.status(200).json({ success: true, data: tatCaNguoiDung });
+  } catch (error) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      error: "Lỗi khi lấy danh sách tất cả người dùng",
+    });
+  }
+});
+
 // tổng số người dùng
-app.get('/totalUser', async (req, res) => {
+app.get("/totalUser", async (req, res) => {
   try {
     const userCount = await Customer.countDocuments();
     res.json({ success: true, data: { userCount } });
@@ -43,23 +62,26 @@ app.get('/totalUser', async (req, res) => {
   }
 });
 
-
 // xóa địa điểm du lịch
 app.delete("/deleteTouristAttraction", async (req, res) => {
   const idTourist = req.query.touristId;
 
   try {
     // Tìm region có provinces chứa touristAttraction có idTourist cần xóa
-    const region = await Region.findOne({ "provinces.touristAttraction.idTourist": idTourist });
+    const region = await Region.findOne({
+      "provinces.touristAttraction.idTourist": idTourist,
+    });
 
     if (!region) {
-      return res.status(404).json({ message: "Không tìm thấy touristAttraction với idTourist này." });
+      return res.status(404).json({
+        message: "Không tìm thấy touristAttraction với idTourist này.",
+      });
     }
 
     // Lọc và cập nhật provinces chỉ giữ lại các touristAttraction không có idTourist cần xóa
-    region.provinces.forEach(province => {
+    region.provinces.forEach((province) => {
       province.touristAttraction = province.touristAttraction.filter(
-        tourist => tourist.idTourist !== idTourist
+        (tourist) => tourist.idTourist !== idTourist
       );
     });
 
