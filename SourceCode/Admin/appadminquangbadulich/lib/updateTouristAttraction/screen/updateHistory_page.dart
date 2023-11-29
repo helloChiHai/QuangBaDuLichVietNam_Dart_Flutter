@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:io';
 
 import 'package:appadminquangbadulich/detailTouristAttraction/widgets/displayVideoWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../model/historyModel.dart';
 
@@ -21,19 +23,66 @@ class UpdateHistoryPage extends StatefulWidget {
 }
 
 class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
-  late List<HistoryModel> hitories;
+  late List<HistoryModel> histories;
   late String idTourist;
-  TextEditingController titleStoryStoryController = TextEditingController();
-  TextEditingController contentStoryStoryController = TextEditingController();
+
+  bool isCheckUploadImgTouristAttraction = false;
+  List<String?> updatedImagePaths = [];
+  final ImagePicker _imagePickerImgTourist = ImagePicker();
+
+  List<TextEditingController?> listTitleStoryController = [];
+  List<TextEditingController?> listcontentStoryController = [];
 
   @override
   void initState() {
     super.initState();
-    hitories = widget.dataHistory;
+    histories = widget.dataHistory;
     idTourist = widget.idTourist;
+
+    listTitleStoryController =
+        List.generate(histories.length, (index) => TextEditingController());
+
+    listcontentStoryController =
+        List.generate(histories.length, (index) => TextEditingController());
+
+    updatedImagePaths = List.generate(histories.length, (index) => null);
+
+    for (int i = 0; i < histories.length; i++) {
+      listTitleStoryController[i]!.text = histories[i].titleStoryStory;
+    }
+
+    for (int i = 0; i < histories.length; i++) {
+      listcontentStoryController[i]!.text = histories[i].contentStoryStory;
+    }
   }
 
-  Future<Widget> _buildImage(String? img) async {
+  void _updateHistory(int index) {
+    // Perform update logic here using the updated data
+    print(histories[index].idHistoryStory);
+    print(idTourist);
+    print(listTitleStoryController[index]!.text);
+    print(listcontentStoryController[index]!.text);
+    print(updatedImagePaths[index]);
+
+    // Add any other update logic you need here
+  }
+
+  Future<void> _pickImage(
+      ImagePicker imagePicker, String type, int index) async {
+    final PickedFile? pickedFile =
+        await imagePicker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      if (type == 'imgTourist') {
+        setState(() {
+          isCheckUploadImgTouristAttraction = true;
+          updatedImagePaths[index] = pickedFile.path;
+        });
+      }
+    }
+  }
+
+  Future<Widget> _buildImage(String? img, int index) async {
     if (img != null && img.isNotEmpty) {
       try {
         List<int> imageBytes = Base64Decoder().convert(img);
@@ -80,9 +129,9 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: hitories.length,
+        itemCount: histories.length,
         itemBuilder: (context, index) {
-          final history = hitories[index];
+          final history = histories[index];
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -91,10 +140,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      print(history.idHistoryStory);
-                      print(idTourist);
-                      print(titleStoryStoryController.text);
-                      print(contentStoryStoryController.text);
+                      _updateHistory(index);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -119,6 +165,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
                     onTap: () {
                       print(history.idHistoryStory);
                       print(idTourist);
+                      // Add any other delete logic you need here
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -143,9 +190,11 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
               const SizedBox(height: 10),
               history.titleStoryStory.isEmpty
                   ? TextField(
-                      controller: titleStoryStoryController,
-                      onChanged: (text) => handleTextChange(text,
-                          titleStoryStoryController, history.titleStoryStory),
+                      controller: listTitleStoryController[index],
+                      onChanged: (text) => handleTextChange(
+                          text,
+                          listTitleStoryController[index]!,
+                          history.titleStoryStory),
                       decoration: InputDecoration(
                         hintText: history.titleStoryStory,
                         hintStyle: const TextStyle(
@@ -160,12 +209,14 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
                         fontWeight: FontWeight.bold,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
+                      maxLines: null,
                     )
                   : TextField(
-                      controller: titleStoryStoryController,
-                      onChanged: (text) => handleTextChange(text,
-                          titleStoryStoryController, history.titleStoryStory),
+                      controller: listTitleStoryController[index],
+                      onChanged: (text) => handleTextChange(
+                          text,
+                          listTitleStoryController[index]!,
+                          history.titleStoryStory),
                       decoration: InputDecoration(
                         hintText: history.titleStoryStory,
                         hintStyle: const TextStyle(
@@ -183,9 +234,11 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
                     ),
               const SizedBox(height: 10),
               TextField(
-                controller: contentStoryStoryController,
-                onChanged: (text) => handleTextChange(text,
-                    contentStoryStoryController, history.contentStoryStory),
+                controller: listcontentStoryController[index],
+                onChanged: (text) => handleTextChange(
+                    text,
+                    listcontentStoryController[index]!,
+                    history.contentStoryStory),
                 decoration: InputDecoration(
                   hintText: history.contentStoryStory,
                   hintStyle: const TextStyle(
@@ -201,16 +254,71 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
                 maxLines: null,
               ),
               const SizedBox(height: 15),
-              FutureBuilder<Widget>(
-                future: _buildImage(history.imgHistory),
-                builder:
-                    (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return snapshot.data ?? Container();
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                },
+              Container(
+                width: double.infinity,
+                height: 250,
+                color: const Color.fromARGB(255, 173, 207, 235),
+                child: Stack(
+                  children: [
+                    updatedImagePaths[index] == null
+                        ? FutureBuilder<Widget>(
+                            future: _buildImage(history.imgHistory, index),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<Widget> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return snapshot.data ?? Container();
+                              } else {
+                                return const CircularProgressIndicator();
+                              }
+                            },
+                          )
+                        : Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              image: isCheckUploadImgTouristAttraction &&
+                                      updatedImagePaths[index] != null
+                                  ? DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(
+                                          File(updatedImagePaths[index]!)),
+                                    )
+                                  : null,
+                            ),
+                          ),
+                    Positioned(
+                      right: MediaQuery.of(context).size.width * 0.05,
+                      left: MediaQuery.of(context).size.width * 0.75,
+                      top: 150,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isCheckUploadImgTouristAttraction =
+                                !isCheckUploadImgTouristAttraction;
+                          });
+                          _pickImage(
+                              _imagePickerImgTourist, 'imgTourist', index);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 20,
+                          ),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color.fromRGBO(169, 169, 169, 0.5),
+                          ),
+                          child: const Icon(
+                            Icons.camera_alt,
+                            size: 30,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 15),
               if (history.videoHistory != null &&
