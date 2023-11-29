@@ -22,7 +22,7 @@ class UpdateTouristIntroBloc
           event.rightTime,
         );
         if (customer == 1) {
-          emit(UpdateTouristIntroSuccess(success: 'Nhập thành công'));
+          emit(UpdateTouristIntroSuccess(success: 'Cập nhật thành công'));
         } else {
           emit(UpdateTouristIntroFailure(error: 'Cập nhật không thành công!'));
         }

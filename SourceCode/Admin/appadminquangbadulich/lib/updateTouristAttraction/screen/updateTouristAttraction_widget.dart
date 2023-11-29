@@ -4,9 +4,9 @@ import 'dart:typed_data';
 
 import 'package:appadminquangbadulich/comment/screens/comment_page.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_culture.dart';
-import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_history.dart';
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateDetailContent_page.dart';
+import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateHistory_page.dart';
 import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateSpecialDish_page.dart';
 import 'package:appadminquangbadulich/update_tourist_intro/bloc/update_tourist_intro_bloc.dart';
 import 'package:appadminquangbadulich/update_tourist_intro/bloc/update_tourist_intro_event.dart';
@@ -45,7 +45,7 @@ class _UpdateTouristAttractionWidgetState
   // upload hình ảnh tourist
   bool isCheckUploadImgTouristAttraction = false;
   String? imagePathTouristAttraction;
-  final ImagePicker _imagePickerAvatarHistory = ImagePicker();
+  final ImagePicker _imagePickerImgTourist = ImagePicker();
 
   @override
   void initState() {
@@ -91,26 +91,6 @@ class _UpdateTouristAttractionWidgetState
           isCheckUploadImgTouristAttraction = true;
           imagePathTouristAttraction = pickedFile.path;
         });
-      } else if (type == 'avatarHistory') {
-        setState(() {
-          isCheckUploadImgTouristAttraction = true;
-          imagePathTouristAttraction = pickedFile.path;
-        });
-      } else if (type == 'imgHistory') {
-        setState(() {
-          // isCheckUploadImgimgHistory = true;
-          // imagePathimgHistory = pickedFile.path;
-        });
-      } else if (type == 'imgCulture') {
-        setState(() {
-          // isCheckUploadImgimgCulture = true;
-          // imagePathimgCulture = pickedFile.path;
-        });
-      } else if (type == 'imgDish') {
-        setState(() {
-          // isCheckUploadImgimgDish = true;
-          // imagePathimgDish = pickedFile.path;
-        });
       }
     }
   }
@@ -133,7 +113,7 @@ class _UpdateTouristAttractionWidgetState
         );
       } catch (e) {
         return Image.asset(
-          'assets/img/${img}',
+          'assets/img/$img',
           width: double.infinity,
           height: double.infinity,
           fit: BoxFit.cover,
@@ -298,7 +278,7 @@ class _UpdateTouristAttractionWidgetState
                             isCheckUploadImgTouristAttraction =
                                 !isCheckUploadImgTouristAttraction;
                           });
-                          _pickImage(_imagePickerAvatarHistory, 'imgTourist');
+                          _pickImage(_imagePickerImgTourist, 'imgTourist');
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -642,7 +622,7 @@ class _UpdateTouristAttractionWidgetState
                             touristIntroduction: tourist.touristIntroduction,
                           ),
                           DetailCulture(dataCulture: tourist.culture),
-                          DetailHistory(dataHistory: tourist.history),
+                          UpdateHistoryPage(dataHistory: tourist.history, idTourist: tourist.idTourist),
                           UpdateSpecialtyDishPage(
                               dataSpecialtyDish: tourist.specialtyDish),
                           CommentPage(idTourist: tourist.idTourist),

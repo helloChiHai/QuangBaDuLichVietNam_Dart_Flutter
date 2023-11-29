@@ -8,7 +8,40 @@ import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:http/http.dart' as http;
 
 class AdminRepository {
-  String urlMain = 'http://192.168.243.214:3090';
+  String urlMain = 'http://192.168.1.36:3090';
+
+  // CẬP NHẬT HISTORY TOURIST
+  Future<int> updateTouristHistory(
+    String idTourist,
+    String idHistoryStory,
+    String titleStoryStory,
+    String contentStoryStory,
+    String? avatarHistory,
+    String? imgHistory,
+    String? videoHistory,
+  ) async {
+    final urlUpdate = '$urlMain/update-history/$idTourist/$idHistoryStory';
+    try {
+      final response = await http.put(Uri.parse(urlUpdate),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'idTourist': idTourist,
+            'idHistoryStory': idHistoryStory,
+            'titleStoryStory': titleStoryStory,
+            'contentStoryStory': contentStoryStory,
+            'avatarHistory': avatarHistory,
+            'imgHistory': imgHistory,
+            'videoHistory': videoHistory,
+          }));
+      if (response.statusCode == 200) {
+        return 1;
+      } else {
+        throw Exception('Lỗi cập nhật history: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
   // CẬP NHẬT INTRO TOURIST
   Future<int> updateTouristIntro(
@@ -26,18 +59,19 @@ class AdminRepository {
       final response = await http.put(Uri.parse(urlUpdate),
           headers: {'Content-Type': 'application/json'},
           body: json.encode({
+            'idTourist': idTourist,
             'nameTourist': nameTourist,
             'typeTourist': typeTourist,
-            'idTourist': idTourist,
             'address': address,
             'ticket': ticket,
+            'imgTourist': imgTourist,
             'touristIntroduction': touristIntroduction,
             'rightTime': rightTime,
           }));
       if (response.statusCode == 200) {
         return 1;
       } else {
-        throw Exception('Lỗi cập nhật img: ${response.reasonPhrase}');
+        throw Exception('Lỗi cập nhật intro tourist: ${response.reasonPhrase}');
       }
     } catch (e) {
       throw Exception(e);

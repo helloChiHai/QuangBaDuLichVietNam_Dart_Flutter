@@ -20,6 +20,7 @@ import 'package:appadminquangbadulich/totalTouristAttraction/bloc/totalTouristAt
 import 'package:appadminquangbadulich/totalUser/bloc/totalUser_bloc.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
 import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateTouristAttraction_page.dart';
+import 'package:appadminquangbadulich/update_tourist_history/bloc/update_tourist_history_bloc.dart';
 import 'package:appadminquangbadulich/update_tourist_intro/bloc/update_tourist_intro_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,6 +54,11 @@ class MyApp extends StatelessWidget {
 void main() {
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider<UpdateTouristHistoryBloc>(
+        create: (context) => UpdateTouristHistoryBloc(
+          adminRepository: AdminRepository(),
+        ),
+      ),
       BlocProvider<UpdateTouristIntroBloc>(
         create: (context) => UpdateTouristIntroBloc(
           adminRepository: AdminRepository(),

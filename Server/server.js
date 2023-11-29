@@ -34,6 +34,55 @@ checkMongoDBConnection();
 
 // ========================== ADMIN =================================================
 
+// cập nhật history
+app.put('/update-history/:idTourist/:idHistoryStory', async (req, res) => {
+  const { idTourist, idHistoryStory } = req.params; 
+  const {
+    titleStoryStory,
+    contentStoryStory,
+    avatarHistory,
+    imgHistory,
+    videoHistory,
+  } = req.body;
+
+  try {
+    const region = await Region.findOne({
+      'provinces.touristAttraction.idTourist': idTourist,
+    });
+
+    if (!region) {
+      return res.status(404).json({ error: 'Không tìm thấy touristAttraction với idTourist đã cho' });
+    }
+
+    region.provinces.forEach((province) => {
+      const tourist = province.touristAttraction.find(
+        (tourist) => tourist.idTourist === idTourist
+      );
+
+      if (tourist) {
+        const historyItem = tourist.history.find(
+          (history) => history.idHistoryStory === idHistoryStory
+        );
+
+        if (historyItem) {
+          historyItem.titleStoryStory = titleStoryStory || historyItem.titleStoryStory;
+          historyItem.contentStoryStory = contentStoryStory || historyItem.contentStoryStory;
+          historyItem.avatarHistory = avatarHistory || historyItem.avatarHistory;
+          historyItem.imgHistory = imgHistory || historyItem.imgHistory;
+          historyItem.videoHistory = videoHistory || historyItem.videoHistory;
+        }
+      }
+    });
+
+    await region.save();
+
+    res.json({ message: 'Cập nhật thông tin history thành công' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Lỗi server' });
+  }
+});
+
 // cập nhật địa điểm - giới thiệu
 app.put("/update-tourist/:idTourist", async (req, res) => {
   const { idTourist } = req.params; // Lấy idTourist từ URL
