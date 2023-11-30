@@ -34,22 +34,112 @@ checkMongoDBConnection();
 
 // ========================== ADMIN =================================================
 
-// cập nhật history
-app.put('/update-history/:idTourist/:idHistoryStory', async (req, res) => {
-  const { idTourist, idHistoryStory } = req.params; 
-  const {
-    titleStoryStory,
-    contentStoryStory,
-    imgHistory,
-  } = req.body;
+// cập nhật culture
+app.put("/update-specialDish/:idTourist/:idDish", async (req, res) => {
+  const { idTourist, idDish } = req.params;
+  const { nameDish, addressDish, imgDish, dishIntroduction } = req.body;
 
   try {
     const region = await Region.findOne({
-      'provinces.touristAttraction.idTourist': idTourist,
+      "provinces.touristAttraction.idTourist": idTourist,
     });
 
     if (!region) {
-      return res.status(404).json({ error: 'Không tìm thấy touristAttraction với idTourist đã cho' });
+      return res.status(404).json({
+        error: "Không tìm thấy touristAttraction với idTourist đã cho",
+      });
+    }
+
+    region.provinces.forEach((province) => {
+      const tourist = province.touristAttraction.find(
+        (tourist) => tourist.idTourist === idTourist
+      );
+
+      if (tourist) {
+        const specialtyDishItem = tourist.specialtyDish.find(
+          (specialtyDish) => specialtyDish.idDish === idDish
+        );
+
+        if (specialtyDishItem) {
+          specialtyDishItem.nameDish = nameDish || specialtyDishItem.nameDish;
+          specialtyDishItem.addressDish =
+            addressDish || specialtyDishItem.addressDish;
+          specialtyDishItem.imgDish = imgDish || specialtyDishItem.imgDish;
+          specialtyDishItem.dishIntroduction =
+            dishIntroduction || specialtyDishItem.dishIntroduction;
+        }
+      }
+    });
+
+    await region.save();
+    console.log("Cập nhật thông tin món ăn đặc sản thành công");
+    res.json({ message: "Cập nhật thông tin món ăn đặc sản thành công" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
+// cập nhật culture
+app.put("/update-culture/:idTourist/:idCulture", async (req, res) => {
+  const { idTourist, idCulture } = req.params;
+  const { titleCulture, contentCulture, imgCulture } = req.body;
+
+  try {
+    const region = await Region.findOne({
+      "provinces.touristAttraction.idTourist": idTourist,
+    });
+
+    if (!region) {
+      return res.status(404).json({
+        error: "Không tìm thấy touristAttraction với idTourist đã cho",
+      });
+    }
+
+    region.provinces.forEach((province) => {
+      const tourist = province.touristAttraction.find(
+        (tourist) => tourist.idTourist === idTourist
+      );
+
+      if (tourist) {
+        const cultureItem = tourist.culture.find(
+          (culture) => culture.idCulture === idCulture
+        );
+
+        if (cultureItem) {
+          cultureItem.titleCulture = titleCulture || cultureItem.titleCulture;
+          cultureItem.contentCulture =
+            contentCulture || cultureItem.contentCulture;
+          // cultureItem.avatarculture = avatarculture || cultureItem.avatarculture;
+          cultureItem.imgCulture = imgCulture || cultureItem.imgCulture;
+          // cultureItem.videoculture = videoculture || cultureItem.videoculture;
+        }
+      }
+    });
+
+    await region.save();
+    console.log("Cập nhật thông tin culture thành công");
+    res.json({ message: "Cập nhật thông tin culture thành công" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
+// cập nhật history
+app.put("/update-history/:idTourist/:idHistoryStory", async (req, res) => {
+  const { idTourist, idHistoryStory } = req.params;
+  const { titleStoryStory, contentStoryStory, imgHistory } = req.body;
+
+  try {
+    const region = await Region.findOne({
+      "provinces.touristAttraction.idTourist": idTourist,
+    });
+
+    if (!region) {
+      return res.status(404).json({
+        error: "Không tìm thấy touristAttraction với idTourist đã cho",
+      });
     }
 
     region.provinces.forEach((province) => {
@@ -63,8 +153,10 @@ app.put('/update-history/:idTourist/:idHistoryStory', async (req, res) => {
         );
 
         if (historyItem) {
-          historyItem.titleStoryStory = titleStoryStory || historyItem.titleStoryStory;
-          historyItem.contentStoryStory = contentStoryStory || historyItem.contentStoryStory;
+          historyItem.titleStoryStory =
+            titleStoryStory || historyItem.titleStoryStory;
+          historyItem.contentStoryStory =
+            contentStoryStory || historyItem.contentStoryStory;
           // historyItem.avatarHistory = avatarHistory || historyItem.avatarHistory;
           historyItem.imgHistory = imgHistory || historyItem.imgHistory;
           // historyItem.videoHistory = videoHistory || historyItem.videoHistory;
@@ -74,10 +166,10 @@ app.put('/update-history/:idTourist/:idHistoryStory', async (req, res) => {
 
     await region.save();
     console.log("cap nhat thanh cong");
-    res.json({ message: 'Cập nhật thông tin history thành công' });
+    res.json({ message: "Cập nhật thông tin history thành công" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Lỗi server' });
+    res.status(500).json({ error: "Lỗi server" });
   }
 });
 
@@ -100,11 +192,9 @@ app.put("/update-tourist/:idTourist", async (req, res) => {
     });
 
     if (!region) {
-      return res
-        .status(404)
-        .json({
-          error: "Không tìm thấy touristAttraction với idTourist đã cho",
-        });
+      return res.status(404).json({
+        error: "Không tìm thấy touristAttraction với idTourist đã cho",
+      });
     }
 
     region.provinces.forEach((province) => {
@@ -1111,7 +1201,6 @@ app.get("/totalTouristAttraction", async (req, res) => {
       });
     });
     const totalAttractions = parseInt(tatCaDiaDiemDuLich.length);
-    console.log(typeof totalAttractions);
     res.status(200).json({ success: true, data: totalAttractions });
   } catch (error) {
     console.log(e);

@@ -10,6 +10,67 @@ import 'package:http/http.dart' as http;
 class AdminRepository {
   String urlMain = 'http://172.16.133.138:3090';
 
+  // CẬP NHẬT SPECIAL DISH TOURIST
+  Future<int> updateTouristSpecialDish(
+    String idTourist,
+    String idDish,
+    String nameDish,
+    String addressDish,
+    String? imgDish,
+    String dishIntroduction,
+  ) async {
+    final urlUpdate = '$urlMain/update-specialDish/$idTourist/$idDish';
+    try {
+      final response = await http.put(Uri.parse(urlUpdate),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'idTourist': idTourist,
+            'idDish': idDish,
+            'nameDish': nameDish,
+            'addressDish': addressDish,
+            'imgDish': imgDish,
+            'dishIntroduction': dishIntroduction,
+          }));
+      if (response.statusCode == 200) {
+        return 1;
+      } else {
+        throw Exception(
+            'Lỗi cập nhật món ăn đặc sản: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  // CẬP NHẬT CULTURE TOURIST
+  Future<int> updateTouristCulture(
+    String idTourist,
+    String idCulture,
+    String titleCulture,
+    String contentCulture,
+    String? imgCulture,
+  ) async {
+    final urlUpdate = '$urlMain/update-culture/$idTourist/$idCulture';
+    try {
+      final response = await http.put(Uri.parse(urlUpdate),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            'idTourist': idTourist,
+            'idCulture': idCulture,
+            'titleCulture': titleCulture,
+            'contentCulture': contentCulture,
+            'imgCulture': imgCulture,
+          }));
+      if (response.statusCode == 200) {
+        return 1;
+      } else {
+        throw Exception('Lỗi cập nhật văn hóa: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   // CẬP NHẬT HISTORY TOURIST
   Future<int> updateTouristHistory(
     String idTourist,

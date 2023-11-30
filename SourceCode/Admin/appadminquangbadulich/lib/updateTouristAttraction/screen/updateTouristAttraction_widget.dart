@@ -3,8 +3,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:appadminquangbadulich/comment/screens/comment_page.dart';
-import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_culture.dart';
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
+import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateCulture_page.dart';
 import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateDetailContent_page.dart';
 import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateHistory_page.dart';
 import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateSpecialDish_page.dart';
@@ -621,10 +621,15 @@ class _UpdateTouristAttractionWidgetState
                                 touristIntroductionController, text),
                             touristIntroduction: tourist.touristIntroduction,
                           ),
-                          DetailCulture(dataCulture: tourist.culture),
-                          UpdateHistoryPage(dataHistory: tourist.history, idTourist: tourist.idTourist),
+                          UpdateCulturePage(
+                              dataCulture: tourist.culture,
+                              idTourist: tourist.idTourist),
+                          UpdateHistoryPage(
+                              dataHistory: tourist.history,
+                              idTourist: tourist.idTourist),
                           UpdateSpecialtyDishPage(
-                              dataSpecialtyDish: tourist.specialtyDish),
+                              dataSpecialtyDish: tourist.specialtyDish,
+                              idTourist: tourist.idTourist),
                           CommentPage(idTourist: tourist.idTourist),
                         ],
                       ),

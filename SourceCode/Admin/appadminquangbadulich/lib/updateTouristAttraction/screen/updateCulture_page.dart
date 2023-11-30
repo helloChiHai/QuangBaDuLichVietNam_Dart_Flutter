@@ -2,67 +2,60 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:appadminquangbadulich/update_tourist_specialDish/bloc/update_tourist_specialDish_event.dart';
-import 'package:appadminquangbadulich/update_tourist_specialDish/bloc/update_tourist_specialDish_state.dart';
+import 'package:appadminquangbadulich/detailTouristAttraction/widgets/displayVideoWidget.dart';
+import 'package:appadminquangbadulich/model/cultureModel.dart';
+import 'package:appadminquangbadulich/update_tourist_culture/bloc/update_tourist_culture_bloc.dart';
+import 'package:appadminquangbadulich/update_tourist_culture/bloc/update_tourist_culture_event.dart';
+import 'package:appadminquangbadulich/update_tourist_culture/bloc/update_tourist_culture_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../model/specialtyDishModel.dart';
-import '../../update_tourist_specialDish/bloc/update_tourist_specialDish_bloc.dart';
-
-class UpdateSpecialtyDishPage extends StatefulWidget {
-  final List<SpecialtyDishModel> dataSpecialtyDish;
+class UpdateCulturePage extends StatefulWidget {
+  final List<CultureModel> dataCulture;
   final String idTourist;
-  const UpdateSpecialtyDishPage({
+
+  const UpdateCulturePage({
     Key? key,
-    required this.dataSpecialtyDish,
+    required this.dataCulture,
     required this.idTourist,
   }) : super(key: key);
 
   @override
-  State<UpdateSpecialtyDishPage> createState() =>
-      _UpdateSpecialtyDishPageState();
+  State<UpdateCulturePage> createState() => _UpdateCulturePageState();
 }
 
-class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
-  late List<SpecialtyDishModel> specialDishs;
+class _UpdateCulturePageState extends State<UpdateCulturePage> {
+  late List<CultureModel> cultures;
   late String idTourist;
 
   bool isCheckUploadImgTouristAttraction = false;
   List<String?> updatedImagePaths = [];
   final ImagePicker _imagePickerImgTourist = ImagePicker();
 
-  List<TextEditingController?> listNameDishController = [];
-  List<TextEditingController?> listAddressDishController = [];
-  List<TextEditingController?> listDishIntroductionController = [];
+  List<TextEditingController?> listTitleCultureController = [];
+  List<TextEditingController?> listContentCultureController = [];
 
   @override
   void initState() {
     super.initState();
-    specialDishs = widget.dataSpecialtyDish;
+    cultures = widget.dataCulture;
     idTourist = widget.idTourist;
 
-    listNameDishController =
-        List.generate(specialDishs.length, (index) => TextEditingController());
+    listTitleCultureController =
+        List.generate(cultures.length, (index) => TextEditingController());
 
-    listAddressDishController =
-        List.generate(specialDishs.length, (index) => TextEditingController());
-    listDishIntroductionController =
-        List.generate(specialDishs.length, (index) => TextEditingController());
+    listContentCultureController =
+        List.generate(cultures.length, (index) => TextEditingController());
 
-    updatedImagePaths = List.generate(specialDishs.length, (index) => null);
+    updatedImagePaths = List.generate(cultures.length, (index) => null);
 
-    for (int i = 0; i < specialDishs.length; i++) {
-      listNameDishController[i]!.text = specialDishs[i].nameDish;
+    for (int i = 0; i < cultures.length; i++) {
+      listTitleCultureController[i]!.text = cultures[i].titleCulture;
     }
 
-    for (int i = 0; i < specialDishs.length; i++) {
-      listAddressDishController[i]!.text = specialDishs[i].addressDish;
-    }
-    for (int i = 0; i < specialDishs.length; i++) {
-      listDishIntroductionController[i]!.text =
-          specialDishs[i].dishIntroduction;
+    for (int i = 0; i < cultures.length; i++) {
+      listContentCultureController[i]!.text = cultures[i].contentCulture;
     }
   }
 
@@ -75,16 +68,15 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
     }
 
     String imgHistory = await getBase64Data(
-        updatedImagePaths[index], specialDishs[index].imgDish!);
+        updatedImagePaths[index], cultures[index].imgCulture!);
 
-    BlocProvider.of<UpdateTouristSpeicalDishBloc>(context).add(
-      UpdateTouristSpecialDishButtonPressed(
+    BlocProvider.of<UpdateTouristCultureBloc>(context).add(
+      UpdateTouristCultureButtonPressed(
         idTourist: idTourist,
-        idDish: specialDishs[index].idDish,
-        nameDish: listNameDishController[index]!.text,
-        addressDish: listAddressDishController[index]!.text,
-        imgDish: imgHistory,
-        dishIntroduction: listDishIntroductionController[index]!.text,
+        idCulture: cultures[index].idCulture,
+        titleCulture: listTitleCultureController[index]!.text,
+        contentCulture: listContentCultureController[index]!.text,
+        imgCulture: imgHistory,
       ),
     );
   }
@@ -95,7 +87,7 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
         await imagePicker.getImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      if (type == 'imgDish') {
+      if (type == 'imgHistory') {
         setState(() {
           isCheckUploadImgTouristAttraction = true;
           updatedImagePaths[index] = pickedFile.path;
@@ -157,23 +149,23 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: specialDishs.length,
+        itemCount: cultures.length,
         itemBuilder: (context, index) {
-          final specialtyDish = specialDishs[index];
+          final culture = cultures[index];
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  BlocListener<UpdateTouristSpeicalDishBloc,
-                      UpdateTouristSpecialDishState>(
+                  BlocListener<UpdateTouristCultureBloc,
+                      UpdateTouristCultureState>(
                     listener: (context, state) {
-                      if (state is UpdateTouristSpecialDishSuccess) {
+                      if (state is UpdateTouristCultureSuccess) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
-                              'Cập nhật món ăn thành công!',
+                              'Cập nhật văn hóa thành công!',
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -181,11 +173,11 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                             backgroundColor: Colors.green,
                           ),
                         );
-                      } else if (state is UpdateTouristSpecialDishFailure) {
+                      } else if (state is UpdateTouristCultureFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
-                              'Cập nhật món ăn không thành công!',
+                              'Cập nhật văn hóa không thành công!',
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -209,7 +201,7 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                           color: Colors.blue[200],
                         ),
                         child: const Text(
-                          'Cập nhật món ăn',
+                          'Cập nhật văn hóa',
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.black,
@@ -221,7 +213,7 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                   const SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
-                      print(specialDishs.indexed);
+                      print(culture.idCulture);
                       print(idTourist);
                       // Add any other delete logic you need here
                     },
@@ -246,15 +238,15 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                 ],
               ),
               const SizedBox(height: 10),
-              specialtyDish.nameDish.isEmpty
+              culture.titleCulture.isEmpty
                   ? TextField(
-                      controller: listNameDishController[index],
+                      controller: listTitleCultureController[index],
                       onChanged: (text) => handleTextChange(
                           text,
-                          listNameDishController[index]!,
-                          specialtyDish.nameDish),
+                          listTitleCultureController[index]!,
+                          culture.titleCulture),
                       decoration: InputDecoration(
-                        hintText: specialtyDish.nameDish,
+                        hintText: culture.titleCulture,
                         hintStyle: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -270,13 +262,13 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                       maxLines: null,
                     )
                   : TextField(
-                      controller: listNameDishController[index],
+                      controller: listTitleCultureController[index],
                       onChanged: (text) => handleTextChange(
                           text,
-                          listNameDishController[index]!,
-                          specialtyDish.nameDish),
+                          listTitleCultureController[index]!,
+                          culture.titleCulture),
                       decoration: InputDecoration(
-                        hintText: specialtyDish.nameDish,
+                        hintText: culture.titleCulture,
                         hintStyle: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -290,75 +282,15 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-              const SizedBox(height: 5),
-              const Text(
-                'Địa chỉ: ',
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-              specialtyDish.addressDish.isEmpty
-                  ? TextField(
-                      controller: listAddressDishController[index],
-                      onChanged: (text) => handleTextChange(
-                          text,
-                          listAddressDishController[index]!,
-                          specialtyDish.addressDish),
-                      decoration: InputDecoration(
-                        hintText: specialtyDish.addressDish,
-                        hintStyle: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      maxLines: null,
-                    )
-                  : TextField(
-                      controller: listAddressDishController[index],
-                      onChanged: (text) => handleTextChange(
-                          text,
-                          listAddressDishController[index]!,
-                          specialtyDish.addressDish),
-                      decoration: InputDecoration(
-                        hintText: specialtyDish.addressDish,
-                        hintStyle: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        border: InputBorder.none,
-                      ),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-              // specialtyDish.addressDish.isNotEmpty
-              //     ? Text(
-              //         'Địa chỉ: ${specialtyDish.addressDish}',
-              //         style: const TextStyle(
-              //           color: Colors.black,
-              //           fontSize: 20,
-              //           fontStyle: FontStyle.italic,
-              //         ),
-              //       )
-              //     : Container(),
               const SizedBox(height: 10),
               TextField(
-                controller: listDishIntroductionController[index],
+                controller: listContentCultureController[index],
                 onChanged: (text) => handleTextChange(
                     text,
-                    listDishIntroductionController[index]!,
-                    specialtyDish.dishIntroduction),
+                    listContentCultureController[index]!,
+                    culture.contentCulture),
                 decoration: InputDecoration(
-                  hintText: specialtyDish.dishIntroduction,
+                  hintText: culture.contentCulture,
                   hintStyle: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
@@ -371,7 +303,7 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                 ),
                 maxLines: null,
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               Container(
                 width: double.infinity,
                 height: 250,
@@ -380,8 +312,7 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                   children: [
                     updatedImagePaths[index] == null
                         ? FutureBuilder<Widget>(
-                            future: _buildImage(
-                                specialtyDish.imgDish, index),
+                            future: _buildImage(culture.imgCulture, index),
                             builder: (BuildContext context,
                                 AsyncSnapshot<Widget> snapshot) {
                               if (snapshot.connectionState ==
@@ -416,7 +347,8 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                             isCheckUploadImgTouristAttraction =
                                 !isCheckUploadImgTouristAttraction;
                           });
-                          _pickImage(_imagePickerImgTourist, 'imgDish', index);
+                          _pickImage(
+                              _imagePickerImgTourist, 'imgHistory', index);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -438,7 +370,14 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 15),
+              if (culture.videoCulture != null &&
+                  culture.videoCulture!.isNotEmpty)
+                YouTubePlayerWidget(
+                  youtubeVideoUrl: culture.videoCulture!,
+                )
+              else
+                Container(),
             ],
           );
         },
