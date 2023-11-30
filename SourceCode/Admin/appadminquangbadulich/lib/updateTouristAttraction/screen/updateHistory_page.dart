@@ -3,10 +3,14 @@ import 'dart:typed_data';
 import 'dart:io';
 
 import 'package:appadminquangbadulich/detailTouristAttraction/widgets/displayVideoWidget.dart';
+import 'package:appadminquangbadulich/update_tourist_history/bloc/update_tourist_history_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../model/historyModel.dart';
+import '../../update_tourist_history/bloc/update_tourist_history_bloc.dart';
+import '../../update_tourist_history/bloc/update_tourist_history_state.dart';
 
 class UpdateHistoryPage extends StatefulWidget {
   final List<HistoryModel> dataHistory;
@@ -56,15 +60,32 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
     }
   }
 
-  void _updateHistory(int index) {
-    // Perform update logic here using the updated data
-    print(histories[index].idHistoryStory);
-    print(idTourist);
-    print(listTitleStoryController[index]!.text);
-    print(listcontentStoryController[index]!.text);
-    print(updatedImagePaths[index]);
+  Future<String> convertImageToBase64(File imageFile) async {
+    List<int> imageBytes = await imageFile.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+    return base64Image;
+  }
 
-    // Add any other update logic you need here
+  void _updateHistory(int index) async {
+    Future<String> getBase64Data(String? imagePath, String imgDefault) async {
+      if (imagePath != null) {
+        return await convertImageToBase64(File(imagePath));
+      }
+      return imgDefault;
+    }
+
+    String imgHistory = await getBase64Data(
+        updatedImagePaths[index], histories[index].imgHistory!);
+
+    BlocProvider.of<UpdateTouristHistoryBloc>(context).add(
+      UpdateTouristHistoryButtonPressed(
+        idTourist: idTourist,
+        idHistoryStory: histories[index].idHistoryStory,
+        titleStoryStory: listTitleStoryController[index]!.text,
+        contentStoryStory: listcontentStoryController[index]!.text,
+        imgHistory: imgHistory,
+      ),
+    );
   }
 
   Future<void> _pickImage(
@@ -73,7 +94,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
         await imagePicker.getImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      if (type == 'imgTourist') {
+      if (type == 'imgHistory') {
         setState(() {
           isCheckUploadImgTouristAttraction = true;
           updatedImagePaths[index] = pickedFile.path;
@@ -138,24 +159,54 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      _updateHistory(index);
+                  BlocListener<UpdateTouristHistoryBloc,
+                      UpdateTouristHistoryState>(
+                    listener: (context, state) {
+                      if (state is UpdateTouristHistorySuccess) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Cập nhật thành công!',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      } else if (state is UpdateTouristHistoryFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Cập nhật không thành công!',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
                     },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue[200],
-                      ),
-                      child: const Text(
-                        'Cập nhật lịch sử',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
+                    child: GestureDetector(
+                      onTap: () {
+                        _updateHistory(index);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blue[200],
+                        ),
+                        child: const Text(
+                          'Cập nhật lịch sử',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ),
@@ -298,7 +349,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
                                 !isCheckUploadImgTouristAttraction;
                           });
                           _pickImage(
-                              _imagePickerImgTourist, 'imgTourist', index);
+                              _imagePickerImgTourist, 'imgHistory', index);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(

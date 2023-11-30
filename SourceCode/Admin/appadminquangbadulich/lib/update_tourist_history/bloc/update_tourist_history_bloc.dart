@@ -16,9 +16,7 @@ class UpdateTouristHistoryBloc
           event.idHistoryStory,
           event.titleStoryStory,
           event.contentStoryStory,
-          event.avatarHistory,
           event.imgHistory,
-          event.videoHistory,
         );
         if (customer == 1) {
           emit(UpdateTouristHistorySuccess(success: 'Cập nhật thành công'));

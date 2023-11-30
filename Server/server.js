@@ -40,9 +40,7 @@ app.put('/update-history/:idTourist/:idHistoryStory', async (req, res) => {
   const {
     titleStoryStory,
     contentStoryStory,
-    avatarHistory,
     imgHistory,
-    videoHistory,
   } = req.body;
 
   try {
@@ -67,15 +65,15 @@ app.put('/update-history/:idTourist/:idHistoryStory', async (req, res) => {
         if (historyItem) {
           historyItem.titleStoryStory = titleStoryStory || historyItem.titleStoryStory;
           historyItem.contentStoryStory = contentStoryStory || historyItem.contentStoryStory;
-          historyItem.avatarHistory = avatarHistory || historyItem.avatarHistory;
+          // historyItem.avatarHistory = avatarHistory || historyItem.avatarHistory;
           historyItem.imgHistory = imgHistory || historyItem.imgHistory;
-          historyItem.videoHistory = videoHistory || historyItem.videoHistory;
+          // historyItem.videoHistory = videoHistory || historyItem.videoHistory;
         }
       }
     });
 
     await region.save();
-
+    console.log("cap nhat thanh cong");
     res.json({ message: 'Cập nhật thông tin history thành công' });
   } catch (error) {
     console.error(error);

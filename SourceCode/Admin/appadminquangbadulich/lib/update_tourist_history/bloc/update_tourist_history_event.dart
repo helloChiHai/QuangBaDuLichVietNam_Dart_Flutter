@@ -11,17 +11,13 @@ class UpdateTouristHistoryButtonPressed extends UpdateTouristHistoryEvent {
   final String idHistoryStory;
   final String titleStoryStory;
   final String contentStoryStory;
-  final String? avatarHistory;
   final String? imgHistory;
-  final String? videoHistory;
   UpdateTouristHistoryButtonPressed({
     required this.idTourist,
     required this.idHistoryStory,
     required this.titleStoryStory,
     required this.contentStoryStory,
-    required this.avatarHistory,
     required this.imgHistory,
-    required this.videoHistory,
   });
   @override
   List<Object?> get props => [
@@ -29,8 +25,6 @@ class UpdateTouristHistoryButtonPressed extends UpdateTouristHistoryEvent {
         idHistoryStory,
         titleStoryStory,
         contentStoryStory,
-        avatarHistory,
         imgHistory,
-        videoHistory,
       ];
 }

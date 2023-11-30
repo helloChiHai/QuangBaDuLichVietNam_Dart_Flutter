@@ -8,7 +8,7 @@ import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:http/http.dart' as http;
 
 class AdminRepository {
-  String urlMain = 'http://192.168.98.214:3090';
+  String urlMain = 'http://172.16.133.138:3090';
 
   // CẬP NHẬT HISTORY TOURIST
   Future<int> updateTouristHistory(
@@ -16,9 +16,7 @@ class AdminRepository {
     String idHistoryStory,
     String titleStoryStory,
     String contentStoryStory,
-    String? avatarHistory,
     String? imgHistory,
-    String? videoHistory,
   ) async {
     final urlUpdate = '$urlMain/update-history/$idTourist/$idHistoryStory';
     try {
@@ -29,9 +27,7 @@ class AdminRepository {
             'idHistoryStory': idHistoryStory,
             'titleStoryStory': titleStoryStory,
             'contentStoryStory': contentStoryStory,
-            'avatarHistory': avatarHistory,
             'imgHistory': imgHistory,
-            'videoHistory': videoHistory,
           }));
       if (response.statusCode == 200) {
         return 1;
