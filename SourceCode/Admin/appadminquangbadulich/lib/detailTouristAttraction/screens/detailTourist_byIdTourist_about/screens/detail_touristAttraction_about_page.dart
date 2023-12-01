@@ -1,13 +1,16 @@
 import 'package:appadminquangbadulich/detailTouristAttraction/bloc/bloc_tourist/detailTourist_about_bloc.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/bloc/bloc_tourist/detailTourist_about_event.dart';
 import 'package:appadminquangbadulich/detailTouristAttraction/bloc/bloc_tourist/detailTourist_about_state.dart';
-import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../widgets/detail_touristAttraction_about_widget.dart';
 
 class DetailTouristAttraction_AboutPage extends StatefulWidget {
-  const DetailTouristAttraction_AboutPage({Key? key}) : super(key: key);
+  final String idTourist;
+  const DetailTouristAttraction_AboutPage({
+    Key? key,
+    required this.idTourist,
+  }) : super(key: key);
 
   @override
   State<DetailTouristAttraction_AboutPage> createState() =>
@@ -16,30 +19,14 @@ class DetailTouristAttraction_AboutPage extends StatefulWidget {
 
 class _DetailTouristAttraction_AboutPageState
     extends State<DetailTouristAttraction_AboutPage> {
-  late TouristAttractionModel touristAttraction;
   bool isCheckVisibility = false;
 
   @override
   void initState() {
+    context
+        .read<DetailTourist_AboutBloc>()
+        .add(getTouristWithIdTourist(idTourist: widget.idTourist));
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final Map<String, dynamic> arguments =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      touristAttraction = arguments['aboutTouristData'];
-      context
-          .read<DetailTourist_AboutBloc>()
-          .add(getTouristWithIdTourist(idTourist: touristAttraction.idTourist));
-    });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -66,5 +53,10 @@ class _DetailTouristAttraction_AboutPageState
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

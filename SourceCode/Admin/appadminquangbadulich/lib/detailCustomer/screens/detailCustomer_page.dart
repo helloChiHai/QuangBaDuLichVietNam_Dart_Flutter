@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
 import 'package:appadminquangbadulich/listFavoriteTouristAttraction/bloc/getTouristInFavoriteList_bloc.dart';
 import 'package:appadminquangbadulich/listFavoriteTouristAttraction/bloc/getTouristInFavoriteList_event.dart';
 import 'package:appadminquangbadulich/listFavoriteTouristAttraction/bloc/getTouristInFavoriteList_state.dart';
@@ -210,8 +211,6 @@ class _DetailCustomerPageState extends State<DetailCustomerPage> {
                             isProfileVisible = true;
                             isSaveTourVisible = false;
                           });
-                          print('isProfileVisible: $isProfileVisible');
-                          print('isSaveTourVisible: $isSaveTourVisible');
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -452,12 +451,14 @@ class _DetailCustomerPageState extends State<DetailCustomerPage> {
                                         touristList[index];
                                     return GestureDetector(
                                       onTap: () {
-                                        Navigator.of(context).pushNamed(
-                                            '/detail_touriestAttraction_about',
-                                            arguments: {
-                                              'aboutTouristData':
-                                                  touristAttraction,
-                                            });
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailTouristAttraction_AboutPage(
+                                            idTourist:
+                                                touristAttraction.idTourist,
+                                          ),
+                                        ));
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(

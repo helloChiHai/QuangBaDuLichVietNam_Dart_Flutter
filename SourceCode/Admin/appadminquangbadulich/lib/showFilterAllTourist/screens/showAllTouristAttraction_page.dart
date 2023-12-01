@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
 import 'package:appadminquangbadulich/model/filterRegionModel.dart';
 import 'package:appadminquangbadulich/model/provinceModel.dart';
 import 'package:appadminquangbadulich/province/bloc/province_bloc.dart';
@@ -272,12 +273,14 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                                       touristAttractions[index];
                                   return GestureDetector(
                                     onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                          '/detail_touriestAttraction_about',
-                                          arguments: {
-                                            'aboutTouristData':
-                                                touristAttraction,
-                                          });
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailTouristAttraction_AboutPage(
+                                          idTourist:
+                                              touristAttraction.idTourist,
+                                        ),
+                                      ));
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -285,7 +288,7 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                                       ),
                                       child: Stack(
                                         children: [
-                                           ClipRRect(
+                                          ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                             child: FutureBuilder<Widget>(
@@ -572,6 +575,11 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
+                    ),
+                    Row(
+                      children: [
+
+                      ],
                     ),
                     Container(
                       width: 150,

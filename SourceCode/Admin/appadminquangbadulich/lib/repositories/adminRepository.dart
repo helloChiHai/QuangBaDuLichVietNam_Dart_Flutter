@@ -8,7 +8,7 @@ import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:http/http.dart' as http;
 
 class AdminRepository {
-  String urlMain = 'http://172.16.133.138:3090';
+  String urlMain = 'http://192.168.98.214:3090';
 
   // CẬP NHẬT SPECIAL DISH TOURIST
   Future<int> updateTouristSpecialDish(

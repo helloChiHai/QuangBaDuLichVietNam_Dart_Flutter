@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
 import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_event.dart';
@@ -213,11 +214,11 @@ class _SearchTouristAttractionPageState
                             filteredTouristAttractions[index];
                         return GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(
-                                '/detail_touriestAttraction_about',
-                                arguments: {
-                                  'aboutTouristData': touristAttraction,
-                                });
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailTouristAttraction_AboutPage(
+                                      idTourist: touristAttraction.idTourist),
+                            ));
                           },
                           child: Container(
                             color: Colors.white,
@@ -319,12 +320,14 @@ class _SearchTouristAttractionPageState
                                     .map((touristAttraction) {
                                   return GestureDetector(
                                     onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                          '/detail_touriestAttraction_about',
-                                          arguments: {
-                                            'aboutTouristData':
-                                                touristAttraction,
-                                          });
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailTouristAttraction_AboutPage(
+                                          idTourist:
+                                              touristAttraction.idTourist,
+                                        ),
+                                      ));
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.all(8),

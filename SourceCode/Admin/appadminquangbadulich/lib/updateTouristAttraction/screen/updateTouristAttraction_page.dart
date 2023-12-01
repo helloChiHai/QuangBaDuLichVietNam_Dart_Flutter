@@ -1,3 +1,4 @@
+import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
 import 'package:appadminquangbadulich/model/touristAttractionModel.dart';
 import 'package:appadminquangbadulich/updateTouristAttraction/screen/updateTouristAttraction_widget.dart';
 import 'package:flutter/material.dart';
@@ -38,9 +39,18 @@ class _UpdateTouristAttrractionpageState
             fontWeight: FontWeight.bold,
           ),
         ),
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-          size: 30,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => DetailTouristAttraction_AboutPage(
+                  idTourist: tourist.idTourist),
+            ));
+          },
         ),
       ),
       body: UpdateTouristAttractionWidget(

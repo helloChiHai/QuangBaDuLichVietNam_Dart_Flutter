@@ -66,7 +66,7 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
     }
   }
 
-  void _updateHistory(int index) async {
+  void _updateSpecialDish(int index) async {
     Future<String> getBase64Data(String? imagePath, String imgDefault) async {
       if (imagePath != null) {
         return await convertImageToBase64(File(imagePath));
@@ -163,10 +163,7 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  BlocListener<UpdateTouristSpeicalDishBloc,
+              BlocListener<UpdateTouristSpeicalDishBloc,
                       UpdateTouristSpecialDishState>(
                     listener: (context, state) {
                       if (state is UpdateTouristSpecialDishSuccess) {
@@ -197,7 +194,7 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                     },
                     child: GestureDetector(
                       onTap: () {
-                        _updateHistory(index);
+                        _updateSpecialDish(index);
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -218,33 +215,6 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () {
-                      print(specialDishs.indexed);
-                      print(idTourist);
-                      // Add any other delete logic you need here
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue[200],
-                      ),
-                      child: const Text(
-                        'Xóa văn hóa',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
               const SizedBox(height: 10),
               specialtyDish.nameDish.isEmpty
                   ? TextField(
@@ -339,18 +309,7 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
-              // specialtyDish.addressDish.isNotEmpty
-              //     ? Text(
-              //         'Địa chỉ: ${specialtyDish.addressDish}',
-              //         style: const TextStyle(
-              //           color: Colors.black,
-              //           fontSize: 20,
-              //           fontStyle: FontStyle.italic,
-              //         ),
-              //       )
-              //     : Container(),
-              const SizedBox(height: 10),
+                     const SizedBox(height: 10),
               TextField(
                 controller: listDishIntroductionController[index],
                 onChanged: (text) => handleTextChange(
@@ -439,6 +398,14 @@ class _UpdateSpecialtyDishPageState extends State<UpdateSpecialtyDishPage> {
                 ),
               ),
               const SizedBox(height: 30),
+              const Divider(
+                color: Colors.black,
+                height: 20,
+                thickness: 2,
+                indent: 20,
+                endIndent: 20,
+              ),
+              const SizedBox(height: 15),
             ],
           );
         },

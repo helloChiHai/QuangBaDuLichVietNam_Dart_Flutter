@@ -59,7 +59,7 @@ class _UpdateCulturePageState extends State<UpdateCulturePage> {
     }
   }
 
-  void _updateHistory(int index) async {
+  void _updateCulture(int index) async {
     Future<String> getBase64Data(String? imagePath, String imgDefault) async {
       if (imagePath != null) {
         return await convertImageToBase64(File(imagePath));
@@ -67,7 +67,7 @@ class _UpdateCulturePageState extends State<UpdateCulturePage> {
       return imgDefault;
     }
 
-    String imgHistory = await getBase64Data(
+    String imgCulture = await getBase64Data(
         updatedImagePaths[index], cultures[index].imgCulture!);
 
     BlocProvider.of<UpdateTouristCultureBloc>(context).add(
@@ -76,7 +76,7 @@ class _UpdateCulturePageState extends State<UpdateCulturePage> {
         idCulture: cultures[index].idCulture,
         titleCulture: listTitleCultureController[index]!.text,
         contentCulture: listContentCultureController[index]!.text,
-        imgCulture: imgHistory,
+        imgCulture: imgCulture,
       ),
     );
   }
@@ -87,7 +87,7 @@ class _UpdateCulturePageState extends State<UpdateCulturePage> {
         await imagePicker.getImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      if (type == 'imgHistory') {
+      if (type == 'imgCulture') {
         setState(() {
           isCheckUploadImgTouristAttraction = true;
           updatedImagePaths[index] = pickedFile.path;
@@ -155,87 +155,56 @@ class _UpdateCulturePageState extends State<UpdateCulturePage> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  BlocListener<UpdateTouristCultureBloc,
-                      UpdateTouristCultureState>(
-                    listener: (context, state) {
-                      if (state is UpdateTouristCultureSuccess) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Cập nhật văn hóa thành công!',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
-                      } else if (state is UpdateTouristCultureFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Cập nhật văn hóa không thành công!',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                      }
-                    },
-                    child: GestureDetector(
-                      onTap: () {
-                        _updateHistory(index);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.blue[200],
-                        ),
-                        child: const Text(
-                          'Cập nhật văn hóa',
+              BlocListener<UpdateTouristCultureBloc, UpdateTouristCultureState>(
+                listener: (context, state) {
+                  if (state is UpdateTouristCultureSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Cập nhật văn hóa thành công!',
                           style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
+                            fontSize: 16,
                           ),
                         ),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  } else if (state is UpdateTouristCultureFailure) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Cập nhật văn hóa không thành công!',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                },
+                child: GestureDetector(
+                  onTap: () {
+                    _updateCulture(index);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.blue[200],
+                    ),
+                    child: const Text(
+                      'Cập nhật văn hóa',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () {
-                      print(culture.idCulture);
-                      print(idTourist);
-                      // Add any other delete logic you need here
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue[200],
-                      ),
-                      child: const Text(
-                        'Xóa văn hóa',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+                ),
               ),
               const SizedBox(height: 10),
               culture.titleCulture.isEmpty
@@ -348,7 +317,7 @@ class _UpdateCulturePageState extends State<UpdateCulturePage> {
                                 !isCheckUploadImgTouristAttraction;
                           });
                           _pickImage(
-                              _imagePickerImgTourist, 'imgHistory', index);
+                              _imagePickerImgTourist, 'imgCulture', index);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -378,6 +347,15 @@ class _UpdateCulturePageState extends State<UpdateCulturePage> {
                 )
               else
                 Container(),
+              const SizedBox(height: 15),
+              const Divider(
+                color: Colors.black,
+                height: 20,
+                thickness: 2,
+                indent: 20,
+                endIndent: 20,
+              ),
+              const SizedBox(height: 15),
             ],
           );
         },

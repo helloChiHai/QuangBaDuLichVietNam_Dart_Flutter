@@ -156,10 +156,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  BlocListener<UpdateTouristHistoryBloc,
+              BlocListener<UpdateTouristHistoryBloc,
                       UpdateTouristHistoryState>(
                     listener: (context, state) {
                       if (state is UpdateTouristHistorySuccess) {
@@ -211,33 +208,6 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () {
-                      print(history.idHistoryStory);
-                      print(idTourist);
-                      // Add any other delete logic you need here
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue[200],
-                      ),
-                      child: const Text(
-                        'Xóa lịch sử',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
               const SizedBox(height: 10),
               history.titleStoryStory.isEmpty
                   ? TextField(

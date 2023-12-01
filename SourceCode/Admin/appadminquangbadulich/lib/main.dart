@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         '/addTouristAttraction': (context) => AddTouristAttractionPage(),
         '/showAllTouristAttraction': (context) => ShowAllTouristAttraction(),
         '/detail_touriestAttraction_about': (context) =>
-            DetailTouristAttraction_AboutPage(),
+            DetailTouristAttraction_AboutPage(idTourist: ''),
         '/homeAdmin': (context) => HomeAdminPage(),
         '/loginAdmin': (context) => LoginAdminPage(),
       },

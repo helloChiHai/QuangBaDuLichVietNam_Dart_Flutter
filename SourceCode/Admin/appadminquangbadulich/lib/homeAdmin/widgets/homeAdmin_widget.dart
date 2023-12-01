@@ -11,6 +11,8 @@ import 'package:appadminquangbadulich/touristAttraction/bloc/touristAttraction_s
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
+
 class HomeAdminWidget extends StatefulWidget {
   const HomeAdminWidget({super.key});
 
@@ -154,11 +156,14 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
                             final touristAttraction = touristAttractions[index];
                             return GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushNamed(
-                                    '/detail_touriestAttraction_about',
-                                    arguments: {
-                                      'aboutTouristData': touristAttraction,
-                                    });
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailTouristAttraction_AboutPage(
+                                            idTourist:
+                                                touristAttraction.idTourist),
+                                  ),
+                                );
                               },
                               child: Container(
                                 decoration: BoxDecoration(
