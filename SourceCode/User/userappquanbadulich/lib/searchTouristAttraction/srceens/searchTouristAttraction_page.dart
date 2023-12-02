@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
 import 'package:userappquanbadulich/model/touristAttractionModel.dart';
 import 'package:userappquanbadulich/touristAttraction/bloc/touristAttraction_bloc.dart';
 import 'package:userappquanbadulich/touristAttraction/bloc/touristAttraction_event.dart';
@@ -217,15 +218,24 @@ class _SearchTouristAttractionPageState
                             filteredTouristAttractions[index];
                         return GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(
-                                '/detail_touriestAttraction_about',
-                                arguments: {
-                                  'aboutTouristData': touristAttraction,
-                                  'idCus': idCus,
-                                });
+                            // Navigator.of(context).pushNamed(
+                            //     '/detail_touriestAttraction_about',
+                            //     arguments: {
+                            //       'aboutTouristData': touristAttraction,
+                            //       'idCus': idCus,
+                            //     });
+
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailTouristAttraction_AboutPage(
+                                touristAttraction: touristAttraction,
+                                idCus: idCus,
+                              ),
+                            ));
                           },
                           child: Container(
                             color: Colors.white,
+                            margin: const EdgeInsets.only(bottom: 10),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Row(
                               children: [
@@ -323,13 +333,21 @@ class _SearchTouristAttractionPageState
                                     .map((touristAttraction) {
                                   return GestureDetector(
                                     onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                          '/detail_touriestAttraction_about',
-                                          arguments: {
-                                            'aboutTouristData':
-                                                touristAttraction,
-                                            'idCus': idCus,
-                                          });
+                                      // Navigator.of(context).pushNamed(
+                                      //     '/detail_touriestAttraction_about',
+                                      //     arguments: {
+                                      //       'aboutTouristData':
+                                      //           touristAttraction,
+                                      //       'idCus': idCus,
+                                      //     });
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailTouristAttraction_AboutPage(
+                                          touristAttraction: touristAttraction,
+                                          idCus: idCus,
+                                        ),
+                                      ));
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.all(8),
@@ -353,6 +371,8 @@ class _SearchTouristAttractionPageState
                             ],
                           ),
                         );
+                      } else if (state is TouristAttractionFailure) {
+                        print(state.error);
                       }
                       return Container();
                     },

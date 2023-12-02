@@ -11,7 +11,13 @@ import '../../../../addTouristAttractionToFavoritesList/bloc/addTouristToList_st
 import '../../../widgets/detail_touristAttraction_about_widget.dart';
 
 class DetailTouristAttraction_AboutPage extends StatefulWidget {
-  const DetailTouristAttraction_AboutPage({Key? key}) : super(key: key);
+  final TouristAttractionModel touristAttraction;
+  final String idCus;
+  const DetailTouristAttraction_AboutPage({
+    Key? key,
+    required this.touristAttraction,
+    required this.idCus,
+  }) : super(key: key);
 
   @override
   State<DetailTouristAttraction_AboutPage> createState() =>
@@ -21,21 +27,17 @@ class DetailTouristAttraction_AboutPage extends StatefulWidget {
 class _DetailTouristAttraction_AboutPageState
     extends State<DetailTouristAttraction_AboutPage> {
   late TouristAttractionModel touristAttraction;
-  String? idCus;
+  late String? idCus;
   bool isCheckVisibility = false;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final Map<String, dynamic> arguments =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      touristAttraction = arguments['aboutTouristData'];
-      idCus = arguments['idCus'];
-      context
-          .read<DetailTourist_AboutBloc>()
-          .add(getTouristWithIdTourist(idTourist: touristAttraction.idTourist));
-    });
+    touristAttraction = widget.touristAttraction;
+    idCus = widget.idCus;
+    context
+        .read<DetailTourist_AboutBloc>()
+        .add(getTouristWithIdTourist(idTourist: touristAttraction.idTourist));
   }
 
   @override

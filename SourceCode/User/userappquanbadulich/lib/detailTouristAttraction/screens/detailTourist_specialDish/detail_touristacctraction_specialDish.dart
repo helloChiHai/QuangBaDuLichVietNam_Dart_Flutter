@@ -12,7 +12,11 @@ import '../../../model/touristAttractionModel.dart';
 import '../../widgets/detail_touristAttraction_about_widget.dart';
 
 class DetailTouristAttraction_SpecialDish extends StatefulWidget {
-  const DetailTouristAttraction_SpecialDish({super.key});
+  final SpecialtyDishModel specialDish;
+  final String idCus;
+  const DetailTouristAttraction_SpecialDish(
+      {Key? key, required this.specialDish, required this.idCus})
+      : super(key: key);
 
   @override
   State<DetailTouristAttraction_SpecialDish> createState() =>
@@ -28,15 +32,20 @@ class _DetailTouristAttraction_SpecialDishState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final Map<String, dynamic> arguments =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      specialDish = arguments['specialDishData'];
-      idCus = arguments['idCus'];
-      context
-          .read<DetailTourist_SpecialDishBloc>()
-          .add(getTouristWithSpecialDish(idDish: specialDish.idDish));
-    });
+    specialDish = widget.specialDish;
+    idCus = widget.idCus;
+    context
+        .read<DetailTourist_SpecialDishBloc>()
+        .add(getTouristWithSpecialDish(idDish: specialDish.idDish));
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   final Map<String, dynamic> arguments =
+    //       ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    //   specialDish = arguments['specialDishData'];
+    //   idCus = arguments['idCus'];
+    //   context
+    //       .read<DetailTourist_SpecialDishBloc>()
+    //       .add(getTouristWithSpecialDish(idDish: specialDish.idDish));
+    // });
   }
 
   @override
@@ -58,7 +67,7 @@ class _DetailTouristAttraction_SpecialDishState
           if (state is DetailTourist_SpecialDishLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is DetailTourist_SpecialDishLoaded) {
-             final tourist = state.touristAttraction;
+            final tourist = state.touristAttraction;
             if (tourist != null && idCus != null) {
               return BlocBuilder<AddAndRemoveTouristListBloc,
                   AddAndRemoveTouristListState>(

@@ -12,7 +12,13 @@ import '../../../model/touristAttractionModel.dart';
 import '../../widgets/detail_touristAttraction_about_widget.dart';
 
 class DetailTouristAttraction_History extends StatefulWidget {
-  const DetailTouristAttraction_History({super.key});
+  final HistoryModel history;
+  final String idCus;
+  const DetailTouristAttraction_History({
+    Key? key,
+    required this.history,
+    required this.idCus,
+  }) : super(key: key);
 
   @override
   State<DetailTouristAttraction_History> createState() =>
@@ -28,25 +34,20 @@ class _DetailTouristAttraction_HistoryState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final Map<String, dynamic> arguments =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      history = arguments['HistoryData'];
-      idCus = arguments['idCus'];
-      context
-          .read<DetailTourist_HistoryBloc>()
-          .add(getTouristWithHistory(idHistoryStory: history.idHistoryStory));
-    });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-  
-  @override
-  void dispose() {
-    super.dispose();
+    history = widget.history;
+    idCus = widget.idCus;
+    context
+        .read<DetailTourist_HistoryBloc>()
+        .add(getTouristWithHistory(idHistoryStory: history.idHistoryStory));
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   final Map<String, dynamic> arguments =
+    //       ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    //   history = arguments['HistoryData'];
+    //   idCus = arguments['idCus'];
+    //   context
+    //       .read<DetailTourist_HistoryBloc>()
+    //       .add(getTouristWithHistory(idHistoryStory: history.idHistoryStory));
+    // });
   }
 
   @override
@@ -92,5 +93,10 @@ class _DetailTouristAttraction_HistoryState
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

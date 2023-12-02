@@ -5,6 +5,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
 
 import '../bloc/touristAttraction_bloc.dart';
 import '../bloc/touristAttraction_event.dart';
@@ -86,12 +87,18 @@ class TouristAttractionPageState extends State<TouristAttractionPage> {
                 final touristAttraction = touristAttractions[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(
-                        '/detail_touriestAttraction_about',
-                        arguments: {
-                          'aboutTouristData': touristAttraction,
-                          'idCus': idCus,
-                        });
+                    // Navigator.of(context).pushNamed(
+                    //     '/detail_touriestAttraction_about',
+                    //     arguments: {
+                    //       'aboutTouristData': touristAttraction,
+                    //       'idCus': idCus,
+                    //     });
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DetailTouristAttraction_AboutPage(
+                        touristAttraction: touristAttraction,
+                        idCus: idCus,
+                      ),
+                    ));
                   },
                   child: Container(
                     width: 180,

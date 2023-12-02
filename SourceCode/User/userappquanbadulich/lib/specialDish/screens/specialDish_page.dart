@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_specialDish/detail_touristacctraction_specialDish.dart';
 import 'package:userappquanbadulich/specialDish/bloc/specialDish_bloc.dart';
 import 'package:userappquanbadulich/specialDish/bloc/specialDish_event.dart';
 
@@ -77,12 +78,19 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
                 final specialDish = specialDishs[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(
-                        '/detail_touriestAttraction_specialDish',
-                        arguments: {
-                          'specialDishData': specialDish,
-                          'idCus': idCus,
-                        });
+                    // Navigator.of(context).pushNamed(
+                    //     '/detail_touriestAttraction_specialDish',
+                    //     arguments: {
+                    //       'specialDishData': specialDish,
+                    //       'idCus': idCus,
+                    //     });
+
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DetailTouristAttraction_SpecialDish(
+                        specialDish: specialDish,
+                        idCus: idCus,
+                      ),
+                    ));
                   },
                   child: Container(
                     width: 250,
@@ -134,5 +142,10 @@ class _SpecialDishPageState extends State<SpecialDishPage> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

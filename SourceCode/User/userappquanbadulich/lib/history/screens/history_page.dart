@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_history/detail_touristacctraction_history.dart';
 
 import '../bloc/history_bloc.dart';
 import '../bloc/history_event.dart';
@@ -74,12 +75,19 @@ class HistoryPageState extends State<HistoryPage> {
                 final history = historyList[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(
-                        '/detail_touriestAttraction_history',
-                        arguments: {
-                          'HistoryData': history,
-                          'idCus': idCus,
-                        });
+                    // Navigator.of(context).pushNamed(
+                    //     '/detail_touriestAttraction_history',
+                    //     arguments: {
+                    //       'HistoryData': history,
+                    //       'idCus': idCus,
+                    //     });
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DetailTouristAttraction_History(
+                            history: history, idCus: idCus),
+                      ),
+                    );
                   },
                   child: Container(
                     width: 180,
@@ -131,5 +139,10 @@ class HistoryPageState extends State<HistoryPage> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_history/detail_touristacctraction_history.dart';
 import 'package:userappquanbadulich/history/bloc/history_bloc.dart';
 import 'package:userappquanbadulich/history/bloc/history_event.dart';
 import 'package:userappquanbadulich/model/filterRegionModel.dart';
@@ -100,12 +101,6 @@ class _ShowAllTourisCulure extends State<ShowAllHistory> {
     } else {
       return const SizedBox();
     }
-  }
-
-  @override
-  void dispose() {
-    _subscription?.cancel();
-    super.dispose();
   }
 
   @override
@@ -247,12 +242,19 @@ class _ShowAllTourisCulure extends State<ShowAllHistory> {
                             final history = histories[index];
                             return GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushNamed(
-                                    '/detail_touriestAttraction_history',
-                                    arguments: {
-                                      'HistoryData': history,
-                                      'idCus': idCus,
-                                    });
+                                // Navigator.of(context).pushNamed(
+                                //     '/detail_touriestAttraction_history',
+                                //     arguments: {
+                                //       'HistoryData': history,
+                                //       'idCus': idCus,
+                                //     });
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailTouristAttraction_History(
+                                            history: history, idCus: idCus),
+                                  ),
+                                );
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -590,5 +592,11 @@ class _ShowAllTourisCulure extends State<ShowAllHistory> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 }

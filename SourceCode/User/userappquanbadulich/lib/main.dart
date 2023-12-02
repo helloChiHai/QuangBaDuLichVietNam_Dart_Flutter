@@ -117,14 +117,14 @@ class MyApp extends StatelessWidget {
         '/showAllSpecialDish': (context) => ShowAllSpecialDish(idCus: ''),
         '/showAllHistory': (context) => ShowAllHistory(idCus: ''),
         '/filterTypeTourist': (context) => FilterTypeTouristPage(idCus: ''),
-        '/detail_touriestAttraction_about': (context) =>
-            DetailTouristAttraction_AboutPage(),
-        '/detail_touriestAttraction_culture': (context) =>
-            DetailTouristAttraction_Culture(),
-        '/detail_touriestAttraction_specialDish': (context) =>
-            DetailTouristAttraction_SpecialDish(),
-        '/detail_touriestAttraction_history': (context) =>
-            DetailTouristAttraction_History(),
+        // '/detail_touriestAttraction_about': (context) =>
+        //     DetailTouristAttraction_AboutPage(),
+        // '/detail_touriestAttraction_culture': (context) =>
+        //     DetailTouristAttraction_Culture(),
+        // '/detail_touriestAttraction_specialDish': (context) =>
+        //     DetailTouristAttraction_SpecialDish(),
+        // '/detail_touriestAttraction_history': (context) =>
+        //     DetailTouristAttraction_History(),
         '/detail_content': (context) => DetailContent(dataIntroTourist: ''),
         '/detail_comment': (context) => CommentTourist(),
         '/detail_culture': (context) => DetailCulture(

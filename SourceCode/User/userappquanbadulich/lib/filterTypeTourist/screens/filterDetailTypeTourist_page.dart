@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
 import 'package:userappquanbadulich/filterTypeTourist/bloc/filterTypeTourist_bloc.dart';
 import 'package:userappquanbadulich/filterTypeTourist/bloc/filterTypeTourist_event.dart';
 import 'package:userappquanbadulich/filterTypeTourist/bloc/filterTypeTourist_state.dart';
@@ -170,13 +171,21 @@ class _DetailFilterTypeTouristState extends State<DetailFilterTypeTourist> {
                         final touristAttraction = touristAttractions[index];
                         return GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(
-                                '/detail_touriestAttraction_about',
-                                arguments: {
-                                  'aboutTouristData': touristAttraction,
-                                  'idCus': idCus,
-                                });
-                            print(idCus);
+                            // Navigator.of(context).pushNamed(
+                            //     '/detail_touriestAttraction_about',
+                            //     arguments: {
+                            //       'aboutTouristData': touristAttraction,
+                            //       'idCus': idCus,
+                            //     });
+                            // print(idCus);
+
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailTouristAttraction_AboutPage(
+                                touristAttraction: touristAttraction,
+                                idCus: idCus!,
+                              ),
+                            ));
                           },
                           child: Container(
                             decoration: BoxDecoration(

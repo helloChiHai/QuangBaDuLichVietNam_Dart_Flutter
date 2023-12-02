@@ -12,7 +12,13 @@ import '../../../model/touristAttractionModel.dart';
 import '../../widgets/detail_touristAttraction_about_widget.dart';
 
 class DetailTouristAttraction_Culture extends StatefulWidget {
-  const DetailTouristAttraction_Culture({super.key});
+  final CultureModel culture;
+  final String idCus;
+  const DetailTouristAttraction_Culture({
+    Key? key,
+    required this.culture,
+    required this.idCus,
+  });
 
   @override
   State<DetailTouristAttraction_Culture> createState() =>
@@ -28,25 +34,20 @@ class _DetailTouristAttraction_CultureState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final Map<String, dynamic> arguments =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      culture = arguments['cultureData'];
-      idCus = arguments['idCus'];
-      context
-          .read<DetailTourist_CultureBloc>()
-          .add(getTouristWithCulture(idCulture: culture.idCulture));
-    });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-  
-  @override
-  void dispose() {
-    super.dispose();
+    culture = widget.culture;
+    idCus = widget.idCus;
+    context
+        .read<DetailTourist_CultureBloc>()
+        .add(getTouristWithCulture(idCulture: culture.idCulture));
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   final Map<String, dynamic> arguments =
+    //       ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    //   culture = arguments['cultureData'];
+    //   idCus = arguments['idCus'];
+    //   context
+    //       .read<DetailTourist_CultureBloc>()
+    //       .add(getTouristWithCulture(idCulture: culture.idCulture));
+    // });
   }
 
   @override
@@ -92,5 +93,10 @@ class _DetailTouristAttraction_CultureState
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

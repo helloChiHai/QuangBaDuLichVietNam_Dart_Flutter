@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userappquanbadulich/culture/bloc/culture_bloc.dart';
+import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_culture/detail_touristacctraction_culture.dart';
 import 'package:userappquanbadulich/model/filterRegionModel.dart';
 import 'package:userappquanbadulich/model/provinceModel.dart';
 import 'package:userappquanbadulich/province/bloc/province_bloc.dart';
@@ -246,12 +247,19 @@ class _ShowAllTourisCulure extends State<ShowAllCulure> {
                             final culture = cultures[index];
                             return GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushNamed(
-                                    '/detail_touriestAttraction_culture',
-                                    arguments: {
-                                      'cultureData': culture,
-                                      'idCus': idCus,
-                                    });
+                                // Navigator.of(context).pushNamed(
+                                //     '/detail_touriestAttraction_culture',
+                                //     arguments: {
+                                //       'cultureData': culture,
+                                //       'idCus': idCus,
+                                //     });
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailTouristAttraction_Culture(
+                                    culture: culture,
+                                    idCus: idCus,
+                                  ),
+                                ));
                               },
                               child: Container(
                                 decoration: BoxDecoration(

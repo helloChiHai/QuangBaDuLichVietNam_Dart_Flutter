@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userappquanbadulich/culture/bloc/culture_bloc.dart';
 import 'package:userappquanbadulich/culture/bloc/culture_event.dart';
 import 'package:userappquanbadulich/culture/bloc/culture_state.dart';
+import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_culture/detail_touristacctraction_culture.dart';
 
 class CulturePage extends StatefulWidget {
   final String idCus;
@@ -76,12 +77,19 @@ class _CulturePageState extends State<CulturePage> {
                 final culture = cultures[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(
-                        '/detail_touriestAttraction_culture',
-                        arguments: {
-                          'cultureData': culture,
-                          'idCus': idCus,
-                        });
+                    // Navigator.of(context).pushNamed(
+                    //     '/detail_touriestAttraction_culture',
+                    //     arguments: {
+                    //       'cultureData': culture,
+                    //       'idCus': idCus,
+                    //     });
+
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DetailTouristAttraction_Culture(
+                        culture: culture,
+                        idCus: idCus,
+                      ),
+                    ));
                   },
                   child: Container(
                     width: 180,
