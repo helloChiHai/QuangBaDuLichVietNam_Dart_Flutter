@@ -272,7 +272,9 @@ class _AddTouristAttractionFormState extends State<AddTouristAttractionForm> {
               child: DropdownButton<ProvinceModel>(
                 isExpanded: true,
                 menuMaxHeight: 150,
-                value: selectedDropDownProvinceItem,
+                value: itemProvince.contains(selectedDropDownProvinceItem)
+                    ? selectedDropDownProvinceItem
+                    : null,
                 items: itemProvince.map((ProvinceModel item) {
                   return DropdownMenuItem(
                     value: item,

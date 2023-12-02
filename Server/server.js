@@ -1304,7 +1304,11 @@ app.get("/getAllCulture", async (req, res) => {
     regions.forEach((region) => {
       region.provinces.forEach((province) => {
         province.touristAttraction.forEach((attraction) => {
-          tatCaThongTinVanHoa.push(...attraction.culture);
+          if (attraction.culture.some((culture) => culture.titleCulture)) {
+            tatCaThongTinVanHoa.push(
+              ...attraction.culture.filter((culture) => culture.titleCulture)
+            );
+          }
         });
       });
     });
@@ -1328,7 +1332,11 @@ app.get("/getAllHistory", async (req, res) => {
     regions.forEach((region) => {
       region.provinces.forEach((province) => {
         province.touristAttraction.forEach((attraction) => {
-          tatCaThongTinLichSu.push(...attraction.history);
+          if (attraction.history.some((history) => history.titleStoryStory)) {
+            tatCaThongTinLichSu.push(
+              ...attraction.history.filter((history) => history.titleStoryStory)
+            );
+          }
         });
       });
     });

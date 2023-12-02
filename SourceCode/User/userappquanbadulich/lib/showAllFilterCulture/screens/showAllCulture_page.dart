@@ -523,7 +523,10 @@ class _ShowAllTourisCulure extends State<ShowAllCulure> {
                       child: DropdownButton<ProvinceModel>(
                         isExpanded: true,
                         menuMaxHeight: 150,
-                        value: selectedDropDownProvinceItem,
+                        value:
+                            itemProvince.contains(selectedDropDownProvinceItem)
+                                ? selectedDropDownProvinceItem
+                                : null,
                         items: itemProvince.map((ProvinceModel item) {
                           return DropdownMenuItem(
                             value: item,
