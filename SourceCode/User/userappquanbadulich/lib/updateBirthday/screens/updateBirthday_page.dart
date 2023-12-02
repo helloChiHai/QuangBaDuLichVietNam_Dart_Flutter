@@ -124,4 +124,9 @@ class _UpdateBirthdayPageState extends State<UpdateBirthdayPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

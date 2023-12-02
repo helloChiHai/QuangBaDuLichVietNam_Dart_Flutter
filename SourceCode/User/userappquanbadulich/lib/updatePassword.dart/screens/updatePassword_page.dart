@@ -6,7 +6,6 @@ import '../bloc/updatePassword_bloc.dart';
 import '../bloc/updatePassword_state.dart';
 
 class UpdatePasswordPage extends StatefulWidget {
-
   UpdatePasswordPage({
     Key? key,
   }) : super(key: key);
@@ -19,7 +18,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
   late String customerId;
   bool isDialogShown = false;
 
-    @override
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
@@ -27,6 +26,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     customerId = args['customerId'] as String;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,5 +124,10 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

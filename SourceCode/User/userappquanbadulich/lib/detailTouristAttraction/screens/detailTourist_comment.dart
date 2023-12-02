@@ -97,4 +97,9 @@ class _CommentTouristState extends State<CommentTourist> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

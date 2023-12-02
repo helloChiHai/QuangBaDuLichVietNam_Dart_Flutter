@@ -529,4 +529,9 @@ class _DetailAccountPageState extends State<DetailAccountPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

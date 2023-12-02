@@ -75,7 +75,7 @@ class _DetailCultureState extends State<DetailCulture> {
                   fontSize: 20,
                 ),
               ),
-             const SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 culture.contentCulture,
                 style: const TextStyle(
@@ -83,7 +83,7 @@ class _DetailCultureState extends State<DetailCulture> {
                   fontSize: 20,
                 ),
               ),
-             const SizedBox(height: 15),
+              const SizedBox(height: 15),
               FutureBuilder<Widget>(
                 future: _buildImage(culture.imgCulture),
                 builder:
@@ -95,7 +95,7 @@ class _DetailCultureState extends State<DetailCulture> {
                   }
                 },
               ),
-             const SizedBox(height: 15),
+              const SizedBox(height: 15),
               if (culture.videoCulture != null &&
                   culture.videoCulture!.isNotEmpty)
                 YouTubePlayerWidget(
@@ -108,5 +108,10 @@ class _DetailCultureState extends State<DetailCulture> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

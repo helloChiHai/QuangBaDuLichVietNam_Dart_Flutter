@@ -122,4 +122,9 @@ class _UpdateAddressPageState extends State<UpdateAddressPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

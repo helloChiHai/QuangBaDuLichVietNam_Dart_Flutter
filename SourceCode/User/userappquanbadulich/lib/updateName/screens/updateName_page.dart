@@ -123,4 +123,9 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

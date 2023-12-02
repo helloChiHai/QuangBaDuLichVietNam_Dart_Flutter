@@ -151,4 +151,9 @@ class TouristAttractionPageState extends State<TouristAttractionPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

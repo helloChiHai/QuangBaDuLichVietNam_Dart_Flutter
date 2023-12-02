@@ -199,4 +199,9 @@ class _UpdateImageWidgetState extends State<UpdateImageWidget> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

@@ -104,12 +104,6 @@ class _ShowAllTourisCulure extends State<ShowAllCulure> {
   }
 
   @override
-  void dispose() {
-    _subscription?.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -338,12 +332,21 @@ class _ShowAllTourisCulure extends State<ShowAllCulure> {
                                   final culture = cultures[index];
                                   return GestureDetector(
                                     onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                          '/detail_touriestAttraction_culture',
-                                          arguments: {
-                                            'cultureData': culture,
-                                            'idCus': idCus,
-                                          });
+                                      // Navigator.of(context).pushNamed(
+                                      //     '/detail_touriestAttraction_culture',
+                                      //     arguments: {
+                                      //       'cultureData': culture,
+                                      //       'idCus': idCus,
+                                      //     });
+
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailTouristAttraction_Culture(
+                                          culture: culture,
+                                          idCus: idCus,
+                                        ),
+                                      ));
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -599,5 +602,11 @@ class _ShowAllTourisCulure extends State<ShowAllCulure> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 }

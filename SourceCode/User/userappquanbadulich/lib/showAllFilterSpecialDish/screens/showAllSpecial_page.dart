@@ -104,12 +104,6 @@ class _ShowAllTourisCulure extends State<ShowAllSpecialDish> {
   }
 
   @override
-  void dispose() {
-    _subscription?.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -339,12 +333,20 @@ class _ShowAllTourisCulure extends State<ShowAllSpecialDish> {
                                   final specialDish = specialDishs[index];
                                   return GestureDetector(
                                     onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                          '/detail_touriestAttraction_specialDish',
-                                          arguments: {
-                                            'specialDishData': specialDish,
-                                            'idCus': idCus,
-                                          });
+                                      // Navigator.of(context).pushNamed(
+                                      //     '/detail_touriestAttraction_specialDish',
+                                      //     arguments: {
+                                      //       'specialDishData': specialDish,
+                                      //       'idCus': idCus,
+                                      //     });
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailTouristAttraction_SpecialDish(
+                                                  specialDish: specialDish,
+                                                  idCus: idCus),
+                                        ),
+                                      );
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -597,5 +599,11 @@ class _ShowAllTourisCulure extends State<ShowAllSpecialDish> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 }

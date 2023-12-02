@@ -13,6 +13,7 @@ class _LoginIntroState extends State<LoginIntro> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: IntroductionScreen(
         pages: [
           buildIntroPage("assets/img/img_intro_1.png", "VietWander",
@@ -53,6 +54,7 @@ class _LoginIntroState extends State<LoginIntro> {
         showNextButton: false,
       ),
     );
+    
   }
 
   PageViewModel buildIntroPage(String imagePath, String title, String body) {

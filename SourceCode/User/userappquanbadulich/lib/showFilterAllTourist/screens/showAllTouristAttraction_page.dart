@@ -105,12 +105,6 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
   }
 
   @override
-  void dispose() {
-    _subscription?.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -612,5 +606,11 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 }

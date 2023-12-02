@@ -54,12 +54,6 @@ class _DetailTouristAttractionWidgetState
     pageController = PageController(initialPage: pageViewInit);
   }
 
-  @override
-  void dispose() {
-    pageController.dispose();
-    super.dispose();
-  }
-
   Future<Widget> _buildImage(String? img) async {
     if (img != null && img.isNotEmpty) {
       try {
@@ -490,5 +484,10 @@ class _DetailTouristAttractionWidgetState
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

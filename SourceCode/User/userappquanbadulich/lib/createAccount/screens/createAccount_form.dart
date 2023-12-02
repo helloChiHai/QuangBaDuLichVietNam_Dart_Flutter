@@ -315,4 +315,9 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
       ],
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

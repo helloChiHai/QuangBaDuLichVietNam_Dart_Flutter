@@ -108,4 +108,9 @@ class _UpdateImagePageState extends State<UpdateImagePage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

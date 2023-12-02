@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class DetailContent extends StatefulWidget {
   final String dataIntroTourist;
-  const DetailContent({Key? key, required this.dataIntroTourist}) : super(key: key);
+  const DetailContent({Key? key, required this.dataIntroTourist})
+      : super(key: key);
 
   @override
   State<DetailContent> createState() => _DetailContentState();
@@ -36,5 +37,10 @@ class _DetailContentState extends State<DetailContent> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

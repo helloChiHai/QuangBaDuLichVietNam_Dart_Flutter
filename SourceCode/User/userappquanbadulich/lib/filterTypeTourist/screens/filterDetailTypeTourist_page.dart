@@ -73,11 +73,6 @@ class _DetailFilterTypeTouristState extends State<DetailFilterTypeTourist> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -252,5 +247,10 @@ class _DetailFilterTypeTouristState extends State<DetailFilterTypeTourist> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

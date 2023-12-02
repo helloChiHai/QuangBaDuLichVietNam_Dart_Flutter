@@ -539,4 +539,9 @@ class _CommentPageState extends State<CommentPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

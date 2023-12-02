@@ -142,4 +142,9 @@ class _CulturePageState extends State<CulturePage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

@@ -382,4 +382,9 @@ class _SearchTouristAttractionPageState
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

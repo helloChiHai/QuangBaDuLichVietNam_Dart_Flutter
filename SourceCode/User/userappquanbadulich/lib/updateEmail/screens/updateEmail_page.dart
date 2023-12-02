@@ -123,4 +123,9 @@ class _UpdateEmailPageState extends State<UpdateEmailPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

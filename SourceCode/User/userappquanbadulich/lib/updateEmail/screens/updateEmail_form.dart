@@ -18,8 +18,7 @@ class _UpdateEmailFormState extends State<UpdateEmailForm> {
   late String idCus;
 
   bool validateEmail(String input) {
-    String emailPattern =
-        r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$';
+    String emailPattern = r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$';
     RegExp regex = RegExp(emailPattern);
     return regex.hasMatch(input);
   }
@@ -124,5 +123,10 @@ class _UpdateEmailFormState extends State<UpdateEmailForm> {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

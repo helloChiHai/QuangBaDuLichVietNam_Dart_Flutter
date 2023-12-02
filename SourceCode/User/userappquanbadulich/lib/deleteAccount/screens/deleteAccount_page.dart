@@ -102,4 +102,9 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

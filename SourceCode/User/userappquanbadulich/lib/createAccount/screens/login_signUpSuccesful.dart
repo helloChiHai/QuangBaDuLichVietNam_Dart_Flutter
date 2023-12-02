@@ -34,12 +34,6 @@ class _CreateAccountSuccessfulState extends State<CreateAccountSuccessful> {
   }
 
   @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -94,5 +88,11 @@ class _CreateAccountSuccessfulState extends State<CreateAccountSuccessful> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 }

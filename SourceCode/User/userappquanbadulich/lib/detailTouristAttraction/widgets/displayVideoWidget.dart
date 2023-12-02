@@ -68,4 +68,9 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
                 ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

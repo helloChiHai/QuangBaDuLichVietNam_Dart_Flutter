@@ -41,16 +41,6 @@ class _DetailTouristAttraction_AboutPageState
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<DetailTourist_AboutBloc, DetailTourist_AboutState>(
@@ -93,5 +83,10 @@ class _DetailTouristAttraction_AboutPageState
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

@@ -6,9 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:userappquanbadulich/imformationCustomer/bloc/imformationCus_bloc.dart';
 import 'package:userappquanbadulich/model/CustomerModel.dart';
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
 
+  @override
+  State<AccountPage> createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
   Future<Widget> _buildImage(CustomerModel cus) async {
     if (cus.imgCus != null && cus.imgCus!.isNotEmpty) {
       try {
@@ -526,5 +531,10 @@ class AccountPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

@@ -29,28 +29,32 @@ class _FilterTypeTouristPageState extends State<FilterTypeTouristPage> {
       titleTypeTourist: 'Chào mừng đến với Miền Tây',
       nameTypeTourist: 'Miền Tây Sông Nước',
       imgTypeTourist: 'img_MTSN.jpg',
-      introTypeTourist: 'Miền Tây Việt Nam, xanh mướt sông nước, nền văn hóa đậm đà và tình thân thiện',
+      introTypeTourist:
+          'Miền Tây Việt Nam, xanh mướt sông nước, nền văn hóa đậm đà và tình thân thiện',
     ),
     TypeTouristModel(
       idTypeTourist: 'B',
       titleTypeTourist: 'Vẻ Đẹp Biển Việt Nam',
       nameTypeTourist: 'Biển',
       imgTypeTourist: 'img_B.jpg',
-      introTypeTourist: 'Biển Việt Nam, với bờ cát dịu dàng, sóng biển êm đềm, là bức tranh tuyệt vời của thiên nhiên',
+      introTypeTourist:
+          'Biển Việt Nam, với bờ cát dịu dàng, sóng biển êm đềm, là bức tranh tuyệt vời của thiên nhiên',
     ),
     TypeTouristModel(
       idTypeTourist: 'N',
       titleTypeTourist: 'Hùng vĩ núi đồi Việt Nam',
       nameTypeTourist: 'Núi',
       imgTypeTourist: 'img_Nui.jpg',
-      introTypeTourist: 'Vùng đồi núi Việt Nam quyến rũ bằng sự hùng vĩ hoang sơ và bí ẩn lôi cuốn',
+      introTypeTourist:
+          'Vùng đồi núi Việt Nam quyến rũ bằng sự hùng vĩ hoang sơ và bí ẩn lôi cuốn',
     ),
     TypeTouristModel(
       idTypeTourist: 'TP',
       titleTypeTourist: 'Thành phố không ngủ',
       nameTypeTourist: 'Thành Phố',
       imgTypeTourist: 'img_thanhPho.jpg',
-      introTypeTourist: 'Thành phố đô thị Việt Nam đẹp và phồn thịnh, hứa hẹn trải nghiệm du lịch độc đáo',
+      introTypeTourist:
+          'Thành phố đô thị Việt Nam đẹp và phồn thịnh, hứa hẹn trải nghiệm du lịch độc đáo',
     ),
   ];
 
@@ -127,5 +131,10 @@ class _FilterTypeTouristPageState extends State<FilterTypeTouristPage> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

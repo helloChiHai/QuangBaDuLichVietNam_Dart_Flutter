@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userappquanbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
 
 import '../../addTouristAttractionToFavoritesList/bloc/addTouristToList_bloc.dart';
 import '../../addTouristAttractionToFavoritesList/bloc/addTouristToList_event.dart';
@@ -110,12 +111,19 @@ class _ListFavoriteTouristAttractionPageState
                             final touristAttraction = touristList[index];
                             return GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushNamed(
-                                    '/detail_touriestAttraction_about',
-                                    arguments: {
-                                      'aboutTouristData': touristAttraction,
-                                      'idCus': idCus,
-                                    });
+                                // Navigator.of(context).pushNamed(
+                                //     '/detail_touriestAttraction_about',
+                                //     arguments: {
+                                //       'aboutTouristData': touristAttraction,
+                                //       'idCus': idCus,
+                                //     });
+
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailTouristAttraction_AboutPage(
+                                          touristAttraction: touristAttraction,
+                                          idCus: idCus!),
+                                ));
                               },
                               child: Container(
                                 padding:
@@ -376,5 +384,10 @@ class _ListFavoriteTouristAttractionPageState
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

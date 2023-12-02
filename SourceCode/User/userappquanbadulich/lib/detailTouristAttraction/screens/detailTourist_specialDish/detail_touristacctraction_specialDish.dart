@@ -49,16 +49,6 @@ class _DetailTouristAttraction_SpecialDishState
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<DetailTourist_SpecialDishBloc,
@@ -102,5 +92,10 @@ class _DetailTouristAttraction_SpecialDishState
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

@@ -115,4 +115,9 @@ class _DetailSpecialtyDishState extends State<DetailSpecialtyDish> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

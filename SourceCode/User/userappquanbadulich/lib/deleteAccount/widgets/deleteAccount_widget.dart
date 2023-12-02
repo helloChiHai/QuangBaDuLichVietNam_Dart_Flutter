@@ -174,4 +174,9 @@ class _DeleteAccount_WidgetState extends State<DeleteAccount_Widget> {
       ],
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }
