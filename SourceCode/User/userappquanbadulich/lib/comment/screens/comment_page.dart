@@ -28,6 +28,7 @@ class _CommentPageState extends State<CommentPage> {
   late String idTourist;
   late String idCus;
   TextEditingController contentCommentController = TextEditingController();
+  List<String> badWords = ["tục tiểu", "từ tục", "cc"];
 
   @override
   void initState() {
@@ -35,6 +36,11 @@ class _CommentPageState extends State<CommentPage> {
     idTourist = widget.idTourist;
     idCus = widget.idCus;
     context.read<CommentBloc>().add(LoadComment(idTourist: idTourist));
+  }
+
+  bool containsBadWords(String comment, List<String> badWords) {
+    return badWords
+        .any((word) => comment.toLowerCase().contains(word.toLowerCase()));
   }
 
   Future<void> _refreshComments() async {
@@ -157,13 +163,28 @@ class _CommentPageState extends State<CommentPage> {
                       onPressed: () {
                         String commentContent = contentCommentController.text;
                         if (commentContent.isNotEmpty) {
-                          context.read<AddCommentBloc>().add(
-                                AddCommentButtonPress(
-                                  idTourist: idTourist,
-                                  idCus: idCus,
-                                  commentData: commentContent,
+                          if (containsBadWords(commentContent, badWords)) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              const snackBar = SnackBar(
+                                content: Text(
+                                  'Bình luận không hợp lệ',
+                                  style: TextStyle(fontSize: 20),
                                 ),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
                               );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            });
+                          } else {
+                            context.read<AddCommentBloc>().add(
+                                  AddCommentButtonPress(
+                                    idTourist: idTourist,
+                                    idCus: idCus,
+                                    commentData: commentContent,
+                                  ),
+                                );
+                          }
                         } else {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             const snackBar = SnackBar(

@@ -82,9 +82,9 @@ class _CommentTouristState extends State<CommentTourist> {
               child: ListView.builder(
                 itemCount: 4,
                 scrollDirection: Axis.vertical,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return Column(
+                  return const Column(
                     children: [
                       Text('adsfsdfffffffffffffffffffffffffffffffffff')
                     ],

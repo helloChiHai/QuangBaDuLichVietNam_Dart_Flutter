@@ -26,6 +26,7 @@ class _UpdateCommentPageState extends State<UpdateCommentPage> {
   late String touristId;
   late String idCus;
   late String idcmt;
+  List<String> badWords = ["tục tiểu", "từ tục", "cc"];
 
   @override
   void initState() {
@@ -33,6 +34,11 @@ class _UpdateCommentPageState extends State<UpdateCommentPage> {
     touristId = widget.touristId;
     idCus = widget.idCus;
     idcmt = widget.idcmt;
+  }
+
+  bool containsBadWords(String comment, List<String> badWords) {
+    return badWords
+        .any((word) => comment.toLowerCase().contains(word.toLowerCase()));
   }
 
   Future<void> _refreshComments() async {
@@ -76,7 +82,7 @@ class _UpdateCommentPageState extends State<UpdateCommentPage> {
                 backgroundColor: Colors.green,
               ),
             );
-            Future.delayed(Duration(seconds: 2), () {
+            Future.delayed(Duration(seconds: 1), () {
               Navigator.of(context).pop();
             });
           } else if (state is UpdateCommentFailure) {
@@ -153,7 +159,33 @@ class _UpdateCommentPageState extends State<UpdateCommentPage> {
                     const SizedBox(width: 15),
                     GestureDetector(
                       onTap: () {
-                        if (newCommentDataController.text.isEmpty) {
+                        if (newCommentDataController.text.isNotEmpty) {
+                          if (containsBadWords(
+                              newCommentDataController.text, badWords)) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              const snackBar = SnackBar(
+                                content: Text(
+                                  'Bình luận không hợp lệ',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                backgroundColor: Colors.red,
+                                duration: Duration(seconds: 2),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            });
+                          } else {
+                            context.read<UpdateCommentBloc>().add(
+                                  UpdateCommentButtonPress(
+                                    touristId: touristId,
+                                    idCus: idCus,
+                                    idcmt: idcmt,
+                                    newCommentData:
+                                        newCommentDataController.text,
+                                  ),
+                                );
+                          }
+                        } else {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
                             content: Text(
@@ -163,15 +195,6 @@ class _UpdateCommentPageState extends State<UpdateCommentPage> {
                             backgroundColor: Colors.red,
                             duration: Duration(seconds: 2),
                           ));
-                        } else {
-                          context.read<UpdateCommentBloc>().add(
-                                UpdateCommentButtonPress(
-                                  touristId: touristId,
-                                  idCus: idCus,
-                                  idcmt: idcmt,
-                                  newCommentData: newCommentDataController.text,
-                                ),
-                              );
                         }
                       },
                       child: Container(

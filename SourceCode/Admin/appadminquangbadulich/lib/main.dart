@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         '/homeAdmin': (context) => HomeAdminPage(),
         '/loginAdmin': (context) => LoginAdminPage(),
       },
-      home: LoginAdminPage(),
+      home: HomeAdminPage(),
     );
   }
 }

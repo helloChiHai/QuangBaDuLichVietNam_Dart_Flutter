@@ -96,6 +96,9 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
               labelText: 'Email',
               labelStyle: TextStyle(fontSize: 20, color: Colors.black),
               border: InputBorder.none,
+              hintText: 'vietwander123@gmail.com',
+              hintStyle: TextStyle(
+                  fontSize: 20, color: Color.fromARGB(255, 113, 112, 112)),
             ),
           ),
         ),
@@ -120,6 +123,9 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
               labelText: 'Mật khẩu',
               labelStyle: const TextStyle(fontSize: 20, color: Colors.black),
               border: InputBorder.none,
+              hintText: 'Vietwander123',
+              hintStyle: const TextStyle(
+                  fontSize: 20, color: Color.fromARGB(255, 113, 112, 112)),
               suffixIcon: IconButton(
                 icon: Icon(
                   _obscureText_mk ? Icons.visibility : Icons.visibility_off,
@@ -154,6 +160,9 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
               labelText: 'Nhập lại mật khẩu',
               labelStyle: const TextStyle(fontSize: 20, color: Colors.black),
               border: InputBorder.none,
+              hintText: 'Vietwander123',
+              hintStyle: const TextStyle(
+                  fontSize: 20, color: Color.fromARGB(255, 113, 112, 112)),
               suffixIcon: IconButton(
                 icon: Icon(
                   _obscureText_nlmk ? Icons.visibility : Icons.visibility_off,
@@ -187,6 +196,9 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
               labelText: 'Họ tên',
               labelStyle: TextStyle(fontSize: 20, color: Colors.black),
               border: InputBorder.none,
+              hintText: 'Vương Chí Hải',
+              hintStyle: TextStyle(
+                  fontSize: 20, color: Color.fromARGB(255, 113, 112, 112)),
             ),
           ),
         ),
