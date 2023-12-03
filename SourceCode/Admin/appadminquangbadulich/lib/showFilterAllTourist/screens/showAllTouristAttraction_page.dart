@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:appadminquangbadulich/detailTouristAttraction/screens/detailTourist_byIdTourist_about/screens/detail_touristAttraction_about_page.dart';
+import 'package:appadminquangbadulich/homeAdmin/screens/homeAdmin_page.dart';
 import 'package:appadminquangbadulich/model/filterRegionModel.dart';
 import 'package:appadminquangbadulich/model/provinceModel.dart';
 import 'package:appadminquangbadulich/province/bloc/province_bloc.dart';
@@ -98,12 +99,6 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
   }
 
   @override
-  void dispose() {
-    _subscription?.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -130,10 +125,17 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
             },
           ),
         ],
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-          size: 30,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => HomeAdminPage(),
+              ));
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+              size: 30,
+            )),
       ),
       body: Stack(
         children: [
@@ -392,12 +394,14 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                                       touristAttractions[index];
                                   return GestureDetector(
                                     onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                          '/detail_touriestAttraction_about',
-                                          arguments: {
-                                            'aboutTouristData':
-                                                touristAttraction,
-                                          });
+                                      print(touristAttraction.idTourist);
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailTouristAttraction_AboutPage(
+                                                idTourist: touristAttraction
+                                                    .idTourist),
+                                      ));
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -576,11 +580,6 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Row(
-                      children: [
-
-                      ],
-                    ),
                     Container(
                       width: 150,
                       height: 40,
@@ -660,5 +659,11 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 }

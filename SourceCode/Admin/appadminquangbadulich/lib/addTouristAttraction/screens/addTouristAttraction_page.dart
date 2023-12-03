@@ -1,6 +1,7 @@
 import 'package:appadminquangbadulich/addTouristAttraction/bloc/addTouristAttraction_bloc.dart';
 import 'package:appadminquangbadulich/addTouristAttraction/bloc/addTouristAttraction_state.dart';
 import 'package:appadminquangbadulich/addTouristAttraction/screens/addTouristAttraction_form.dart';
+import 'package:appadminquangbadulich/homeAdmin/screens/homeAdmin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,7 +31,6 @@ class AddTouristAttractionPage extends StatelessWidget {
       body: BlocListener<AddTouristAttractionBloc, AddTouristAttractionState>(
         listener: (context, state) {
           if (state is AddTouristAttractionSuccess) {
-            print('Thêm địa điểm mới thành công');
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
@@ -43,11 +43,11 @@ class AddTouristAttractionPage extends StatelessWidget {
               ),
             );
             Future.delayed(const Duration(seconds: 1), () {
-              Navigator.of(context).pushNamed('/homeAdmin');
+              // Navigator.of(context).pushNamed('/homeAdmin');
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeAdminPage(),));
             });
           }
           if (state is AddTouristAttractionFailure) {
-            print(state.error);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(

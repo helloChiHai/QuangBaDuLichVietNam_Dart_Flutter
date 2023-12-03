@@ -27,6 +27,7 @@ class _HomeAdminWidgetState extends State<HomeAdminWidget> {
 
     context.read<TouristAttractionBloc>().add(FetchTouristAttraction());
     context.read<TotalTouristAttractionBloc>().add(ToTalTouristAttraction());
+    print("hello");
   }
 
   Future<Widget> _buildImage(String? img) async {
