@@ -177,7 +177,7 @@ class _DetailTouristAttractionWidgetState
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.transparent,
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: IconButton(
