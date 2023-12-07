@@ -11,7 +11,7 @@ import '../model/CustomerModel.dart';
 import '../model/regionModel.dart';
 
 class UserRepository {
-  String urlMain = 'http://172.16.132.127:3090';
+  String urlMain = 'http://192.168.98.214:3090';
 
   // KIỂM TRA COMMENT
   Future<int> checkCommentOwnership(
