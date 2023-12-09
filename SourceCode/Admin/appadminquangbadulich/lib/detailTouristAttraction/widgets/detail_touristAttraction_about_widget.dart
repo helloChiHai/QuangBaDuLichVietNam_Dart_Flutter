@@ -335,7 +335,7 @@ class _DetailTouristAttractionWidgetState
                     const SizedBox(height: 15),
                     Container(
                       color: Colors.white,
-                      height: 50,
+                      height: 60,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: [
@@ -350,17 +350,30 @@ class _DetailTouristAttractionWidgetState
                                     curve: Curves.easeInOut,
                                   );
                                 },
-                                child: Text(
-                                  'Giới thiệu',
-                                  style: TextStyle(
-                                    color: pageViewInit == 0
-                                        ? Colors.black
-                                        : const Color.fromARGB(255, 77, 76, 76),
-                                    fontSize: pageViewInit == 0 ? 25 : 20,
-                                    fontWeight: FontWeight.bold,
+                                child: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: pageViewInit == 2
+                                          ? Colors.black
+                                          : const Color.fromARGB(
+                                              255, 77, 76, 76),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                                  child: Text(
+                                    'Giới thiệu',
+                                    style: TextStyle(
+                                      color: pageViewInit == 0
+                                          ? Colors.black
+                                          : const Color.fromARGB(
+                                              255, 77, 76, 76),
+                                      fontSize: pageViewInit == 0 ? 25 : 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
                               TextButton(
@@ -371,17 +384,30 @@ class _DetailTouristAttractionWidgetState
                                     curve: Curves.easeInOut,
                                   );
                                 },
-                                child: Text(
-                                  'Văn hóa',
-                                  style: TextStyle(
-                                    color: pageViewInit == 1
-                                        ? Colors.black
-                                        : const Color.fromARGB(255, 77, 76, 76),
-                                    fontSize: pageViewInit == 1 ? 25 : 20,
-                                    fontWeight: FontWeight.bold,
+                                child: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: pageViewInit == 2
+                                          ? Colors.black
+                                          : const Color.fromARGB(
+                                              255, 77, 76, 76),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                                  child: Text(
+                                    'Văn hóa',
+                                    style: TextStyle(
+                                      color: pageViewInit == 1
+                                          ? Colors.black
+                                          : const Color.fromARGB(
+                                              255, 77, 76, 76),
+                                      fontSize: pageViewInit == 1 ? 25 : 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
                               TextButton(
@@ -392,17 +418,30 @@ class _DetailTouristAttractionWidgetState
                                     curve: Curves.easeInOut,
                                   );
                                 },
-                                child: Text(
-                                  'Lịch sử',
-                                  style: TextStyle(
-                                    color: pageViewInit == 2
-                                        ? Colors.black
-                                        : const Color.fromARGB(255, 77, 76, 76),
-                                    fontSize: pageViewInit == 2 ? 25 : 20,
-                                    fontWeight: FontWeight.bold,
+                                child: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: pageViewInit == 2
+                                          ? Colors.black
+                                          : const Color.fromARGB(
+                                              255, 77, 76, 76),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                                  child: Text(
+                                    'Lịch sử',
+                                    style: TextStyle(
+                                      color: pageViewInit == 2
+                                          ? Colors.black
+                                          : const Color.fromARGB(
+                                              255, 77, 76, 76),
+                                      fontSize: pageViewInit == 2 ? 25 : 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
                               TextButton(
@@ -413,17 +452,30 @@ class _DetailTouristAttractionWidgetState
                                     curve: Curves.easeInOut,
                                   );
                                 },
-                                child: Text(
-                                  'Đặc sản',
-                                  style: TextStyle(
-                                    color: pageViewInit == 3
-                                        ? Colors.black
-                                        : const Color.fromARGB(255, 77, 76, 76),
-                                    fontSize: pageViewInit == 3 ? 25 : 20,
-                                    fontWeight: FontWeight.bold,
+                                child: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: pageViewInit == 2
+                                          ? Colors.black
+                                          : const Color.fromARGB(
+                                              255, 77, 76, 76),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                                  child: Text(
+                                    'Đặc sản',
+                                    style: TextStyle(
+                                      color: pageViewInit == 3
+                                          ? Colors.black
+                                          : const Color.fromARGB(
+                                              255, 77, 76, 76),
+                                      fontSize: pageViewInit == 3 ? 25 : 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
                               TextButton(
@@ -434,17 +486,30 @@ class _DetailTouristAttractionWidgetState
                                     curve: Curves.easeInOut,
                                   );
                                 },
-                                child: Text(
-                                  'Bình luận',
-                                  style: TextStyle(
-                                    color: pageViewInit == 4
-                                        ? Colors.black
-                                        : const Color.fromARGB(255, 77, 76, 76),
-                                    fontSize: pageViewInit == 4 ? 25 : 20,
-                                    fontWeight: FontWeight.bold,
+                                child: Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: pageViewInit == 2
+                                          ? Colors.black
+                                          : const Color.fromARGB(
+                                              255, 77, 76, 76),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                                  child: Text(
+                                    'Bình luận',
+                                    style: TextStyle(
+                                      color: pageViewInit == 4
+                                          ? Colors.black
+                                          : const Color.fromARGB(
+                                              255, 77, 76, 76),
+                                      fontSize: pageViewInit == 4 ? 25 : 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
                             ],

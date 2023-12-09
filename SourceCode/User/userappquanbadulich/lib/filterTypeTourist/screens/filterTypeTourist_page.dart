@@ -25,7 +25,7 @@ class _FilterTypeTouristPageState extends State<FilterTypeTouristPage> {
 
   List<TypeTouristModel> typeTouristList = [
     TypeTouristModel(
-      idTypeTourist: 'MT',
+      idTypeTourist: 'MTSN',
       titleTypeTourist: 'Chào mừng đến với Miền Tây',
       nameTypeTourist: 'Miền Tây Sông Nước',
       imgTypeTourist: 'img_MTSN.jpg',
