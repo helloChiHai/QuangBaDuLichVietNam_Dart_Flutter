@@ -18,7 +18,7 @@ class _LoginIntroState extends State<LoginIntro> {
         pages: [
           buildIntroPage("assets/img/img_intro_1.png", "VietWander",
               "Với ứng dụng du lịch, hòa mình vào văn hóa phong phú và thưởng thức cảnh đẹp độc đáo của Việt Nam!"),
-          buildIntroPage("assets/img/img_intro_2.png", "Việt Nam Đẹp Mê Hồn",
+          buildIntroPage("assets/img/img_intro_2.png", "Việt Nam Thật Tuyệt",
               "Đặt chân vào thế giới du lịch Việt Nam qua ứng dụng VietWander, khám phá văn hóa, ẩm thực và phong cảnh tuyệt vời, đầy ấn tượng!"),
           buildIntroPage(
               "assets/img/img_intro_3.png",

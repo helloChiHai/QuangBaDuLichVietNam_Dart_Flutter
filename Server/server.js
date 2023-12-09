@@ -808,7 +808,7 @@ app.get("/filter-culture", async (req, res) => {
         region.provinces.forEach((province) => {
           province.touristAttraction.forEach((touristAttraction) => {
             if (region.idRegion === idRegion) {
-              cultures.push(...touristAttraction.culture);
+              cultures.push(...touristAttraction.culture.filter((culture) => culture.titleCulture));
             }
           });
         });
@@ -822,7 +822,7 @@ app.get("/filter-culture", async (req, res) => {
               region.idRegion === idRegion &&
               province.idProvines === idProvines
             ) {
-              cultures.push(...touristAttraction.culture);
+              cultures.push(...touristAttraction.culture.filter((culture) => culture.titleCulture));
             }
           });
         });
@@ -886,7 +886,7 @@ app.get("/filter-history", async (req, res) => {
         region.provinces.forEach((province) => {
           province.touristAttraction.forEach((touristAttraction) => {
             if (region.idRegion === idRegion) {
-              historyList.push(...touristAttraction.history);
+              historyList.push(...touristAttraction.history.filter((history) => history.titleStoryStory));
             }
           });
         });
@@ -900,7 +900,7 @@ app.get("/filter-history", async (req, res) => {
               region.idRegion === idRegion &&
               province.idProvines === idProvines
             ) {
-              historyList.push(...touristAttraction.history);
+              historyList.push(...touristAttraction.history.filter((history) => history.titleStoryStory));
             }
           });
         });

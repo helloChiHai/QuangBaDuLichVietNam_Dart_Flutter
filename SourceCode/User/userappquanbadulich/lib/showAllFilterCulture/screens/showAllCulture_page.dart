@@ -538,7 +538,7 @@ class _ShowAllTourisCulure extends State<ShowAllCulure> {
                             itemProvince.contains(selectedDropDownProvinceItem)
                                 ? selectedDropDownProvinceItem
                                 : null,
-                        items: itemProvince.map((ProvinceModel item) {
+                        items: itemProvince.toSet().map((ProvinceModel item) {
                           return DropdownMenuItem(
                             value: item,
                             child: Text(

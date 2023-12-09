@@ -535,7 +535,7 @@ class _ShowAllTourisCulure extends State<ShowAllSpecialDish> {
                         isExpanded: true,
                         menuMaxHeight: 150,
                         value: selectedDropDownProvinceItem,
-                        items: itemProvince.map((ProvinceModel item) {
+                        items: itemProvince.toSet().map((ProvinceModel item) {
                           return DropdownMenuItem(
                             value: item,
                             child: Text(
