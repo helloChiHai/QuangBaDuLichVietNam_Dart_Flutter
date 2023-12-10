@@ -28,7 +28,7 @@ class _CommentPageState extends State<CommentPage> {
   late String idTourist;
   late String idCus;
   TextEditingController contentCommentController = TextEditingController();
-  List<String> badWords = ["tục tiểu", "từ tục", "cc"];
+  List<String> badWords = ["tục tiểu", "từ tục", "cc", "cdmm", "mm", "fuck", "f*"];
 
   @override
   void initState() {

@@ -67,6 +67,12 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
           setState(() {
             itemProvince.clear();
             itemProvince.addAll(state.provinces);
+
+            itemProvince.insert(
+                0,
+                ProvinceModel(
+                    idprovince: '', nameprovince: 'Chọn tỉnh/thành phố'));
+            selectedDropDownProvinceItem = itemProvince[0];
           });
         }
       }

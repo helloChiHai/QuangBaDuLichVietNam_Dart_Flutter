@@ -62,6 +62,12 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
           setState(() {
             itemProvince.clear();
             itemProvince.addAll(state.provinces);
+
+            itemProvince.insert(
+                0,
+                ProvinceModel(
+                    idprovince: '', nameprovince: 'Chọn tỉnh/thành phố'));
+            selectedDropDownProvinceItem = itemProvince[0];
           });
         }
       }
@@ -595,7 +601,7 @@ class _ShowAllTouristAttractionState extends State<ShowAllTouristAttraction> {
                         isExpanded: true,
                         menuMaxHeight: 150,
                         value: selectedDropDownProvinceItem,
-                        items: itemProvince.map((ProvinceModel item) {
+                        items: itemProvince.toSet().map((ProvinceModel item) {
                           return DropdownMenuItem(
                             value: item,
                             child: Text(

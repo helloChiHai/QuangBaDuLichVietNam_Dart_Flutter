@@ -26,7 +26,7 @@ class _UpdateCommentPageState extends State<UpdateCommentPage> {
   late String touristId;
   late String idCus;
   late String idcmt;
-  List<String> badWords = ["tục tiểu", "từ tục", "cc"];
+  List<String> badWords = ["tục tiểu", "từ tục", "cc", "cdmm", "mm", "fuck", "f*"];
 
   @override
   void initState() {
