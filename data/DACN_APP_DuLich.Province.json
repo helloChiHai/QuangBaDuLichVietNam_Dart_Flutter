@@ -1,0 +1,448 @@
+[{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b36f"
+  },
+  "idprovince": "",
+  "nameprovince": ""
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b370"
+  },
+  "idprovince": "1",
+  "nameprovince": "An Giang"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b371"
+  },
+  "idprovince": "2",
+  "nameprovince": "Bà Rịa-Vũng Tàu"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b372"
+  },
+  "idprovince": "3",
+  "nameprovince": "Bắc Giang"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b373"
+  },
+  "idprovince": "4",
+  "nameprovince": "Bắc Kạn"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b374"
+  },
+  "idprovince": "5",
+  "nameprovince": "Bạc Liêu"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b375"
+  },
+  "idprovince": "6",
+  "nameprovince": "Bắc Ninh"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b376"
+  },
+  "idprovince": "7",
+  "nameprovince": "Bến Tre"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b377"
+  },
+  "idprovince": "8",
+  "nameprovince": "Bình Định"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b378"
+  },
+  "idprovince": "9",
+  "nameprovince": "Bình Dương"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b379"
+  },
+  "idprovince": "10",
+  "nameprovince": "Bình Phước"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b37a"
+  },
+  "idprovince": "11",
+  "nameprovince": "Bình Thuận"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b37b"
+  },
+  "idprovince": "12",
+  "nameprovince": "Cà Mau"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b37c"
+  },
+  "idprovince": "13",
+  "nameprovince": "Cần Thơ"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b37d"
+  },
+  "idprovince": "14",
+  "nameprovince": "Cao Bằng"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b37e"
+  },
+  "idprovince": "15",
+  "nameprovince": "Đà Nẵng"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b37f"
+  },
+  "idprovince": "16",
+  "nameprovince": "Đắk Lắk"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b380"
+  },
+  "idprovince": "17",
+  "nameprovince": "Đắk Nông"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b381"
+  },
+  "idprovince": "18",
+  "nameprovince": "Điện Biên"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b382"
+  },
+  "idprovince": "19",
+  "nameprovince": "Đồng Nai"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b383"
+  },
+  "idprovince": "20",
+  "nameprovince": "Đồng Tháp"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b384"
+  },
+  "idprovince": "21",
+  "nameprovince": "Gia Lai"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b385"
+  },
+  "idprovince": "22",
+  "nameprovince": "Hà Giang"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b386"
+  },
+  "idprovince": "23",
+  "nameprovince": "Hà Nam"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b387"
+  },
+  "idprovince": "24",
+  "nameprovince": "Hà Nội"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b388"
+  },
+  "idprovince": "25",
+  "nameprovince": "Hà Tĩnh"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b389"
+  },
+  "idprovince": "26",
+  "nameprovince": "Hải Dương"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b38a"
+  },
+  "idprovince": "27",
+  "nameprovince": "Hải Phòng"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b38b"
+  },
+  "idprovince": "28",
+  "nameprovince": "Hậu Giang"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b38c"
+  },
+  "idprovince": "29",
+  "nameprovince": "TP. Hồ Chí Minh"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b38d"
+  },
+  "idprovince": "30",
+  "nameprovince": "Hòa Bình"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b38e"
+  },
+  "idprovince": "31",
+  "nameprovince": "Hưng Yên"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b38f"
+  },
+  "idprovince": "32",
+  "nameprovince": "Khánh Hòa"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b390"
+  },
+  "idprovince": "33",
+  "nameprovince": "Kiên Giang"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b391"
+  },
+  "idprovince": "34",
+  "nameprovince": "Kon Tum"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b392"
+  },
+  "idprovince": "35",
+  "nameprovince": "Lai Châu"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b393"
+  },
+  "idprovince": "36",
+  "nameprovince": "Lâm Đồng"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b394"
+  },
+  "idprovince": "37",
+  "nameprovince": "Lạng Sơn"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b395"
+  },
+  "idprovince": "38",
+  "nameprovince": "Lào Cai"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b396"
+  },
+  "idprovince": "39",
+  "nameprovince": "Long An"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b397"
+  },
+  "idprovince": "40",
+  "nameprovince": "Nam Định"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b398"
+  },
+  "idprovince": "41",
+  "nameprovince": "Nghệ An"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b399"
+  },
+  "idprovince": "42",
+  "nameprovince": "Ninh Bình"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b39a"
+  },
+  "idprovince": "43",
+  "nameprovince": "Ninh Thuận"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b39b"
+  },
+  "idprovince": "44",
+  "nameprovince": "Phú Thọ"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b39c"
+  },
+  "idprovince": "45",
+  "nameprovince": "Phú Yên"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b39d"
+  },
+  "idprovince": "46",
+  "nameprovince": "Quảng Bình"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b39e"
+  },
+  "idprovince": "47",
+  "nameprovince": "Quảng Nam"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b39f"
+  },
+  "idprovince": "48",
+  "nameprovince": "Quảng Ngãi"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3a0"
+  },
+  "idprovince": "49",
+  "nameprovince": "Quảng Ninh"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3a1"
+  },
+  "idprovince": "50",
+  "nameprovince": "Quảng Trị"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3a2"
+  },
+  "idprovince": "51",
+  "nameprovince": "Sóc Trăng"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3a3"
+  },
+  "idprovince": "52",
+  "nameprovince": "Sơn La"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3a4"
+  },
+  "idprovince": "53",
+  "nameprovince": "Tây Ninh"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3a5"
+  },
+  "idprovince": "54",
+  "nameprovince": "Thái Bình"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3a6"
+  },
+  "idprovince": "55",
+  "nameprovince": "Thái Nguyên"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3a7"
+  },
+  "idprovince": "56",
+  "nameprovince": "Thanh Hóa"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3a8"
+  },
+  "idprovince": "57",
+  "nameprovince": "Thừa Thiên - Huế"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3a9"
+  },
+  "idprovince": "58",
+  "nameprovince": "Tiền Giang"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3aa"
+  },
+  "idprovince": "59",
+  "nameprovince": "Trà Vinh"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3ab"
+  },
+  "idprovince": "60",
+  "nameprovince": "Tuyên Quang"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3ac"
+  },
+  "idprovince": "61",
+  "nameprovince": "Vĩnh Long"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3ad"
+  },
+  "idprovince": "62",
+  "nameprovince": "Vĩnh Phúc"
+},
+{
+  "_id": {
+    "$oid": "6569a61f2045e0fd2ec7b3ae"
+  },
+  "idprovince": "63",
+  "nameprovince": "Yên Bái"
+}]
