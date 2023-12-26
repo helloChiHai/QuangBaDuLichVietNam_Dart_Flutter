@@ -17,16 +17,6 @@ Some of the page effects are as follows:
 
 USER
 
-| Library | Functionality |
-|--------------|-------|
-| <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585275.png?raw=true"> | <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585295.png?raw=true"> | 
-| <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585302.png?raw=true"> | <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585308.png?raw=true"> | 
-| <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585348.png?raw=true"> | <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585370.png?raw=true"> | 
-| <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585370.png?raw=true"> | <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585374.png?raw=true"> | 
-| <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585380.png?raw=true"> | <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585387.png?raw=true"> | 
-| <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585398.png?raw=true"> | <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585404.png?raw=true"> | 
-| <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585427.png?raw=true"> | <img width="286" src="https://github.com/helloChiHai/HinhAnhQuangBaDuLichVietNam/blob/master/user/Screenshot_1703585441.png?raw=true"> | 
-
 ADMIN
 
 | Library | Functionality |
