@@ -78,18 +78,18 @@ Users can create and log in to the application
 ## Library used
 | Library | Functionality |
 |--------------|-------|
-| cupertino_icons | Manage application state and logic | 
-| bloc | Manage application state and logic by separating it from the user interface, increasing clarity and reuse in the source code |
-| equatable | implements == and hashCode methods easily for objects, minimizing repetitive coding and ensuring proper comparison between states or events |
-| http | Manage network communication and process data returned from the server | 
-| introduction_screen | Create easy and flexible onboarding screens in Flutter apps. | 
-| video_player | integrates and controls video playback within the application, providing components for displaying and managing video playback | 
-| intl | Convert between different languages ​​and format data according to the rules of each region | 
-| scroll_date_picker | Customizable and easy to use date picker for Flutter | 
-| full_screen_image | Full screen photo viewer. It shuts off when scrolling vertically. Can work with Hero widget | 
-| image_picker | Function to select and take photos from the device's gallery or camera | 
-| animated_text_kit | Create interesting and dynamic text effects, such as running, hitting, and motion blur effects | 
-| youtube_player_flutter | Play videos from YouTube in Flutter app conveniently and flexibly | 
+| [cupertino_icons](https://pub.dev/packages/cupertino_icons) | Manage application state and logic | 
+| [bloc](https://pub.dev/packages/flutter_bloc) | Manage application state and logic by separating it from the user interface, increasing clarity and reuse in the source code |
+| [equatable](https://pub.dev/packages/equatable) | implements == and hashCode methods easily for objects, minimizing repetitive coding and ensuring proper comparison between states or events |
+| [http](https://pub.dev/packages/http) | Manage network communication and process data returned from the server | 
+| [introduction_screen](https://pub.dev/packages/introduction_screen) | Create easy and flexible onboarding screens in Flutter apps. | 
+| [video_player](https://pub.dev/packages/video_player) | integrates and controls video playback within the application, providing components for displaying and managing video playback | 
+| [intl](https://pub.dev/packages/intl) | Convert between different languages ​​and format data according to the rules of each region | 
+| [scroll_date_picker](https://pub.dev/packages/scroll_date_picker) | Customizable and easy to use date picker for Flutter | 
+| [full_screen_image](https://pub.dev/packages/full_screen_image) | Full screen photo viewer. It shuts off when scrolling vertically. Can work with Hero widget | 
+| [image_picker](https://pub.dev/packages/image_picker) | Function to select and take photos from the device's gallery or camera | 
+| [animated_text_kit](https://pub.dev/packages/animated_text_kit) | Create interesting and dynamic text effects, such as running, hitting, and motion blur effects | 
+| [youtube_player_flutter](https://pub.dev/packages/youtube_player_flutter) | Play videos from YouTube in Flutter app conveniently and flexibly | 
 
 For details, please refer to the [pubspec.yaml](https://github.com/helloChiHai/QuangBaDuLichVietNam_Dart_Flutter/blob/master/SourceCode/User/userappquanbadulich/pubspec.yaml) file.
   
