@@ -78,7 +78,7 @@ Users can create and log in to the application
 ## Library used
 | Library | Functionality |
 |--------------|-------|
-| [cupertino_icons](https://pub.dev/packages/cupertino_icons) | Manage application state and logic | 
+| [flutter_bloc](https://pub.dev/packages/flutter_bloc) | Manage application state and logic | 
 | [bloc](https://pub.dev/packages/flutter_bloc) | Manage application state and logic by separating it from the user interface, increasing clarity and reuse in the source code |
 | [equatable](https://pub.dev/packages/equatable) | implements == and hashCode methods easily for objects, minimizing repetitive coding and ensuring proper comparison between states or events |
 | [http](https://pub.dev/packages/http) | Manage network communication and process data returned from the server | 
