@@ -73,6 +73,8 @@ Users can create and log in to the application
 1. Flutter version 3.10.0
 
 2. Dart version 3.0.0
+
+3. MongoDB version 1.40.2
 ```
 
 ## Library used
